@@ -21,14 +21,18 @@
     { id: 3, keys: ["q8", "q9", "q10"], label: "Part 3" },
   ];
 
-  const panes = document.querySelectorAll(".quiz-pane");
-  const stepBtns = document.querySelectorAll(".quiz-step-btn");
+  const quizRoot = document.getElementById("ppQuiz");
+  if (!quizRoot) return;
+
+  const panes = quizRoot.querySelectorAll(".quiz-pane");
+  const stepBtns = quizRoot.querySelectorAll(".quiz-step-btn");
   const btnPrev = document.getElementById("quizBtnPrev");
   const btnNext = document.getElementById("quizBtnNext");
   const btnSubmit = document.getElementById("quizBtnSubmit");
-  const quizRoot = document.getElementById("ppQuiz");
+  const footerNav = document.getElementById("quizFooterNav");
+  const quizMain = quizRoot.querySelector(".quiz-main");
 
-  if (!quizRoot || !panes.length) return;
+  if (!panes.length) return;
 
   let current = 0;
   const totalSteps = panes.length;
@@ -76,7 +80,9 @@
   function showStep(i) {
     current = Math.max(0, Math.min(i, totalSteps - 1));
     panes.forEach((pane, idx) => {
-      pane.hidden = idx !== current;
+      const isActive = idx === current;
+      pane.hidden = !isActive;
+      pane.classList.toggle("is-active-pane", isActive);
     });
     stepBtns.forEach((btn, idx) => {
       btn.classList.toggle("is-active", idx === current);
@@ -86,6 +92,13 @@
     if (btnPrev) btnPrev.disabled = current === 0;
     if (btnNext) btnNext.hidden = current >= totalSteps - 1;
     if (btnSubmit) btnSubmit.hidden = current < totalSteps - 1;
+
+    const activePane = panes[current];
+    if (activePane) {
+      activePane.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (quizMain) {
+      quizMain.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   stepBtns.forEach((btn) => {
@@ -95,11 +108,18 @@
     });
   });
 
-  if (btnPrev) {
-    btnPrev.addEventListener("click", () => showStep(current - 1));
-  }
-  if (btnNext) {
-    btnNext.addEventListener("click", () => showStep(current + 1));
+  if (footerNav) {
+    footerNav.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (target.id === "quizBtnPrev" || target.closest("#quizBtnPrev")) {
+        e.preventDefault();
+        showStep(current - 1);
+      } else if (target.id === "quizBtnNext" || target.closest("#quizBtnNext")) {
+        e.preventDefault();
+        showStep(current + 1);
+      }
+    });
   }
 
   function destroyCharts() {

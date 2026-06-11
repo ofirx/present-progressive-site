@@ -25,19 +25,46 @@ Videos are **saved automatically** in your browser (IndexedDB). When you open th
 
 > Note: Saved videos stay on your computer in browser storage. They are not uploaded to GitHub or any server.
 
-## Publish to GitHub Pages
+## Git setup (Windows)
 
-```bash
-cd grammar-site
-git init
-git add .
-git commit -m "Present Progressive grammar site"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/grammar-site.git
-git push -u origin main
+If `git` is not recognized, restart Cursor/terminal after installing Git, or use the full path:
+
+```powershell
+& "C:\Program Files\Git\bin\git.exe" --version
 ```
 
-Then enable **Settings → Pages →** branch `main`, folder `/ (root)`.
+Set your name and email once (replace with your details):
+
+```powershell
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+This repo is already initialized on branch `main` with an initial commit.
+
+## Publish to GitHub Pages
+
+### 1. Log in to GitHub
+
+```powershell
+gh auth login
+```
+
+### 2. Create the repo and push
+
+```powershell
+cd "C:\Users\או\Documents\grammar-site"
+gh repo create present-progressive-site --public --source=. --remote=origin --push
+```
+
+Use any repo name you like. If you pick a different name, your site URL will be:
+`https://YOUR_USERNAME.github.io/REPO_NAME/`
+
+### 3. Enable GitHub Pages
+
+On GitHub: **Settings → Pages →** branch `main`, folder `/ (root)`.
+
+Your site will be live in 1–2 minutes.
 
 ## Project structure
 

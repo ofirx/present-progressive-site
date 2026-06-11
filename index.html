@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Learn the Present Progressive tense with videos, practice, and a quiz." />
+  <title>Present Progressive — Grammar Guide</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Present<span>Progressive</span></a>
+      <nav aria-label="Main">
+        <a href="#introduction" class="nav-link">
+          <span class="en">Introduction</span>
+          <span class="he" dir="rtl" lang="he">מבוא</span>
+        </a>
+        <a href="#practice" class="nav-link">
+          <span class="en">Practice</span>
+          <span class="he" dir="rtl" lang="he">תרגול</span>
+        </a>
+        <a href="#quiz" class="nav-link">
+          <span class="en">Quiz</span>
+          <span class="he" dir="rtl" lang="he">חידון</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-content">
+        <p class="eyebrow bilingual-block">
+          <span class="en">English grammar</span>
+          <span class="he" dir="rtl" lang="he">דקדוק אנגלי</span>
+        </p>
+        <h1 class="bilingual-block">
+          <span class="en">The Present Progressive</span>
+          <span class="he" dir="rtl" lang="he">הווה מתמשך (Present Progressive)</span>
+        </h1>
+        <p class="lead bilingual-block">
+          <span class="en">
+            Learn how to describe actions happening <em>right now</em> using
+            <strong>am / is / are + verb-ing</strong>.
+          </span>
+          <span class="he" dir="rtl" lang="he">
+            למדו לתאר פעולות שקורות <em>עכשיו</em> בעזרת
+            <strong>am / is / are + verb-ing</strong>.
+          </span>
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-bilingual" href="#introduction">
+            <span class="btn-en">Start learning</span>
+            <span class="btn-he" dir="rtl" lang="he">התחל ללמוד</span>
+          </a>
+          <a class="btn btn-secondary btn-bilingual" href="#practice">
+            <span class="btn-en">Practice</span>
+            <span class="btn-he" dir="rtl" lang="he">תרגול</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="introduction" class="section">
+      <div class="container">
+        <h2 class="bilingual-block">
+          <span class="en">Introduction</span>
+          <span class="he" dir="rtl" lang="he">מבוא</span>
+        </h2>
+        <p class="section-intro bilingual-block">
+          <span class="en">
+            Watch the four lesson videos below. Upload your own files, then use Play,
+            Pause, Restart, Fullscreen, or drag the timeline to move forward and backward.
+            Videos are saved automatically in your browser.
+          </span>
+          <span class="he" dir="rtl" lang="he">
+            צפו בארבעת סרטוני השיעור למטה. העלו קבצים משלכם, ואז השתמשו בנגן, השהה,
+            התחל מחדש, מסך מלא, או גררו את ציר הזמן כדי לדלג קדימה ואחורה.
+            הסרטונים נשמרים אוטומטית בדפדפן שלכם.
+          </span>
+        </p>
+
+        <div class="rule-card">
+          <h3 class="bilingual-block">
+            <span class="en">The formula</span>
+            <span class="he" dir="rtl" lang="he">הנוסחה</span>
+          </h3>
+          <p class="formula"><span>Subject</span> + <span>am / is / are</span> + <span>verb-ing</span></p>
+          <p class="example">I <em>am studying</em>. &nbsp; She <em>is running</em>. &nbsp; They <em>are eating</em>.</p>
+          <p class="he-note" dir="rtl" lang="he">נושא + am/is/are + פועל עם ing</p>
+        </div>
+
+        <div class="video-gallery" aria-label="Lesson video gallery">
+          <article class="video-slot" data-slot="1">
+            <div class="video-number bilingual-block">
+              <span class="en">Video 1</span>
+              <span class="he" dir="rtl" lang="he">סרטון 1</span>
+            </div>
+            <h3 class="video-title bilingual-block">
+              <span class="en">What is the present progressive?</span>
+              <span class="he" dir="rtl" lang="he">מהו הווה מתמשך?</span>
+            </h3>
+            <label class="upload-label" for="upload-1">
+              <span class="upload-icon" aria-hidden="true">↑</span>
+              <span class="upload-text">
+                <span class="en">Upload video</span>
+                <span class="he" dir="rtl" lang="he">העלה סרטון</span>
+              </span>
+              <input id="upload-1" class="video-upload" type="file" accept="video/*" data-video="1" />
+            </label>
+            <div class="video-frame">
+              <video id="video-1" class="lesson-video" playsinline preload="metadata" hidden></video>
+              <p class="video-placeholder bilingual-block" id="placeholder-1">
+                <span class="en">No video uploaded yet</span>
+                <span class="he" dir="rtl" lang="he">עדיין לא הועלה סרטון</span>
+              </p>
+            </div>
+            <p class="save-status" id="save-status-1" hidden></p>
+            <div class="video-controls">
+              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="1" disabled>
+                <span class="btn-en">Play</span>
+                <span class="btn-he" dir="rtl" lang="he">נגן</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="1" disabled>
+                <span class="btn-en">Pause</span>
+                <span class="btn-he" dir="rtl" lang="he">השהה</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="1" disabled>
+                <span class="btn-en">Restart</span>
+                <span class="btn-he" dir="rtl" lang="he">התחל מחדש</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="1" disabled>
+                <span class="btn-en">Fullscreen</span>
+                <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="video-slot" data-slot="2">
+            <div class="video-number bilingual-block">
+              <span class="en">Video 2</span>
+              <span class="he" dir="rtl" lang="he">סרטון 2</span>
+            </div>
+            <h3 class="video-title bilingual-block">
+              <span class="en">Forming verb-ing</span>
+              <span class="he" dir="rtl" lang="he">יצירת צורת verb-ing</span>
+            </h3>
+            <label class="upload-label" for="upload-2">
+              <span class="upload-icon" aria-hidden="true">↑</span>
+              <span class="upload-text">
+                <span class="en">Upload video</span>
+                <span class="he" dir="rtl" lang="he">העלה סרטון</span>
+              </span>
+              <input id="upload-2" class="video-upload" type="file" accept="video/*" data-video="2" />
+            </label>
+            <div class="video-frame">
+              <video id="video-2" class="lesson-video" playsinline preload="metadata" hidden></video>
+              <p class="video-placeholder bilingual-block" id="placeholder-2">
+                <span class="en">No video uploaded yet</span>
+                <span class="he" dir="rtl" lang="he">עדיין לא הועלה סרטון</span>
+              </p>
+            </div>
+            <p class="save-status" id="save-status-2" hidden></p>
+            <div class="video-controls">
+              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="2" disabled>
+                <span class="btn-en">Play</span>
+                <span class="btn-he" dir="rtl" lang="he">נגן</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="2" disabled>
+                <span class="btn-en">Pause</span>
+                <span class="btn-he" dir="rtl" lang="he">השהה</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="2" disabled>
+                <span class="btn-en">Restart</span>
+                <span class="btn-he" dir="rtl" lang="he">התחל מחדש</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="2" disabled>
+                <span class="btn-en">Fullscreen</span>
+                <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="video-slot" data-slot="3">
+            <div class="video-number bilingual-block">
+              <span class="en">Video 3</span>
+              <span class="he" dir="rtl" lang="he">סרטון 3</span>
+            </div>
+            <h3 class="video-title bilingual-block">
+              <span class="en">When do we use it?</span>
+              <span class="he" dir="rtl" lang="he">מתי משתמשים בזה?</span>
+            </h3>
+            <label class="upload-label" for="upload-3">
+              <span class="upload-icon" aria-hidden="true">↑</span>
+              <span class="upload-text">
+                <span class="en">Upload video</span>
+                <span class="he" dir="rtl" lang="he">העלה סרטון</span>
+              </span>
+              <input id="upload-3" class="video-upload" type="file" accept="video/*" data-video="3" />
+            </label>
+            <div class="video-frame">
+              <video id="video-3" class="lesson-video" playsinline preload="metadata" hidden></video>
+              <p class="video-placeholder bilingual-block" id="placeholder-3">
+                <span class="en">No video uploaded yet</span>
+                <span class="he" dir="rtl" lang="he">עדיין לא הועלה סרטון</span>
+              </p>
+            </div>
+            <p class="save-status" id="save-status-3" hidden></p>
+            <div class="video-controls">
+              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="3" disabled>
+                <span class="btn-en">Play</span>
+                <span class="btn-he" dir="rtl" lang="he">נגן</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="3" disabled>
+                <span class="btn-en">Pause</span>
+                <span class="btn-he" dir="rtl" lang="he">השהה</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="3" disabled>
+                <span class="btn-en">Restart</span>
+                <span class="btn-he" dir="rtl" lang="he">התחל מחדש</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="3" disabled>
+                <span class="btn-en">Fullscreen</span>
+                <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="video-slot" data-slot="4">
+            <div class="video-number bilingual-block">
+              <span class="en">Video 4</span>
+              <span class="he" dir="rtl" lang="he">סרטון 4</span>
+            </div>
+            <h3 class="video-title bilingual-block">
+              <span class="en">Common mistakes</span>
+              <span class="he" dir="rtl" lang="he">טעויות נפוצות</span>
+            </h3>
+            <label class="upload-label" for="upload-4">
+              <span class="upload-icon" aria-hidden="true">↑</span>
+              <span class="upload-text">
+                <span class="en">Upload video</span>
+                <span class="he" dir="rtl" lang="he">העלה סרטון</span>
+              </span>
+              <input id="upload-4" class="video-upload" type="file" accept="video/*" data-video="4" />
+            </label>
+            <div class="video-frame">
+              <video id="video-4" class="lesson-video" playsinline preload="metadata" hidden></video>
+              <p class="video-placeholder bilingual-block" id="placeholder-4">
+                <span class="en">No video uploaded yet</span>
+                <span class="he" dir="rtl" lang="he">עדיין לא הועלה סרטון</span>
+              </p>
+            </div>
+            <p class="save-status" id="save-status-4" hidden></p>
+            <div class="video-controls">
+              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="4" disabled>
+                <span class="btn-en">Play</span>
+                <span class="btn-he" dir="rtl" lang="he">נגן</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="4" disabled>
+                <span class="btn-en">Pause</span>
+                <span class="btn-he" dir="rtl" lang="he">השהה</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="4" disabled>
+                <span class="btn-en">Restart</span>
+                <span class="btn-he" dir="rtl" lang="he">התחל מחדש</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="4" disabled>
+                <span class="btn-en">Fullscreen</span>
+                <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="practice" class="section section-alt">
+      <div class="container">
+        <h2 class="bilingual-block">
+          <span class="en">Practice</span>
+          <span class="he" dir="rtl" lang="he">תרגול</span>
+        </h2>
+        <p class="section-intro bilingual-block">
+          <span class="en">
+            Complete each sentence with the correct present progressive form.
+            Click <strong>Check answers</strong> when you are done.
+          </span>
+          <span class="he" dir="rtl" lang="he">
+            השלימו כל משפט בצורת הווה מתמשך הנכונה.
+            לחצו על <strong>בדוק תשובות</strong> כשסיימתם.
+          </span>
+        </p>
+
+        <div class="practice-card">
+          <ol class="practice-list" id="practice-list">
+            <li class="practice-item">
+              <p class="sentence-en">Right now, she <input type="text" class="practice-input" data-answer="is reading" aria-label="Answer for sentence 1" /> a book. <em>(read)</em></p>
+              <p class="sentence-he" dir="rtl" lang="he">כרגע, היא <em>(read)</em> ספר.</p>
+            </li>
+            <li class="practice-item">
+              <p class="sentence-en">We <input type="text" class="practice-input" data-answer="are playing" aria-label="Answer for sentence 2" /> soccer in the park. <em>(play)</em></p>
+              <p class="sentence-he" dir="rtl" lang="he">אנחנו <em>(play)</em> כדורגל בפארק.</p>
+            </li>
+            <li class="practice-item">
+              <p class="sentence-en">I <input type="text" class="practice-input" data-answer="am cooking" aria-label="Answer for sentence 3" /> dinner for my family. <em>(cook)</em></p>
+              <p class="sentence-he" dir="rtl" lang="he">אני <em>(cook)</em> ארוחת ערב למשפחה שלי.</p>
+            </li>
+            <li class="practice-item">
+              <p class="sentence-en">Look! The baby <input type="text" class="practice-input" data-answer="is crying" aria-label="Answer for sentence 4" />. <em>(cry)</em></p>
+              <p class="sentence-he" dir="rtl" lang="he">תראו! התינוק <em>(cry)</em>.</p>
+            </li>
+            <li class="practice-item">
+              <p class="sentence-en">They <input type="text" class="practice-input" data-answer="are not watching,aren't watching" aria-label="Answer for sentence 5" /> TV at the moment. <em>(not watch)</em></p>
+              <p class="sentence-he" dir="rtl" lang="he">הם <em>(not watch)</em> טלוויזיה כרגע.</p>
+            </li>
+            <li class="practice-item">
+              <p class="sentence-en"><input type="text" class="practice-input" data-answer="Are you listening" aria-label="Answer for sentence 6" /> to the teacher? <em>(listen)</em></p>
+              <p class="sentence-he" dir="rtl" lang="he"><em>(listen)</em> למורה?</p>
+            </li>
+          </ol>
+
+          <div class="practice-actions">
+            <button type="button" class="btn btn-primary btn-bilingual" id="practice-check">
+              <span class="btn-en">Check answers</span>
+              <span class="btn-he" dir="rtl" lang="he">בדוק תשובות</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-bilingual" id="practice-reset">
+              <span class="btn-en">Reset</span>
+              <span class="btn-he" dir="rtl" lang="he">איפוס</span>
+            </button>
+          </div>
+          <p id="practice-feedback" class="practice-feedback bilingual-block" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="section">
+      <div class="container">
+        <h2 class="bilingual-block">
+          <span class="en">Quiz</span>
+          <span class="he" dir="rtl" lang="he">חידון</span>
+        </h2>
+        <p class="section-intro bilingual-block">
+          <span class="en">Five questions on the present progressive. Instant feedback.</span>
+          <span class="he" dir="rtl" lang="he">חמש שאלות על הווה מתמשך. משוב מיידי.</span>
+        </p>
+        <div id="quiz-app" class="quiz-card">
+          <div id="quiz-progress" class="quiz-progress bilingual-block" aria-live="polite"></div>
+          <div id="quiz-question-wrap" class="bilingual-block">
+            <p id="quiz-question" class="quiz-question"></p>
+            <p id="quiz-question-he" class="quiz-question-he" dir="rtl" lang="he"></p>
+          </div>
+          <div id="quiz-options" class="quiz-options" role="group" aria-labelledby="quiz-question"></div>
+          <div id="quiz-feedback" class="quiz-feedback bilingual-block" aria-live="polite">
+            <p id="quiz-feedback-en" class="quiz-feedback-en"></p>
+            <p id="quiz-feedback-he" class="quiz-feedback-he" dir="rtl" lang="he"></p>
+          </div>
+          <div class="quiz-actions">
+            <button id="quiz-next" class="btn btn-primary btn-bilingual" type="button" hidden>
+              <span class="btn-en">Next question</span>
+              <span class="btn-he" dir="rtl" lang="he">שאלה הבאה</span>
+            </button>
+            <button id="quiz-restart" class="btn btn-secondary btn-bilingual" type="button" hidden>
+              <span class="btn-en">Try again</span>
+              <span class="btn-he" dir="rtl" lang="he">נסה שוב</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner bilingual-block">
+      <p class="en">Present Progressive — Grammar Guide</p>
+      <p class="he" dir="rtl" lang="he">הווה מתמשך — מדריך דקדוק</p>
+    </div>
+  </footer>
+
+  <script src="js/video-storage.js"></script>
+  <script src="js/videos.js"></script>
+  <script src="js/practice.js"></script>
+  <script src="js/quiz.js"></script>
+</body>
+</html>

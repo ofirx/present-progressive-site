@@ -1,152 +1,216 @@
-const questions = [
-  {
-    question: "Which sentence uses the present progressive correctly?",
-    questionHe: "איזה משפט משתמש נכון בהווה מתמשך?",
-    options: [
-      "She is cook dinner now.",
-      "She is cooking dinner now.",
-      "She cooking dinner now.",
-    ],
-    answer: 1,
-    explanation: "Use am/is/are + verb-ing: She is cooking.",
-    explanationHe: "יש להשתמש ב-am/is/are + verb-ing: She is cooking.",
-  },
-  {
-    question: "Choose the correct form:",
-    questionHe: "בחרו את הצורה הנכונה:",
-    options: [
-      "I am study for the test.",
-      "I studying for the test.",
-      "I am studying for the test.",
-    ],
-    answer: 2,
-    explanation: "With I, use am + verb-ing.",
-    explanationHe: "עם I משתמשים ב-am + verb-ing.",
-  },
-  {
-    question: "Which sentence is in the present progressive?",
-    questionHe: "איזה משפט הוא בהווה מתמשך?",
-    options: [
-      "They play chess every Friday.",
-      "They are playing chess right now.",
-      "They played chess yesterday.",
-    ],
-    answer: 1,
-    explanation: "Present progressive describes an action happening now.",
-    explanationHe: "הווה מתמשך מתאר פעולה שקורית עכשיו.",
-  },
-  {
-    question: 'What is the -ing form of "run"?',
-    questionHe: 'מהי צורת ה-ing של "run"?',
-    options: ["runing", "running", "runned"],
-    answer: 1,
-    explanation: "Double the final consonant: run → running.",
-    explanationHe: "מכפילים את האות האחרונה: run → running.",
-  },
-  {
-    question: "Which negative sentence is correct?",
-    questionHe: "איזה משפט שלילי נכון?",
-    options: [
-      "He is not working today.",
-      "He not is working today.",
-      "He is not work today.",
-    ],
-    answer: 0,
-    explanation: "Put not after am/is/are: He is not working.",
-    explanationHe: "שמים את not אחרי am/is/are: He is not working.",
-  },
-];
+/**
+ * Present Progressive: 3-part self-graded quiz with step navigation and Chart.js results.
+ */
+(function () {
+  const ANSWERS = {
+    q1: "b",
+    q2: "c",
+    q3: "b",
+    q4: "a",
+    q5: "b",
+    q6: "a",
+    q7: "b",
+    q8: "a",
+    q9: "b",
+    q10: "b",
+  };
 
-let current = 0;
-let score = 0;
-let answered = false;
+  const PARTS = [
+    { id: 1, keys: ["q1", "q2", "q3", "q4"], label: "Part 1" },
+    { id: 2, keys: ["q5", "q6", "q7"], label: "Part 2" },
+    { id: 3, keys: ["q8", "q9", "q10"], label: "Part 3" },
+  ];
 
-const progressEl = document.getElementById("quiz-progress");
-const questionEl = document.getElementById("quiz-question");
-const questionHeEl = document.getElementById("quiz-question-he");
-const optionsEl = document.getElementById("quiz-options");
-const feedbackEnEl = document.getElementById("quiz-feedback-en");
-const feedbackHeEl = document.getElementById("quiz-feedback-he");
-const feedbackWrap = document.getElementById("quiz-feedback");
-const nextBtn = document.getElementById("quiz-next");
-const restartBtn = document.getElementById("quiz-restart");
+  const panes = document.querySelectorAll(".quiz-pane");
+  const stepBtns = document.querySelectorAll(".quiz-step-btn");
+  const btnPrev = document.getElementById("quizBtnPrev");
+  const btnNext = document.getElementById("quizBtnNext");
+  const btnSubmit = document.getElementById("quizBtnSubmit");
+  const quizRoot = document.getElementById("ppQuiz");
 
-function setProgress() {
-  const en = `Question ${current + 1} of ${questions.length}`;
-  const he = `שאלה ${current + 1} מתוך ${questions.length}`;
-  progressEl.innerHTML = `<span class="en">${en}</span><span class="he" dir="rtl" lang="he">${he}</span>`;
-}
+  if (!quizRoot || !panes.length) return;
 
-function setFeedback(en, he, ok) {
-  feedbackEnEl.textContent = en;
-  feedbackHeEl.textContent = he;
-  feedbackWrap.className = ok ? "quiz-feedback bilingual-block ok" : "quiz-feedback bilingual-block bad";
-}
+  let current = 0;
+  const totalSteps = panes.length;
+  let chartInstances = [];
 
-function renderQuestion() {
-  answered = false;
-  const item = questions[current];
+  function countAnsweredInPart(keys) {
+    return keys.reduce((n, key) => {
+      return document.querySelector(`input[name="${key}"]:checked`) ? n + 1 : n;
+    }, 0);
+  }
 
-  setProgress();
-  questionEl.textContent = item.question;
-  questionHeEl.textContent = item.questionHe;
-  feedbackEnEl.textContent = "";
-  feedbackHeEl.textContent = "";
-  feedbackWrap.className = "quiz-feedback bilingual-block";
-  nextBtn.hidden = true;
-  restartBtn.hidden = true;
+  function updatePartCounters() {
+    PARTS.forEach((part) => {
+      const el = document.getElementById(`quizCounterPart${part.id}`);
+      if (!el) return;
 
-  optionsEl.innerHTML = "";
-  item.options.forEach((text, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "quiz-option";
-    button.textContent = text;
-    button.addEventListener("click", () => selectAnswer(index, button));
-    optionsEl.appendChild(button);
+      const answered = countAnsweredInPart(part.keys);
+      const total = part.keys.length;
+      const remaining = total - answered;
+      el.textContent = `${answered} / ${total}`;
+      el.setAttribute("aria-label", `${answered} of ${total} questions answered in this part`);
+
+      const hintEl = document.getElementById(`quizCounterHintPart${part.id}`);
+      if (!hintEl) return;
+
+      if (remaining > 0) {
+        hintEl.hidden = false;
+        hintEl.classList.remove("is-complete");
+        hintEl.textContent =
+          remaining === 1
+            ? "You still have 1 question unanswered in this section."
+            : `You still have ${remaining} questions unanswered in this section.`;
+      } else if (total > 0) {
+        hintEl.hidden = false;
+        hintEl.classList.add("is-complete");
+        hintEl.textContent = "Great job! You've answered every question in this section.";
+      } else {
+        hintEl.hidden = true;
+        hintEl.classList.remove("is-complete");
+        hintEl.textContent = "";
+      }
+    });
+  }
+
+  function showStep(i) {
+    current = Math.max(0, Math.min(i, totalSteps - 1));
+    panes.forEach((pane, idx) => {
+      pane.hidden = idx !== current;
+    });
+    stepBtns.forEach((btn, idx) => {
+      btn.classList.toggle("is-active", idx === current);
+      btn.classList.toggle("is-done", idx < current);
+      btn.classList.toggle("is-upcoming", idx > current);
+    });
+    if (btnPrev) btnPrev.disabled = current === 0;
+    if (btnNext) btnNext.hidden = current >= totalSteps - 1;
+    if (btnSubmit) btnSubmit.hidden = current < totalSteps - 1;
+  }
+
+  stepBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const n = parseInt(btn.getAttribute("data-step"), 10) - 1;
+      if (!Number.isNaN(n)) showStep(n);
+    });
   });
-}
 
-function selectAnswer(index, button) {
-  if (answered) return;
-  answered = true;
-
-  const item = questions[current];
-  const buttons = optionsEl.querySelectorAll(".quiz-option");
-  buttons.forEach((btn) => (btn.disabled = true));
-
-  if (index === item.answer) {
-    score += 1;
-    button.classList.add("correct");
-    setFeedback(`Correct! ${item.explanation}`, `נכון! ${item.explanationHe}`, true);
-  } else {
-    button.classList.add("incorrect");
-    buttons[item.answer].classList.add("correct");
-    setFeedback(
-      `Not quite. ${item.explanation}`,
-      `לא בדיוק. ${item.explanationHe}`,
-      false
-    );
+  if (btnPrev) {
+    btnPrev.addEventListener("click", () => showStep(current - 1));
+  }
+  if (btnNext) {
+    btnNext.addEventListener("click", () => showStep(current + 1));
   }
 
-  if (current < questions.length - 1) {
-    nextBtn.hidden = false;
-  } else {
-    feedbackEnEl.textContent += ` Final score: ${score}/${questions.length}.`;
-    feedbackHeEl.textContent += ` ציון סופי: ${score}/${questions.length}.`;
-    restartBtn.hidden = false;
+  function destroyCharts() {
+    chartInstances.forEach((chart) => chart?.destroy());
+    chartInstances = [];
   }
-}
 
-nextBtn.addEventListener("click", () => {
-  current += 1;
-  renderQuestion();
-});
+  function gradeMc() {
+    let correct = 0;
+    const total = Object.keys(ANSWERS).length;
+    const byPart = [
+      { c: 0, t: 0 },
+      { c: 0, t: 0 },
+      { c: 0, t: 0 },
+    ];
 
-restartBtn.addEventListener("click", () => {
-  current = 0;
-  score = 0;
-  renderQuestion();
-});
+    PARTS.forEach((part, pi) => {
+      part.keys.forEach((key) => {
+        byPart[pi].t++;
+        const el = document.querySelector(`input[name="${key}"]:checked`);
+        const value = el ? el.value : "";
+        if (value === ANSWERS[key]) {
+          correct++;
+          byPart[pi].c++;
+        }
+      });
+    });
 
-renderQuestion();
+    return { correct, total, byPart };
+  }
+
+  function renderCharts(result) {
+    destroyCharts();
+    const Chart = window.Chart;
+    if (!Chart) return;
+
+    const green = "#2d6a4f";
+    const red = "#9b2226";
+
+    PARTS.forEach((part, idx) => {
+      const bp = result.byPart[idx];
+      const wrong = bp.t - bp.c;
+      const canvas = document.getElementById(`chartPart${part.id}`);
+      if (!canvas) return;
+
+      chartInstances.push(
+        new Chart(canvas.getContext("2d"), {
+          type: "pie",
+          data: {
+            labels: ["Correct", "Incorrect"],
+            datasets: [
+              {
+                data: [bp.c, wrong],
+                backgroundColor: [green, red],
+                borderWidth: 1,
+                borderColor: "#fff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "bottom" },
+              tooltip: {
+                callbacks: {
+                  label(ctx) {
+                    const n = ctx.raw;
+                    const pct = bp.t ? ((n / bp.t) * 100).toFixed(0) : "0";
+                    return `${ctx.label}: ${n} (${pct}%)`;
+                  },
+                },
+              },
+            },
+          },
+        })
+      );
+
+      const statEl = document.getElementById(`statsPart${part.id}`);
+      if (statEl) {
+        statEl.textContent = `Correct: ${bp.c}/${bp.t} · Incorrect: ${wrong}/${bp.t}`;
+      }
+    });
+  }
+
+  if (btnSubmit) {
+    btnSubmit.addEventListener("click", () => {
+      const result = gradeMc();
+      const scoreEl = document.getElementById("quizScoreText");
+      const resultsEl = document.getElementById("quizResults");
+      const pct = Math.round((result.correct / result.total) * 100);
+
+      if (scoreEl) {
+        scoreEl.innerHTML = `
+          <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100)</span>
+          <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100)</span>
+        `;
+      }
+      if (resultsEl) {
+        resultsEl.hidden = false;
+        renderCharts(result);
+        resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
+  quizRoot.addEventListener("change", (e) => {
+    if (e.target?.matches?.('input[type="radio"]')) {
+      updatePartCounters();
+    }
+  });
+
+  updatePartCounters();
+  showStep(0);
+})();

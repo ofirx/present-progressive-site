@@ -79,6 +79,7 @@
 
   function showStep(i) {
     current = Math.max(0, Math.min(i, totalSteps - 1));
+    quizRoot.setAttribute("data-active-part", String(current + 1));
     panes.forEach((pane, idx) => {
       const isActive = idx === current;
       pane.hidden = !isActive;
@@ -156,7 +157,7 @@
     const Chart = window.Chart;
     if (!Chart) return;
 
-    const green = "#2d6a4f";
+    const partCorrectColors = ["#2d6a4f", "#7c3aed", "#ca8a04"];
     const red = "#9b2226";
 
     PARTS.forEach((part, idx) => {
@@ -173,7 +174,7 @@
             datasets: [
               {
                 data: [bp.c, wrong],
-                backgroundColor: [green, red],
+                backgroundColor: [partCorrectColors[idx], red],
                 borderWidth: 1,
                 borderColor: "#fff",
               },

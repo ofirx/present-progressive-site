@@ -1,0 +1,13 @@
+---
+description: Push git changes to GitHub after every task
+alwaysApply: true
+---
+
+# Always push after changes
+
+When you make changes to this project, always commit and push to GitHub at the end of each task or user request — without waiting to be asked.
+
+- Commit only when there are actual changes to push
+- Do not push secrets or credential files
+- Use the existing commit message style (concise, why-focused)
+- Confirm the push succeeded before finishing your response

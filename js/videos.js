@@ -1,5 +1,6 @@
 const videoSlots = [1, 2, 3, 4];
 const objectUrls = new Map();
+const storage = window.GitHubVideoStorage;
 
 function formatTime(seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
@@ -9,8 +10,73 @@ function formatTime(seconds) {
   return `${mins}:${secs}`;
 }
 
+function initGitHubPanel() {
+  const panel = document.getElementById("githubStoragePanel");
+  if (!panel || !storage) return;
+
+  const form = document.getElementById("githubTokenForm");
+  const tokenInput = document.getElementById("githubTokenInput");
+  const statusEl = document.getElementById("githubConnectionStatus");
+  const disconnectBtn = document.getElementById("githubDisconnectBtn");
+
+  function setStatus(connected) {
+    if (!statusEl) return;
+    if (connected) {
+      statusEl.innerHTML = `
+        <span class="en">Connected to GitHub — uploads are saved in the repository.</span>
+        <span class="he" dir="rtl" lang="he">מחובר ל-GitHub — העלאות נשמרות במאגר.</span>
+      `;
+      statusEl.classList.add("is-connected");
+    } else {
+      statusEl.innerHTML = `
+        <span class="en">Not connected — connect GitHub to save uploads for everyone.</span>
+        <span class="he" dir="rtl" lang="he">לא מחובר — התחברו ל-GitHub כדי לשמור העלאות לכולם.</span>
+      `;
+      statusEl.classList.remove("is-connected");
+    }
+    statusEl.classList.add("bilingual-block");
+  }
+
+  setStatus(storage.hasToken());
+
+  if (disconnectBtn) {
+    disconnectBtn.hidden = !storage.hasToken();
+    disconnectBtn.addEventListener("click", () => {
+      storage.setToken("");
+      if (tokenInput) tokenInput.value = "";
+      setStatus(false);
+      disconnectBtn.hidden = true;
+    });
+  }
+
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const token = tokenInput?.value?.trim();
+      if (!token) return;
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        await storage.validateToken(token);
+        storage.setToken(token);
+        setStatus(true);
+        if (disconnectBtn) disconnectBtn.hidden = false;
+        if (tokenInput) tokenInput.value = "";
+      } catch (err) {
+        alert(err.message || "Could not connect to GitHub.");
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
+}
+
 videoSlots.forEach((id) => {
   const video = document.getElementById(`video-${id}`);
+  if (!video) return;
+
   const frame = video.closest(".video-frame");
   const upload = document.querySelector(`.video-upload[data-video="${id}"]`);
   const playBtn = document.querySelector(`.btn-play[data-video="${id}"]`);
@@ -77,10 +143,12 @@ videoSlots.forEach((id) => {
     timeCurrent.textContent = "0:00";
     timeDuration.textContent = "0:00";
   }
-  function setSaveStatus(en, he) {
+
+  function setSaveStatus(en, he, isError = false) {
     if (!saveStatus) return;
     saveStatus.innerHTML = `<span class="en">${en}</span><span class="he" dir="rtl" lang="he">${he}</span>`;
     saveStatus.hidden = false;
+    saveStatus.classList.toggle("save-status-error", isError);
     saveStatus.classList.add("bilingual-block", "save-status");
   }
 
@@ -90,6 +158,20 @@ videoSlots.forEach((id) => {
       URL.revokeObjectURL(existing);
       objectUrls.delete(id);
     }
+  }
+
+  function showVideoFromUrl(url, fileName) {
+    revokeObjectUrl();
+    resetTimeline();
+    video.src = url;
+    video.load();
+    video.hidden = false;
+    slot.classList.add("has-video");
+    setControlsEnabled(true);
+    setSaveStatus(
+      `Saved on GitHub: ${fileName}`,
+      `נשמר ב-GitHub: ${fileName}`
+    );
   }
 
   function showVideoFromBlob(blob, fileName) {
@@ -104,42 +186,44 @@ videoSlots.forEach((id) => {
     video.hidden = false;
     slot.classList.add("has-video");
     setControlsEnabled(true);
+    setSaveStatus(`Preview: ${fileName}`, `תצוגה מקדימה: ${fileName}`);
   }
-  async function handleVideoFile(file, { persist = true, saved = false, fileName } = {}) {
+
+  async function handleVideoFile(file) {
     if (!file) return;
 
-    const displayName = fileName || file.name || `video-${id}`;
+    const displayName = file.name || `video-${id}`;
     if (file.type && !file.type.startsWith("video/")) return;
 
-    showVideoFromBlob(file, displayName);
-
-    if (saved) {
-      setSaveStatus(`Saved: ${displayName}`, `נשמר: ${displayName}`);
+    if (!storage?.hasToken()) {
+      setSaveStatus(
+        "Connect GitHub above to save this upload.",
+        "התחברו ל-GitHub למעלה כדי לשמור את ההעלאה.",
+        true
+      );
+      showVideoFromBlob(file, displayName);
       return;
     }
 
-    setSaveStatus(`Saving: ${displayName}…`, `שומר: ${displayName}…`);
+    showVideoFromBlob(file, displayName);
+    setSaveStatus(`Saving to GitHub: ${displayName}…`, `שומר ב-GitHub: ${displayName}…`);
 
-    if (persist) {
-      try {
-        const toStore =
-          file instanceof File
-            ? file
-            : new File([file], displayName, { type: file.type || "video/mp4" });
-        await saveVideo(id, toStore);
-        setSaveStatus(`Saved: ${displayName}`, `נשמר: ${displayName}`);
-      } catch {
-        setSaveStatus(
-          "Could not save video in browser storage.",
-          "לא ניתן לשמור את הסרטון בדפדפן."
-        );
-      }
+    try {
+      const result = await storage.saveVideoToGitHub(id, file);
+      showVideoFromUrl(result.url, result.slot.fileName || displayName);
+    } catch (err) {
+      setSaveStatus(
+        err.message || "Could not save video on GitHub.",
+        "לא ניתן לשמור את הסרטון ב-GitHub.",
+        true
+      );
     }
   }
 
   upload.addEventListener("change", () => {
     const file = upload.files[0];
     if (file) handleVideoFile(file);
+    upload.value = "";
   });
 
   playBtn.addEventListener("click", async () => {
@@ -190,7 +274,8 @@ videoSlots.forEach((id) => {
     updateTimeline();
   });
 
-  fullscreenBtn.addEventListener("click", async () => {    if (!video.src) return;
+  fullscreenBtn.addEventListener("click", async () => {
+    if (!video.src) return;
 
     try {
       if (video.webkitEnterFullscreen) {
@@ -204,19 +289,50 @@ videoSlots.forEach((id) => {
       return;
     }
   });
-
-  loadVideo(id).then((record) => {
-    if (!record?.blob) return;
-
-    const blob =
-      record.blob instanceof Blob
-        ? record.blob
-        : new Blob([record.blob], { type: record.mimeType || "video/mp4" });
-
-    handleVideoFile(blob, {
-      persist: false,
-      saved: true,
-      fileName: record.fileName,
-    });
-  });
 });
+
+async function loadVideosFromGitHub() {
+  if (!storage) return;
+
+  const manifest = await storage.fetchManifest();
+  videoSlots.forEach((id) => {
+    const entry = manifest?.slots?.[String(id)];
+    if (!entry?.file) return;
+
+    const video = document.getElementById(`video-${id}`);
+    const slot = document.querySelector(`.video-slot[data-slot="${id}"]`);
+    if (!video || !slot) return;
+
+    const url = storage.videoPublicUrl(entry.file, entry.updatedAt || "");
+    video.src = url;
+    video.load();
+    video.hidden = false;
+    slot.classList.add("has-video");
+
+    const playBtn = document.querySelector(`.btn-play[data-video="${id}"]`);
+    const pauseBtn = document.querySelector(`.btn-pause[data-video="${id}"]`);
+    const restartBtn = document.querySelector(`.btn-restart[data-video="${id}"]`);
+    const fullscreenBtn = document.querySelector(`.btn-fullscreen[data-video="${id}"]`);
+    [playBtn, pauseBtn, restartBtn, fullscreenBtn].forEach((btn) => {
+      if (btn) btn.disabled = false;
+    });
+
+    const timeline = slot.querySelector(".video-timeline");
+    const seekBar = slot.querySelector(".video-seek");
+    if (timeline) timeline.hidden = false;
+    if (seekBar) seekBar.disabled = false;
+
+    const saveStatus = document.getElementById(`save-status-${id}`);
+    if (saveStatus) {
+      saveStatus.hidden = false;
+      saveStatus.classList.add("bilingual-block", "save-status");
+      saveStatus.innerHTML = `
+        <span class="en">Saved on GitHub: ${entry.fileName || entry.file}</span>
+        <span class="he" dir="rtl" lang="he">נשמר ב-GitHub: ${entry.fileName || entry.file}</span>
+      `;
+    }
+  });
+}
+
+initGitHubPanel();
+loadVideosFromGitHub();

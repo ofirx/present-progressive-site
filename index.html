@@ -72,14 +72,60 @@
           <span class="en">
             Watch the four lesson videos below. Upload your own files, then use Play,
             Pause, Restart, Fullscreen, or drag the timeline to move forward and backward.
-            Videos are saved automatically in your browser.
+            Videos are saved in this site&apos;s GitHub repository so they stay available
+            on every device.
           </span>
           <span class="he" dir="rtl" lang="he">
             צפו בארבעת סרטוני השיעור למטה. העלו קבצים משלכם, ואז השתמשו בנגן, השהה,
             התחל מחדש, מסך מלא, או גררו את ציר הזמן כדי לדלג קדימה ואחורה.
-            הסרטונים נשמרים אוטומטית בדפדפן שלכם.
+            הסרטונים נשמרים במאגר GitHub של האתר ונשארים זמינים בכל מכשיר.
           </span>
         </p>
+
+        <section class="github-storage-panel" id="githubStoragePanel" aria-label="GitHub video storage">
+          <h3 class="bilingual-block github-storage-title">
+            <span class="en">GitHub storage</span>
+            <span class="he" dir="rtl" lang="he">אחסון ב-GitHub</span>
+          </h3>
+          <p class="github-storage-intro bilingual-block">
+            <span class="en">
+              Site owners: connect once with a GitHub Personal Access Token
+              (<strong>repo</strong> scope) to upload videos into the repository.
+              Students can watch saved videos without a token.
+            </span>
+            <span class="he" dir="rtl" lang="he">
+              לבעלי האתר: התחברו פעם אחת עם Personal Access Token של GitHub
+              (הרשאת <strong>repo</strong>) כדי להעלות סרטונים למאגר.
+              תלמידים יכולים לצפות בסרטונים שנשמרו ללא טוקן.
+            </span>
+          </p>
+          <p class="github-connection-status bilingual-block" id="githubConnectionStatus"></p>
+          <form class="github-token-form" id="githubTokenForm">
+            <label class="github-token-label bilingual-block" for="githubTokenInput">
+              <span class="en">GitHub token</span>
+              <span class="he" dir="rtl" lang="he">טוקן GitHub</span>
+            </label>
+            <div class="github-token-row">
+              <input
+                id="githubTokenInput"
+                class="github-token-input"
+                type="password"
+                name="github-token"
+                autocomplete="off"
+                placeholder="ghp_…"
+                spellcheck="false"
+              />
+              <button type="submit" class="btn btn-primary btn-bilingual">
+                <span class="btn-en">Connect</span>
+                <span class="btn-he" dir="rtl" lang="he">התחבר</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-bilingual" id="githubDisconnectBtn" hidden>
+                <span class="btn-en">Disconnect</span>
+                <span class="btn-he" dir="rtl" lang="he">התנתק</span>
+              </button>
+            </div>
+          </form>
+        </section>
 
         <div class="rule-card">
           <h3 class="bilingual-block">
@@ -294,7 +340,8 @@
     </div>
   </footer>
 
-  <script src="js/video-storage.js"></script>
+  <script src="js/github-config.js"></script>
+  <script src="js/github-video-storage.js"></script>
   <script src="js/videos.js"></script>
 </body>
 </html>

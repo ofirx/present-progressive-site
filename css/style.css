@@ -75,9 +75,9 @@ body {
 .btn-bilingual {
   flex-direction: column;
   align-items: stretch;
-  gap: 0.1rem;
+  gap: 0.2rem;
   line-height: 1.15;
-  padding: 0.55rem 0.65rem;
+  padding: 1.1rem 1.3rem;
 }
 
 .btn-bilingual .btn-en {
@@ -95,7 +95,7 @@ body {
 .btn-he {
   display: block;
   width: 100%;
-  font-size: 0.78rem;
+  font-size: 1.56rem;
   font-weight: 600;
   opacity: 0.92;
 }
@@ -215,14 +215,14 @@ nav a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.15rem;
-  min-width: 6.5rem;
-  padding: 0.85rem 2rem;
+  gap: 0.3rem;
+  min-width: 13rem;
+  padding: 1.7rem 4rem;
   border-radius: 999px;
   border: none;
   font: inherit;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1.15;
   text-decoration: none;
   color: #fff;
@@ -238,7 +238,7 @@ nav a:hover {
 }
 
 .btn-round .he {
-  font-size: 0.78rem;
+  font-size: 1.56rem;
   font-weight: 700;
   opacity: 0.95;
   text-align: center;
@@ -311,10 +311,11 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 1.25rem;
+  padding: 1.6rem 2.5rem;
   border-radius: 999px;
   border: none;
   font: inherit;
+  font-size: 1.76rem;
   font-weight: 700;
   cursor: pointer;
   text-decoration: none;
@@ -539,15 +540,15 @@ h3 .he {
 .upload-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.9rem;
   width: fit-content;
   margin-bottom: 0.85rem;
-  padding: 0.55rem 0.9rem;
+  padding: 1.1rem 1.8rem;
   border: 1px dashed var(--accent);
   border-radius: 10px;
   background: var(--accent-light);
   color: var(--accent-dark);
-  font-size: 0.9rem;
+  font-size: 1.8rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -561,7 +562,7 @@ h3 .he {
 }
 
 .upload-icon {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
@@ -611,8 +612,8 @@ h3 .he {
 
 .video-controls .btn {
   min-width: 0;
-  padding: 0.55rem 0.5rem;
-  font-size: 0.85rem;
+  padding: 1.1rem 1rem;
+  font-size: 1.7rem;
 }
 
 .video-controls .btn:disabled {

@@ -160,15 +160,15 @@
 .quiz-step-btn {
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
+  gap: 1.3rem;
   width: 100%;
   text-align: left;
-  padding: 0.65rem 0.75rem;
+  padding: 1.3rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 10px;
   background: transparent;
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 1.76rem;
   font-weight: 650;
   color: var(--muted);
   cursor: pointer;
@@ -182,12 +182,12 @@
 
 .quiz-step-num {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
   border-radius: 999px;
   display: grid;
   place-items: center;
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   font-weight: 800;
   background: rgba(45, 106, 79, 0.1);
   color: var(--muted);
@@ -499,9 +499,9 @@
 .quiz-submit {
   font: inherit;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 1.76rem;
   cursor: pointer;
-  padding: 0.65rem 1.1rem;
+  padding: 1.3rem 2.2rem;
   border-radius: 10px;
 }
 

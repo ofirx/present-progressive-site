@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Quiz on the Present Progressive tense." />
+  <title>Quiz — Present Progressive</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/quiz-form.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Present<span>Progressive</span></a>
+      <nav aria-label="Main">
+        <a href="index.html" class="nav-link">
+          <span class="en">Introduction</span>
+          <span class="he" dir="rtl" lang="he">מבוא</span>
+        </a>
+        <a href="practice.html" class="nav-link">
+          <span class="en">Practice</span>
+          <span class="he" dir="rtl" lang="he">תרגול</span>
+        </a>
+        <a href="quiz.html" class="nav-link" aria-current="page">
+          <span class="en">Quiz</span>
+          <span class="he" dir="rtl" lang="he">חידון</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero hero-compact">
+      <div class="container hero-content">
+        <p class="eyebrow bilingual-block">
+          <span class="en">English grammar</span>
+          <span class="he" dir="rtl" lang="he">דקדוק אנגלי</span>
+        </p>
+        <h1 class="bilingual-block">
+          <span class="en">Quiz</span>
+          <span class="he" dir="rtl" lang="he">חידון</span>
+        </h1>
+      </div>
+    </section>
+
+    <section id="quiz" class="section">
+      <div class="container">
+        <h2 class="bilingual-block">
+          <span class="en">Quiz</span>
+          <span class="he" dir="rtl" lang="he">חידון</span>
+        </h2>
+        <p class="section-intro bilingual-block">
+          <span class="en">
+            Ten self-check questions in three parts. Review the grammar notes, answer every question,
+            then click <strong>Finish &amp; see results</strong> for your score.
+          </span>
+          <span class="he" dir="rtl" lang="he">
+            עשר שאלות לבדיקה עצמית בשלושה חלקים. עברו על הכללים, ענו על כל השאלות,
+            ואז לחצו על <strong>Finish &amp; see results</strong> כדי לראות את הציון.
+          </span>
+        </p>
+
+        <div class="quiz-instructions-block" aria-label="Quiz instructions">
+          <h3 class="quiz-instructions-title bilingual-block">
+            <span class="en"><strong>Instructions</strong></span>
+            <span class="he" dir="rtl" lang="he"><strong>הוראות</strong></span>
+          </h3>
+          <div class="quiz-instructions">
+            <p class="quiz-instr-en">
+              Read the grammar notes below and answer the questions in the short quiz. You have three sections.
+              After you finish, click <strong>Finish &amp; see results</strong> to see your correct and incorrect
+              answers in each section, and your grade.
+            </p>
+            <p class="quiz-instr-he" lang="he" dir="rtl">
+              קראו את כללי הדקדוק למטה וענו על השאלות בחידון הקצר. יש לכם שלושה חלקים. אחרי שסיימתם, לחצו על
+              <strong>Finish &amp; see results</strong> כדי לראות את התשובות הנכונות והשגויות בכל חלק, ואת הציון.
+            </p>
+          </div>
+        </div>
+
+        <div class="quiz-reference-block" aria-label="Grammar reference">
+          <h3 class="bilingual-block">
+            <span class="en">Grammar notes</span>
+            <span class="he" dir="rtl" lang="he">כללי דקדוק</span>
+          </h3>
+          <p class="quiz-reference-passage" lang="en">
+<strong>Present Progressive — quick guide</strong>
+Formula: Subject + am / is / are + verb-ing
+Examples: I am studying. She is running. They are eating.
+Use it for actions happening right now or around now.
+Negative: am/is/are + not + verb-ing (He is not working.)
+Questions: Am/Is/Are + subject + verb-ing? (Are you listening?)
+Spelling: run → running (double the final consonant)
+          </p>
+        </div>
+
+        <div class="quiz-form-section" aria-label="Self-graded quiz">
+          <div class="quiz-shell-wrap">
+            <div class="quiz-shell" id="ppQuiz">
+              <aside class="quiz-sidebar" aria-label="Quiz parts">
+                <div class="quiz-sidebar-brand">
+                  <div class="quiz-brand-mark" aria-hidden="true">PP</div>
+                  <div class="quiz-brand-text">
+                    <span class="quiz-brand-name">Present Progressive</span>
+                    <span class="quiz-brand-tag">Self-check form</span>
+                  </div>
+                </div>
+                <p class="quiz-sidebar-title">Your progress</p>
+                <ol class="quiz-steps">
+                  <li>
+                    <button type="button" class="quiz-step-btn quiz-step--p1 is-active" data-step="1">
+                      <span class="quiz-step-num">1</span>
+                      <span>Part 1 — Form &amp; basics</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="quiz-step-btn quiz-step--p2" data-step="2">
+                      <span class="quiz-step-num">2</span>
+                      <span>Part 2 — Verb-ing &amp; negatives</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="quiz-step-btn quiz-step--p3" data-step="3">
+                      <span class="quiz-step-num">3</span>
+                      <span>Part 3 — Usage &amp; mistakes</span>
+                    </button>
+                  </li>
+                </ol>
+              </aside>
+
+              <div class="quiz-main">
+                <div class="quiz-pane" data-pane="1">
+                  <div class="quiz-pane-layout">
+                    <div class="quiz-pane-body">
+                      <header class="quiz-pane-header">
+                        <div class="quiz-pane-instr-grid">
+                          <div class="quiz-pane-instr-en">
+                            <h3 class="quiz-pane-heading">Part 1 — Form &amp; basics</h3>
+                            <p class="quiz-pane-lead">Use the grammar notes above. Answer all four questions before you continue.</p>
+                          </div>
+                          <div class="quiz-pane-instr-he" lang="he" dir="rtl">
+                            <p class="quiz-pane-heading-he">חלק 1 — צורה ויסודות</p>
+                            <p class="quiz-pane-lead-he">השתמשו בכללי הדקדוק למעלה. ענו על כל ארבע השאלות לפני שממשיכים.</p>
+                          </div>
+                        </div>
+                      </header>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">1. Which sentence uses the present progressive correctly?</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q1" value="a" /> She is cook dinner now.</label>
+                          <label><input type="radio" name="q1" value="b" /> She is cooking dinner now.</label>
+                          <label><input type="radio" name="q1" value="c" /> She cooking dinner now.</label>
+                        </div>
+                      </div>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">2. Choose the correct form: I ___ for the test.</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q2" value="a" /> am study</label>
+                          <label><input type="radio" name="q2" value="b" /> studying</label>
+                          <label><input type="radio" name="q2" value="c" /> am studying</label>
+                        </div>
+                      </div>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">3. Which sentence is in the present progressive?</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q3" value="a" /> They play chess every Friday.</label>
+                          <label><input type="radio" name="q3" value="b" /> They are playing chess right now.</label>
+                          <label><input type="radio" name="q3" value="c" /> They played chess yesterday.</label>
+                        </div>
+                      </div>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">4. The present progressive describes actions that are…</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q4" value="a" /> happening right now or around now</label>
+                          <label><input type="radio" name="q4" value="b" /> always true (facts)</label>
+                          <label><input type="radio" name="q4" value="c" /> finished in the past</label>
+                        </div>
+                      </div>
+                    </div>
+                    <aside class="quiz-pane-rail" aria-label="Progress for this part">
+                      <div class="quiz-pane-sticky-bar">
+                        <p class="quiz-pane-rail-title">Progress</p>
+                        <p class="quiz-pane-counter" id="quizCounterPart1" aria-live="polite" aria-atomic="true">0 / 4</p>
+                        <p class="quiz-pane-counter-hint" id="quizCounterHintPart1" hidden aria-live="polite"></p>
+                      </div>
+                    </aside>
+                  </div>
+                </div>
+
+                <div class="quiz-pane" data-pane="2" hidden>
+                  <div class="quiz-pane-layout">
+                    <div class="quiz-pane-body">
+                      <header class="quiz-pane-header">
+                        <div class="quiz-pane-instr-grid">
+                          <div class="quiz-pane-instr-en">
+                            <h3 class="quiz-pane-heading">Part 2 — Verb-ing &amp; negatives</h3>
+                            <p class="quiz-pane-lead">Read carefully and choose the best answer for each question.</p>
+                          </div>
+                          <div class="quiz-pane-instr-he" lang="he" dir="rtl">
+                            <p class="quiz-pane-heading-he">חלק 2 — צורת ing ומשפטים שליליים</p>
+                            <p class="quiz-pane-lead-he">קראו בעיון ובחרו את התשובה הנכונה ביותר לכל שאלה.</p>
+                          </div>
+                        </div>
+                      </header>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">5. What is the -ing form of &ldquo;run&rdquo;?</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q5" value="a" /> runing</label>
+                          <label><input type="radio" name="q5" value="b" /> running</label>
+                          <label><input type="radio" name="q5" value="c" /> runned</label>
+                        </div>
+                      </div>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">6. Which negative sentence is correct?</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q6" value="a" /> He is not working today.</label>
+                          <label><input type="radio" name="q6" value="b" /> He not is working today.</label>
+                          <label><input type="radio" name="q6" value="c" /> He is not work today.</label>
+                        </div>
+                      </div>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">7. True or False: &ldquo;I am knowing the answer&rdquo; is correct in standard English.</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q7" value="a" /> True</label>
+                          <label><input type="radio" name="q7" value="b" /> False</label>
+                        </div>
+                      </div>
+                    </div>
+                    <aside class="quiz-pane-rail" aria-label="Progress for this part">
+                      <div class="quiz-pane-sticky-bar">
+                        <p class="quiz-pane-rail-title">Progress</p>
+                        <p class="quiz-pane-counter" id="quizCounterPart2" aria-live="polite" aria-atomic="true">0 / 3</p>
+                        <p class="quiz-pane-counter-hint" id="quizCounterHintPart2" hidden aria-live="polite"></p>
+                      </div>
+                    </aside>
+                  </div>
+                </div>
+
+                <div class="quiz-pane" data-pane="3" hidden>
+                  <div class="quiz-pane-layout">
+                    <div class="quiz-pane-body">
+                      <header class="quiz-pane-header">
+                        <div class="quiz-pane-instr-grid">
+                          <div class="quiz-pane-instr-en">
+                            <h3 class="quiz-pane-heading">Part 3 — Usage &amp; mistakes</h3>
+                            <p class="quiz-pane-lead">Use what you learned, then click Finish &amp; see results for your score.</p>
+                          </div>
+                          <div class="quiz-pane-instr-he" lang="he" dir="rtl">
+                            <p class="quiz-pane-heading-he">חלק 3 — שימוש וטעויות נפוצות</p>
+                            <p class="quiz-pane-lead-he">השתמשו במה שלמדתם, ואז לחצו על Finish &amp; see results כדי לראות את התוצאות.</p>
+                          </div>
+                        </div>
+                      </header>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">8. Why is &ldquo;Look! The baby cries&rdquo; wrong if the baby is crying now?</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q8" value="a" /> We need am/is/are + verb-ing for now</label>
+                          <label><input type="radio" name="q8" value="b" /> cries is always wrong</label>
+                          <label><input type="radio" name="q8" value="c" /> A baby cannot cry</label>
+                        </div>
+                      </div>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">9. &ldquo;They are eating lunch&rdquo; — what does this describe?</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q9" value="a" /> A daily habit</label>
+                          <label><input type="radio" name="q9" value="b" /> An action happening now</label>
+                          <label><input type="radio" name="q9" value="c" /> Something that already finished</label>
+                        </div>
+                      </div>
+
+                      <div class="quiz-q">
+                        <span class="quiz-q-label">10. Which question is in the present progressive?</span>
+                        <div class="quiz-form-options">
+                          <label><input type="radio" name="q10" value="a" /> Do you listen?</label>
+                          <label><input type="radio" name="q10" value="b" /> Are you listening?</label>
+                          <label><input type="radio" name="q10" value="c" /> Did you listen?</label>
+                        </div>
+                      </div>
+                    </div>
+                    <aside class="quiz-pane-rail" aria-label="Progress for this part">
+                      <div class="quiz-pane-sticky-bar">
+                        <p class="quiz-pane-rail-title">Progress</p>
+                        <p class="quiz-pane-counter" id="quizCounterPart3" aria-live="polite" aria-atomic="true">0 / 3</p>
+                        <p class="quiz-pane-counter-hint" id="quizCounterHintPart3" hidden aria-live="polite"></p>
+                      </div>
+                    </aside>
+                  </div>
+                </div>
+
+                <div class="quiz-footer-nav" id="quizFooterNav">
+                  <button type="button" class="quiz-prev" id="quizBtnPrev" disabled>Previous step</button>
+                  <button type="button" class="quiz-next" id="quizBtnNext">Next step</button>
+                  <button type="button" class="quiz-submit" id="quizBtnSubmit" hidden>Finish &amp; see results</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-results" id="quizResults" hidden>
+            <h3 class="bilingual-block">
+              <span class="en">Results</span>
+              <span class="he" dir="rtl" lang="he">תוצאות</span>
+            </h3>
+            <p class="quiz-results-summary bilingual-block" id="quizScoreText"></p>
+            <div class="quiz-charts">
+              <div class="quiz-chart-box">
+                <h4>Part 1</h4>
+                <canvas id="chartPart1" width="240" height="200"></canvas>
+                <div class="quiz-chart-stats" id="statsPart1"></div>
+              </div>
+              <div class="quiz-chart-box">
+                <h4>Part 2</h4>
+                <canvas id="chartPart2" width="240" height="200"></canvas>
+                <div class="quiz-chart-stats" id="statsPart2"></div>
+              </div>
+              <div class="quiz-chart-box">
+                <h4>Part 3</h4>
+                <canvas id="chartPart3" width="240" height="200"></canvas>
+                <div class="quiz-chart-stats" id="statsPart3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav class="page-pager" aria-label="Page navigation">
+          <a class="page-pager-btn page-pager-back btn-round" href="practice.html">
+            <span class="en">Back</span>
+            <span class="he" dir="rtl" lang="he">חזרה</span>
+          </a>
+          <span class="page-pager-gap" aria-hidden="true"></span>
+        </nav>
+
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner bilingual-block">
+      <p class="en">Present Progressive — Grammar Guide</p>
+      <p class="he" dir="rtl" lang="he">הווה מתמשך — מדריך דקדוק</p>
+    </div>
+  </footer>
+  <script src="js/quiz.js"></script>
+</body>
+</html>

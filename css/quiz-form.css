@@ -28,8 +28,6 @@
   border-top: 1px dashed rgba(26, 26, 26, 0.12);
   font-size: 0.95rem;
   line-height: 1.55;
-  direction: rtl;
-  text-align: right;
   color: var(--muted);
 }
 
@@ -271,6 +269,8 @@
   border-radius: 10px;
   border: 1px solid rgba(45, 106, 79, 0.22);
   background: rgba(216, 243, 220, 0.45);
+  direction: rtl;
+  text-align: right;
 }
 
 .quiz-pane-layout {
@@ -327,8 +327,6 @@
   border-bottom: 1px solid rgba(45, 106, 79, 0.2);
   font-size: clamp(1rem, 2.2vw, 1.15rem);
   font-weight: 750;
-  direction: rtl;
-  text-align: right;
 }
 
 .quiz-pane-lead,
@@ -340,8 +338,6 @@
 }
 
 .quiz-pane-lead-he {
-  direction: rtl;
-  text-align: right;
   color: var(--text);
 }
 

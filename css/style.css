@@ -38,6 +38,27 @@ body {
 .bilingual-block .en,
 .sentence-en {
   display: block;
+  direction: ltr;
+  text-align: left;
+}
+
+/* Hebrew — right-to-left reading and right-aligned layout */
+[lang="he"],
+[dir="rtl"],
+.he,
+.btn-he,
+.he-note,
+.sentence-he,
+.quiz-instr-he,
+.quiz-pane-instr-he,
+.quiz-pane-heading-he,
+.quiz-pane-lead-he,
+.quiz-question-he,
+.quiz-feedback-he {
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: isolate;
+  font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
 }
 
 .bilingual-block .he,
@@ -46,17 +67,25 @@ body {
 .quiz-question-he,
 .quiz-feedback-he {
   display: block;
-  direction: rtl;
-  text-align: right;
-  font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
+  align-self: stretch;
+  width: 100%;
   color: var(--muted);
 }
 
 .btn-bilingual {
   flex-direction: column;
+  align-items: stretch;
   gap: 0.1rem;
   line-height: 1.15;
   padding: 0.55rem 0.65rem;
+}
+
+.btn-bilingual .btn-en {
+  text-align: center;
+}
+
+.btn-bilingual .btn-he {
+  text-align: right;
 }
 
 .btn-en {
@@ -65,7 +94,7 @@ body {
 
 .btn-he {
   display: block;
-  direction: rtl;
+  width: 100%;
   font-size: 0.78rem;
   font-weight: 600;
   opacity: 0.92;
@@ -74,15 +103,19 @@ body {
 .nav-link {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 0.1rem;
   line-height: 1.15;
   text-align: center;
 }
 
+.nav-link .en {
+  text-align: center;
+}
+
 .nav-link .he {
   font-size: 0.78rem;
-  direction: rtl;
+  text-align: right;
 }
 
 a {
@@ -157,6 +190,88 @@ nav a:hover {
   background:
     radial-gradient(circle at top right, var(--accent-light), transparent 55%),
     linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+}
+
+.hero-compact {
+  padding: 3rem 0 2rem;
+}
+
+.page-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.page-pager-gap {
+  flex: 1;
+}
+
+.btn-round {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-width: 6.5rem;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  border: none;
+  font: inherit;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.15;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.btn-round:hover {
+  color: #fff;
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.btn-round .he {
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.95;
+  text-align: center;
+  width: 100%;
+}
+
+.page-pager-back .he {
+  text-align: center;
+}
+
+.page-pager-next .he {
+  text-align: center;
+}
+
+.page-pager-back {
+  background: #c62828;
+}
+
+.page-pager-back:hover {
+  background: #b71c1c;
+}
+
+.page-pager-next {
+  background: #2d6a4f;
+}
+
+.page-pager-next:hover {
+  background: #1b4332;
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--accent);
+  font-weight: 800;
 }
 
 .hero-content {
@@ -325,10 +440,12 @@ h2 {
 }
 
 h1 .he,
-h2 .he {
+h2 .he,
+h3 .he {
   font-size: 0.58em;
   font-weight: 600;
   margin-top: 0.15rem;
+  text-align: right;
 }
 
 .eyebrow .he {
@@ -347,8 +464,8 @@ h2 .he {
 }
 
 .upload-text .he {
-  direction: rtl;
   font-size: 0.82rem;
+  text-align: right;
 }
 
 .save-status {
@@ -681,6 +798,20 @@ h2 .he {
 
 .footer-inner p {
   margin: 0.25rem 0;
+}
+
+.footer-inner .en {
+  text-align: left;
+}
+
+.footer-inner .he {
+  text-align: right;
+}
+
+.lead .he,
+.section-intro .he,
+.eyebrow .he {
+  text-align: right;
 }
 
 .footer-note {

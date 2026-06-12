@@ -3,6 +3,10 @@ const checkBtn = document.getElementById("practice-check");
 const resetBtn = document.getElementById("practice-reset");
 const feedbackEl = document.getElementById("practice-feedback");
 
+if (!checkBtn || !resetBtn || !feedbackEl || !practiceInputs.length) {
+  // Not on the practice page
+} else {
+
 function normalize(value) {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
@@ -48,3 +52,4 @@ resetBtn.addEventListener("click", () => {
   feedbackEl.textContent = "";
   feedbackEl.className = "practice-feedback bilingual-block";
 });
+}

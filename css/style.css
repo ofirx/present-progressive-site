@@ -1347,7 +1347,7 @@ h3 .he {
 
 .be-verb-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 156px;
+  grid-template-columns: 156px minmax(0, 1fr);
   gap: 1.1rem 1.35rem;
   align-items: stretch;
 }
@@ -1629,10 +1629,6 @@ h3 .he {
 @media (max-width: 700px) {
   .be-verb-layout {
     grid-template-columns: 1fr;
-  }
-
-  .be-verb-rail {
-    order: -1;
   }
 
   .be-verb-sticky-bar {

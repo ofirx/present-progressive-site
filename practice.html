@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=20" />
+  <link rel="stylesheet" href="css/style.css?v=21" />
 </head>
 <body>
   <header class="site-header">
@@ -318,9 +318,44 @@
           <section class="practice-section practice-section--5" aria-labelledby="practice-section-5-title">
             <div class="practice-section-layout">
               <div class="practice-activity">
-                <div class="practice-activity-content bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
+                <div class="be-verb-activity" id="be-verb-activity">
+                  <div class="be-verb-toolbar">
+                    <fieldset class="be-verb-mode">
+                      <legend class="be-verb-legend">Activity mode</legend>
+                      <label class="be-verb-mode-option">
+                        <input type="radio" name="be-mode" value="free" checked />
+                        No timer
+                      </label>
+                      <label class="be-verb-mode-option">
+                        <input type="radio" name="be-mode" value="timed" />
+                        Timed
+                      </label>
+                      <label class="be-verb-timer-pick">
+                        <span class="be-verb-timer-label">Time:</span>
+                        <select id="be-timer-minutes" disabled>
+                          <option value="4">4 minutes</option>
+                          <option value="5" selected>5 minutes</option>
+                          <option value="6">6 minutes</option>
+                        </select>
+                      </label>
+                    </fieldset>
+
+                    <div class="be-verb-controls">
+                      <button type="button" class="btn btn-primary" id="be-start">Start</button>
+                      <button type="button" class="btn btn-secondary" id="be-pause" disabled>Pause</button>
+                      <button type="button" class="btn btn-primary btn-bilingual" id="be-submit" disabled>
+                        <span class="btn-en">Submit</span>
+                        <span class="btn-he" dir="rtl" lang="he">שלח</span>
+                      </button>
+                    </div>
+
+                    <div id="be-timer-display" class="be-timer-display" hidden aria-live="polite">5:00</div>
+                  </div>
+
+                  <div id="be-sentences" class="be-sentences" aria-label="Choose am, is, or are"></div>
+
+                  <p id="be-summary" class="be-verb-summary" hidden aria-live="polite"></p>
+                  <div id="be-results" class="be-verb-results" hidden aria-live="polite"></div>
                 </div>
               </div>
               <aside class="practice-task">
@@ -329,13 +364,30 @@
                   <span class="he" dir="rtl" lang="he">חלק 5</span>
                 </p>
                 <h2 id="practice-section-5-title" class="practice-task-title bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
+                  <span class="en">Choose the correct form of <em>be</em></span>
+                  <span class="he" dir="rtl" lang="he">בחרו את צורת הפועל <em>be</em> הנכונה</span>
                 </h2>
-                <p class="practice-task-text bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
-                </p>
+                <div class="match-instructions">
+                  <p class="match-instructions-en">
+                    There are <strong>7 sentences</strong> in the Present Progressive. Choose the correct form of
+                    <strong>be</strong> for each gap: <strong>am</strong>, <strong>is</strong>, or <strong>are</strong>.
+                    <strong>2 sentences are negative</strong> — choose <strong>am not</strong>, <strong>isn't</strong>, or
+                    <strong>aren't</strong>.
+                    Pick <strong>No timer</strong> or <strong>Timed</strong> (4, 5, or 6 minutes). Click
+                    <strong>Start</strong>, then click your answer for each sentence. Use <strong>Pause</strong> to stop
+                    the clock, and <strong>Submit</strong> when you finish. In timed mode, answers are sent automatically
+                    when time runs out.
+                  </p>
+                  <p class="match-instructions-he" dir="rtl" lang="he">
+                    יש <strong>7 משפטים</strong> בזמן הווה מתמשך. בחרו את צורת <strong>be</strong> הנכונה לכל רווח:
+                    <strong>am</strong>, <strong>is</strong> או <strong>are</strong>.
+                    <strong>2 משפטים שליליים</strong> — בחרו <strong>am not</strong>, <strong>isn't</strong> או
+                    <strong>aren't</strong>.
+                    בחרו <strong>No timer</strong> (בלי זמן) או <strong>Timed</strong> (4, 5 או 6 דקות). לחצו
+                    <strong>Start</strong> והתחילו לענות. <strong>Pause</strong> עוצר את השעון. לחצו
+                    <strong>Submit / שלח</strong> כשסיימתם. במצב מתוזמן, התשובות נשלחות אוטומטית כשנגמר הזמן.
+                  </p>
+                </div>
               </aside>
             </div>
           </section>
@@ -365,5 +417,6 @@
   <script src="js/practice-game-fullscreen.js?v=2"></script>
   <script src="js/practice-match.js?v=16"></script>
   <script src="js/practice-reporter.js?v=5"></script>
+  <script src="js/practice-be-verb.js?v=1"></script>
 </body>
 </html>

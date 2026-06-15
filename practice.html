@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=16" />
+  <link rel="stylesheet" href="css/style.css?v=17" />
 </head>
 <body>
   <header class="site-header">
@@ -56,13 +56,24 @@
           <section class="practice-section practice-section--1" aria-labelledby="practice-section-1-title">
             <div class="practice-section-layout">
               <div class="practice-activity practice-activity--game">
-                <iframe
-                  class="balloon-game-frame"
-                  title="Present Progressive Balloon Arrow Game"
-                  src="games/present_progressive_balloon_arrow_game.html?embed=1"
-                  loading="lazy"
-                  allow="fullscreen"
-                ></iframe>
+                <div class="balloon-game-shell" id="balloon-game-shell">
+                  <button
+                    type="button"
+                    class="balloon-game-fullscreen-btn btn btn-secondary btn-bilingual"
+                    id="balloon-game-fullscreen"
+                    aria-label="Enter fullscreen"
+                  >
+                    <span class="btn-en">Fullscreen</span>
+                    <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
+                  </button>
+                  <iframe
+                    class="balloon-game-frame"
+                    title="Present Progressive Balloon Arrow Game"
+                    src="games/present_progressive_balloon_arrow_game.html?embed=1"
+                    loading="lazy"
+                    allow="fullscreen"
+                  ></iframe>
+                </div>
               </div>
               <aside class="practice-task">
                 <p class="practice-section-label bilingual-block">
@@ -83,7 +94,7 @@
                     A correct hit pops the balloon and moves you to the next question. A wrong hit costs one heart,
                     but you keep playing the same question until you get it right or run out of hearts.
                     <strong>Stage 1</strong> has fewer balloons. After 4 correct answers, <strong>Stage 2</strong>
-                    unlocks with more balloons. You start with 3 hearts.
+                    unlocks with more balloons. You start with 3 hearts. Click <strong>Fullscreen</strong> for a larger view.
                   </p>
                   <p class="match-instructions-he" dir="rtl" lang="he">
                     ירו על הבלון שמציג משפט <strong>תקין דקדוקית</strong> בזמן
@@ -94,7 +105,7 @@
                     פגיעה נכונה מפוצצת את הבלון ומעבירה לשאלה הבאה. פגיעה שגויה גורמת לאובדן לב אחד,
                     אבל ממשיכים באותה שאלה עד שפוגעים נכון או שנגמרים הלבבות.
                     ב<strong>שלב 1</strong> יורדים פחות בלונים. אחרי 4 תשובות נכונות נפתח
-                    <strong>שלב 2</strong> עם יותר בלונים. מתחילים עם 3 לבבות.
+                    <strong>שלב 2</strong> עם יותר בלונים. מתחילים עם 3 לבבות. לחצו <strong>מסך מלא</strong> לתצוגה גדולה יותר.
                   </p>
                 </div>
               </aside>
@@ -260,6 +271,7 @@
     </div>
   </footer>
 
+  <script src="js/practice-game-fullscreen.js?v=1"></script>
   <script src="js/practice-match.js?v=16"></script>
 </body>
 </html>

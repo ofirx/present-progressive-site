@@ -1482,15 +1482,122 @@ h3 .he {
 }
 
 .be-verb-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.65rem 1rem;
-  padding: 0.75rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
   background: #fff;
   border: 2px solid #fce7f3;
   border-radius: 12px;
   transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.be-verb-sentence {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.be-verb-line {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.be-verb-line--start {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.be-verb-line--rest {
+  padding-left: 1.35rem;
+  color: #374151;
+}
+
+.be-verb-before {
+  font-weight: 700;
+}
+
+.be-verb-num {
+  color: #9d174d;
+  font-weight: 800;
+  flex: 0 0 auto;
+}
+
+.be-verb-blank {
+  display: inline-block;
+  min-width: 2.4rem;
+  border-bottom: 2px solid #db2777;
+  color: transparent;
+  user-select: none;
+}
+
+.be-verb-picker {
+  padding-left: 1.35rem;
+}
+
+.be-verb-select-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.be-verb-select {
+  width: min(100%, 12rem);
+  border: 2px solid #f9a8d4;
+  background: #fff;
+  color: #9d174d;
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.be-verb-select:hover:not(:disabled) {
+  border-color: #ec4899;
+  background: #fdf2f8;
+}
+
+.be-verb-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.be-verb-select.is-selected {
+  border-color: #db2777;
+  background: #fce7f3;
+  color: #831843;
+}
+
+.be-verb-select.is-correct {
+  border-color: #22c55e;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.be-verb-select.is-wrong {
+  border-color: #ef4444;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.be-verb-row-feedback {
+  margin: 0;
+  padding-left: 1.35rem;
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .be-verb-row--ok {
@@ -1501,84 +1608,6 @@ h3 .he {
 .be-verb-row--bad {
   border-color: #fca5a5;
   background: #fef2f2;
-}
-
-.be-verb-prompt {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.35;
-  flex: 0 0 auto;
-}
-
-.be-verb-num {
-  color: #9d174d;
-  font-weight: 800;
-}
-
-.be-verb-blank {
-  display: inline-block;
-  min-width: 2.2rem;
-  border-bottom: 2px solid #db2777;
-  color: #db2777;
-  font-weight: 800;
-}
-
-.be-verb-tag {
-  display: none;
-}
-
-.be-verb-choices {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.45rem;
-  justify-content: flex-end;
-}
-
-.be-verb-choice {
-  border: 2px solid #f9a8d4;
-  background: #fff;
-  color: #9d174d;
-  border-radius: 999px;
-  padding: 0.38rem 0.85rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-
-.be-verb-choice:hover:not(:disabled) {
-  background: #fdf2f8;
-  border-color: #ec4899;
-}
-
-.be-verb-choice:disabled {
-  cursor: not-allowed;
-  opacity: 0.72;
-}
-
-.be-verb-choice.is-selected {
-  background: #fce7f3;
-  border-color: #db2777;
-  color: #831843;
-}
-
-.be-verb-choice.is-correct {
-  background: #dcfce7;
-  border-color: #22c55e;
-  color: #166534;
-}
-
-.be-verb-choice.is-wrong {
-  background: #fee2e2;
-  border-color: #ef4444;
-  color: #991b1b;
-}
-
-.be-verb-row-feedback {
-  margin: 0;
-  font-size: 0.92rem;
-  font-weight: 700;
-  flex: 1 1 100%;
 }
 
 .be-verb-row-feedback.is-ok {
@@ -1666,13 +1695,15 @@ h3 .he {
     border-left: 1px solid #fbcfe8;
   }
 
-  .be-verb-row {
-    grid-template-columns: 1fr;
+  .be-verb-line--rest,
+  .be-verb-picker,
+  .be-verb-row-feedback {
+    padding-left: 0;
   }
 
-  .be-verb-choices {
-    flex-wrap: wrap;
-    justify-content: flex-start;
+  .be-verb-select {
+    width: 100%;
+    max-width: none;
   }
 }
 

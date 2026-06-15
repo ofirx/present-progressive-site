@@ -58,8 +58,8 @@
 
   function setInteractive(enabled) {
     root.classList.toggle("be-verb-activity--active", enabled);
-    sentencesEl.querySelectorAll(".be-verb-choice").forEach((btn) => {
-      btn.disabled = !enabled || finished;
+    sentencesEl.querySelectorAll(".be-verb-select").forEach((select) => {
+      select.disabled = !enabled || finished;
     });
     btnSubmit.disabled = !enabled || finished;
     btnPause.disabled = !started || finished;
@@ -142,55 +142,71 @@
     }, 1000);
   }
 
+  function splitSentence(text) {
+    const parts = text.split("___");
+    return {
+      before: (parts[0] || "").trim(),
+      after: (parts[1] || "").trim(),
+    };
+  }
+
   function renderSentences() {
     sentencesEl.innerHTML = SENTENCES.map((item, index) => {
       const options = item.negative ? NEGATIVE_OPTIONS : POSITIVE_OPTIONS;
-      const choices = options
-        .map((opt) => {
-          return (
-            '<button type="button" class="be-verb-choice" data-index="' +
-            index +
-            '" data-value="' +
-            opt +
-            '">' +
-            opt +
-            "</button>"
-          );
-        })
+      const { before, after } = splitSentence(item.text);
+      const optionTags = options
+        .map((opt) => '<option value="' + opt + '">' + opt + "</option>")
         .join("");
+
       return (
         '<div class="be-verb-row" data-index="' +
         index +
         '">' +
-        '<p class="be-verb-prompt"><span class="be-verb-num">' +
+        '<div class="be-verb-sentence">' +
+        '<p class="be-verb-line be-verb-line--start">' +
+        '<span class="be-verb-num">' +
         (index + 1) +
         ".</span> " +
-        item.text.replace("___", '<span class="be-verb-blank">___</span>') +
+        '<span class="be-verb-before">' +
+        before +
+        "</span>" +
+        '<span class="be-verb-blank" aria-hidden="true">___</span>' +
         "</p>" +
-        '<div class="be-verb-choices">' +
-        choices +
+        '<p class="be-verb-line be-verb-line--rest">' +
+        after +
+        "</p>" +
+        "</div>" +
+        '<div class="be-verb-picker">' +
+        '<label class="be-verb-select-label" for="be-select-' +
+        index +
+        '">Choose the correct form for sentence ' +
+        (index + 1) +
+        "</label>" +
+        '<select class="be-verb-select" id="be-select-' +
+        index +
+        '" data-index="' +
+        index +
+        '" disabled>' +
+        '<option value="">Choose…</option>' +
+        optionTags +
+        "</select>" +
         "</div>" +
         '<p class="be-verb-row-feedback" hidden aria-live="polite"></p>' +
         "</div>"
       );
     }).join("");
 
-    sentencesEl.querySelectorAll(".be-verb-choice").forEach((btn) => {
-      btn.addEventListener("click", onPick);
+    sentencesEl.querySelectorAll(".be-verb-select").forEach((select) => {
+      select.addEventListener("change", onSelect);
     });
   }
 
-  function onPick(e) {
+  function onSelect(e) {
     if (!started || paused || finished) return;
-    const btn = e.currentTarget;
-    const index = Number(btn.dataset.index);
-    const value = btn.dataset.value;
-    picks[index] = value;
-
-    const row = sentencesEl.querySelector('.be-verb-row[data-index="' + index + '"]');
-    row.querySelectorAll(".be-verb-choice").forEach((b) => {
-      b.classList.toggle("is-selected", b === btn);
-    });
+    const select = e.currentTarget;
+    const index = Number(select.dataset.index);
+    picks[index] = select.value || null;
+    select.classList.toggle("is-selected", Boolean(select.value));
     updateProgress();
   }
 
@@ -215,8 +231,9 @@
         fb.textContent = "";
       }
     });
-    sentencesEl.querySelectorAll(".be-verb-choice").forEach((b) => {
-      b.classList.remove("is-selected", "is-correct", "is-wrong");
+    sentencesEl.querySelectorAll(".be-verb-select").forEach((select) => {
+      select.value = "";
+      select.classList.remove("is-selected", "is-correct", "is-wrong");
     });
 
     btnStart.textContent = "Restart";
@@ -264,12 +281,16 @@
 
       const row = sentencesEl.querySelector('.be-verb-row[data-index="' + index + '"]');
       row.classList.add(ok ? "be-verb-row--ok" : "be-verb-row--bad");
-      row.querySelectorAll(".be-verb-choice").forEach((btn) => {
-        const val = btn.dataset.value;
-        btn.classList.toggle("is-correct", answersMatch(val, item.answer));
-        btn.classList.toggle("is-wrong", pick === val && !ok);
-        btn.classList.toggle("is-selected", pick === val);
-      });
+      const select = row.querySelector(".be-verb-select");
+      if (select) {
+        select.classList.toggle("is-correct", ok);
+        select.classList.toggle("is-wrong", !ok);
+        if (pick) {
+          select.value = pick;
+        } else if (!ok) {
+          select.value = item.answer;
+        }
+      }
 
       const fb = row.querySelector(".be-verb-row-feedback");
       if (fb) {

@@ -109,12 +109,12 @@ body{
 }
 .cloud{
   position:absolute;
-  right:-320px;
-  width:230px;
-  height:120px;
-  padding:34px 18px 16px;
-  color:#1e40af;
-  font-size:24px;
+  right:-240px;
+  width:155px;
+  height:82px;
+  padding:22px 10px 10px;
+  color:#fff;
+  font-size:16px;
   font-weight:bold;
   text-align:center;
   cursor:pointer;
@@ -125,38 +125,42 @@ body{
 .cloudShape{
   position:absolute;
   inset:0;
-  background:white;
-  border-radius:70px;
-  box-shadow:0 10px 22px rgba(0,0,0,.18);
+  background:#e03131;
+  border-radius:48px;
+  box-shadow:0 8px 18px rgba(0,0,0,.22);
 }
 .cloudShape:before{
   content:"";
   position:absolute;
-  width:85px;
-  height:85px;
-  top:-35px;
-  left:32px;
-  background:white;
+  width:56px;
+  height:56px;
+  top:-24px;
+  left:24px;
+  background:#e03131;
   border-radius:50%;
 }
 .cloudShape:after{
   content:"";
   position:absolute;
-  width:105px;
-  height:105px;
-  top:-52px;
-  right:32px;
-  background:white;
+  width:68px;
+  height:68px;
+  top:-34px;
+  right:24px;
+  background:#e03131;
   border-radius:50%;
 }
 .cloud span{
   position:relative;
   z-index:3;
   display:block;
-  margin-top:6px;
+  margin-top:2px;
+  color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.25);
+  line-height:1.15;
+  font-size:15px;
 }
 @keyframes moveCloud{
-  from{right:-320px}
+  from{right:-240px}
   to{right:110vw}
 }
 .feedback{
@@ -193,8 +197,24 @@ button{
   cursor:pointer;
 }
 .start{background:#2563eb;color:white}
+.pause{background:#495057;color:white}
 .restart{background:var(--orange);color:white}
 .next{background:#1c7ed6;color:white}
+.pause-overlay{
+  position:fixed;
+  inset:0;
+  z-index:55;
+  background:rgba(11,37,69,.5);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:34px;
+  font-weight:bold;
+  letter-spacing:.04em;
+  pointer-events:none;
+}
+body.paused .pause-overlay{display:flex}
 .result{
   position:fixed;
   inset:0;
@@ -252,7 +272,7 @@ button{
   .topbar{top:132px;padding:8px}
   .questionBox{top:184px}
   #question{font-size:23px}
-  .cloud{font-size:19px;width:190px}
+  .cloud{font-size:14px;width:130px;height:72px}
   .plane{font-size:54px;width:76px;height:76px}
   .help{display:none}
 }
@@ -288,10 +308,12 @@ button{
 </div>
 
 <div class="help">Move: ↑ ↓ ← →</div>
+<div id="pause-overlay" class="pause-overlay" aria-hidden="true">Paused</div>
 <div id="feedback" class="feedback"></div>
 
 <div class="controls">
   <button type="button" class="start" id="btn-start">Start</button>
+  <button type="button" class="pause" id="btn-pause">Pause</button>
   <button type="button" class="next" id="btn-next">Next Drill</button>
   <button type="button" class="restart" id="btn-restart">Restart</button>
 </div>
@@ -324,9 +346,12 @@ let score = 0;
 let lives = 3;
 let active = false;
 let gameStarted = false;
+let paused = false;
 let clouds = [];
 let cloudTimer = null;
-let checkTimer = null;
+let cloudTimerStart = 0;
+let cloudTimerDuration = 11500;
+let cloudTimeLeft = null;
 let planeX = 70;
 let planeY = 520;
 let keys = {};
@@ -346,6 +371,8 @@ const btnStart = document.getElementById("btn-start");
 const btnNext = document.getElementById("btn-next");
 const btnRestart = document.getElementById("btn-restart");
 const btnPlayAgain = document.getElementById("btn-play-again");
+const btnPause = document.getElementById("btn-pause");
+const pauseOverlay = document.getElementById("pause-overlay");
 
 function playWidth(){
   return game.clientWidth || window.innerWidth;
@@ -364,6 +391,12 @@ function tryStartIfIdle(){
 }
 
 document.addEventListener("keydown", e => {
+  if(e.key === "p" || e.key === "P"){
+    if(gameStarted && result.style.display !== "flex") togglePause();
+    e.preventDefault();
+    return;
+  }
+  if(paused) return;
   if(e.key === "Enter" || e.key === " "){
     if(tryStartIfIdle()){ e.preventDefault(); return; }
   }
@@ -372,24 +405,74 @@ document.addEventListener("keydown", e => {
     e.preventDefault();
   }
 });
-document.addEventListener("keyup", e => keys[e.key] = false);
+document.addEventListener("keyup", e => {
+  if(!paused) keys[e.key] = false;
+});
+
+function setCloudAnimationsPaused(isPaused){
+  clouds.forEach(c => {
+    c.style.animationPlayState = isPaused ? "paused" : "running";
+  });
+}
+
+function startQuestionTimer(ms){
+  cloudTimerDuration = ms;
+  cloudTimerStart = Date.now();
+  if(cloudTimer) clearTimeout(cloudTimer);
+  cloudTimer = setTimeout(onQuestionTimeUp, ms);
+}
+
+function onQuestionTimeUp(){
+  if(paused || !active) return;
+  lives--;
+  active = false;
+  showFeedback("Time is up! / הזמן נגמר!", false);
+  current++;
+  updateTop();
+  setTimeout(loadQuestion, 1000);
+}
+
+function togglePause(){
+  if(!gameStarted || result.style.display === "flex") return;
+  if(!active && !paused) return;
+  paused = !paused;
+  document.body.classList.toggle("paused", paused);
+  if(pauseOverlay){
+    pauseOverlay.setAttribute("aria-hidden", paused ? "false" : "true");
+  }
+  if(btnPause) btnPause.textContent = paused ? "Resume" : "Pause";
+  setCloudAnimationsPaused(paused);
+  if(paused){
+    Object.keys(keys).forEach(k => { keys[k] = false; });
+    if(cloudTimer){
+      cloudTimeLeft = Math.max(0, cloudTimerDuration - (Date.now() - cloudTimerStart));
+      clearTimeout(cloudTimer);
+      cloudTimer = null;
+    }
+  }else if(active && cloudTimeLeft !== null){
+    startQuestionTimer(cloudTimeLeft);
+    cloudTimeLeft = null;
+  }
+}
 
 function gameLoop(){
-  const speed = 8;
-  if(keys.ArrowUp || keys.w) planeY -= speed;
-  if(keys.ArrowDown || keys.s) planeY += speed;
-  if(keys.ArrowLeft || keys.a) planeX -= speed;
-  if(keys.ArrowRight || keys.d) planeX += speed;
+  if(!paused){
+    const speed = 8;
+    if(keys.ArrowUp || keys.w) planeY -= speed;
+    if(keys.ArrowDown || keys.s) planeY += speed;
+    if(keys.ArrowLeft || keys.a) planeX -= speed;
+    if(keys.ArrowRight || keys.d) planeX += speed;
 
-  const maxX = playWidth() - 120;
-  const maxY = playHeight() - 120;
-  planeX = Math.max(10, Math.min(maxX, planeX));
-  planeY = Math.max(180, Math.min(maxY, planeY));
+    const maxX = playWidth() - 120;
+    const maxY = playHeight() - 120;
+    planeX = Math.max(10, Math.min(maxX, planeX));
+    planeY = Math.max(180, Math.min(maxY, planeY));
 
-  plane.style.left = planeX + "px";
-  plane.style.top = planeY + "px";
+    plane.style.left = planeX + "px";
+    plane.style.top = planeY + "px";
 
-  if(active) checkCollisions();
+    if(active) checkCollisions();
+  }
   requestAnimationFrame(gameLoop);
 }
 requestAnimationFrame(gameLoop);
@@ -404,11 +487,13 @@ function clearClouds(){
   clouds.forEach(c => c.remove());
   clouds = [];
   if(cloudTimer) clearTimeout(cloudTimer);
-  if(checkTimer) clearInterval(checkTimer);
 }
 
 function startGame(){
   gameStarted = true;
+  paused = false;
+  document.body.classList.remove("paused");
+  if(btnPause) btnPause.textContent = "Pause";
   result.style.display = "none";
   feedback.className = "feedback";
   current = 0;
@@ -422,6 +507,10 @@ function startGame(){
 function restartGame(){
   clearClouds();
   gameStarted = false;
+  paused = false;
+  cloudTimeLeft = null;
+  document.body.classList.remove("paused");
+  if(btnPause) btnPause.textContent = "Pause";
   result.style.display = "none";
   active = false;
   current = 0;
@@ -462,21 +551,13 @@ function loadQuestion(){
     cloud.style.animationDuration = positions[index].speed + "s";
     cloud.style.animationDelay = positions[index].delay + "s";
     cloud.innerHTML = '<div class="cloudShape"></div><span>' + ans + '</span>';
-    cloud.onclick = () => chooseAnswer(ans, cloud);
+    cloud.onclick = () => { if(!paused) chooseAnswer(ans, cloud); };
     game.appendChild(cloud);
     clouds.push(cloud);
   });
 
-  cloudTimer = setTimeout(() => {
-    if(active){
-      lives--;
-      active = false;
-      showFeedback("Time is up! / הזמן נגמר!", false);
-      current++;
-      updateTop();
-      setTimeout(loadQuestion, 1000);
-    }
-  }, 11500);
+  cloudTimeLeft = null;
+  startQuestionTimer(11500);
 }
 
 function getScatteredPositions(){
@@ -509,18 +590,20 @@ function checkCollisions(){
 }
 
 function chooseAnswer(answer, cloud){
-  if(!active) return;
+  if(!active || paused) return;
   active = false;
   clearTimeout(cloudTimer);
+  cloudTimer = null;
 
   const correct = questions[current].correct;
+  const shape = cloud.querySelector(".cloudShape");
   if(answer === correct){
     score++;
-    cloud.querySelector(".cloudShape").style.background = "#d3f9d8";
+    if(shape) shape.style.background = "#2f9e44";
     showFeedback("Correct! Good job! / נכון! כל הכבוד!", true);
   }else{
     lives--;
-    cloud.querySelector(".cloudShape").style.background = "#ffe3e3";
+    if(shape) shape.style.background = "#c92a2a";
     showFeedback("Wrong! Correct answer: " + correct + " / לא נכון!", false);
   }
 
@@ -563,6 +646,7 @@ if(btnStart) btnStart.addEventListener("click", startGame);
 if(btnNext) btnNext.addEventListener("click", nextQuestion);
 if(btnRestart) btnRestart.addEventListener("click", restartGame);
 if(btnPlayAgain) btnPlayAgain.addEventListener("click", playAgain);
+if(btnPause) btnPause.addEventListener("click", togglePause);
 if(questionBoxEl) questionBoxEl.addEventListener("click", tryStartIfIdle);
 if(questionBoxEl) questionBoxEl.addEventListener("keydown", e => {
   if(e.key === "Enter" || e.key === " "){ tryStartIfIdle(); e.preventDefault(); }

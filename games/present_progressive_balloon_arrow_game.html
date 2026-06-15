@@ -284,8 +284,24 @@ button{
   cursor:pointer;
 }
 .start{background:#2563eb;color:white}
+.pause{background:#495057;color:white}
 .restart{background:#f97316;color:white}
 .next{background:#2563eb;color:white}
+.pause-overlay{
+  position:fixed;
+  inset:0;
+  z-index:55;
+  background:rgba(15,23,42,.5);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:34px;
+  font-weight:bold;
+  letter-spacing:.04em;
+  pointer-events:none;
+}
+body.paused .pause-overlay{display:flex}
 .help{
   position:fixed;
   left:18px;
@@ -412,10 +428,12 @@ button{
 </div>
 
 <div class="help">Bow swings automatically &nbsp; | &nbsp; Shoot: Enter &nbsp; | &nbsp; <span class="hebrew" style="display:inline">הקשת מתנדנדת — Enter לירייה</span></div>
+<div id="pause-overlay" class="pause-overlay" aria-hidden="true">Paused</div>
 <div id="feedback" class="feedback"></div>
 
 <div class="controls">
   <button type="button" class="start" id="btn-start">Start</button>
+  <button type="button" class="pause" id="btn-pause">Pause</button>
   <button type="button" class="next" id="btn-next">Next Drill</button>
   <button type="button" class="restart" id="btn-restart">Restart</button>
 </div>
@@ -470,6 +488,8 @@ let spawnTimer = null;
 let loopStarted = false;
 let resolvingHit = false;
 let feedbackTimer = null;
+let paused = false;
+let pauseSwingTime = 0;
 
 const game = document.getElementById("game");
 const boy = document.getElementById("boy");
@@ -483,8 +503,16 @@ const grade = document.getElementById("grade");
 const finalMessage = document.getElementById("finalMessage");
 
 const questionBox = document.getElementById("questionBox");
+const btnPause = document.getElementById("btn-pause");
+const pauseOverlay = document.getElementById("pause-overlay");
 
 document.addEventListener("keydown", e=>{
+  if(e.key==="p" || e.key==="P"){
+    if(gameStarted && result.style.display !== "flex") togglePause();
+    e.preventDefault();
+    return;
+  }
+  if(paused) return;
   if(e.key==="Enter"){
     if(tryStartIfIdle()){ e.preventDefault(); return; }
     if(active) shootArrow();
@@ -511,10 +539,28 @@ function setQuestionIdle(idle){
 }
 
 function updateBowSwing(now){
+  if(paused) return;
   if(!swingStart) swingStart = now;
   const t = (now - swingStart) / SWING_PERIOD;
   bowAngle = SWING_AMPLITUDE * Math.sin(t * Math.PI * 2);
   boy.style.transform = "rotate(" + bowAngle + "deg)";
+}
+
+function togglePause(){
+  if(!gameStarted || result.style.display === "flex") return;
+  if(!active && !paused) return;
+  paused = !paused;
+  document.body.classList.toggle("paused", paused);
+  if(pauseOverlay) pauseOverlay.setAttribute("aria-hidden", paused ? "false" : "true");
+  if(btnPause) btnPause.textContent = paused ? "Resume" : "Pause";
+  if(paused){
+    pauseSwingTime = performance.now();
+    if(spawnTimer){ clearInterval(spawnTimer); spawnTimer = null; }
+  }else if(active){
+    swingStart += performance.now() - pauseSwingTime;
+    const cfg = stageConfig();
+    if(!spawnTimer) spawnTimer = setInterval(spawnBalloons, cfg.spawnMs);
+  }
 }
 
 function isEasyStage(){
@@ -560,6 +606,9 @@ function loseLife(){
 function startGame(){
   document.body.classList.add("playing");
   gameStarted = true;
+  paused = false;
+  document.body.classList.remove("paused");
+  if(btnPause) btnPause.textContent = "Pause";
   setQuestionIdle(false);
   current=0; score=0; lives=MAX_LIVES; resolvingHit=false; swingStart=0; result.style.display="none";
   boy.style.transform = "rotate(0deg)";
@@ -576,6 +625,9 @@ function restartGame(){
   document.body.classList.remove("playing");
   clearAll();
   gameStarted = false;
+  paused = false;
+  document.body.classList.remove("paused");
+  if(btnPause) btnPause.textContent = "Pause";
   current=0; score=0; lives=MAX_LIVES; active=false; resolvingHit=false; swingStart=0;
   questionEl.textContent="Press Start";
   setQuestionIdle(true);
@@ -668,7 +720,7 @@ function getArrowSpawn(){
 }
 
 function shootArrow(){
-  if(!active || resolvingHit) return;
+  if(!active || resolvingHit || paused) return;
   if(arrows.some(a => !a.finished)) return;
   const pos = getArrowSpawn();
   const el = document.createElement("div");
@@ -689,38 +741,40 @@ function shootArrow(){
 }
 
 function gameLoop(now){
-  updateBowSwing(now);
+  if(!paused){
+    updateBowSwing(now);
 
-  arrows.forEach(a=>{
-    if(a.finished) return;
-    a.x += a.vx;
-    a.y += a.vy;
-    a.el.style.left = a.x + "px";
-    a.el.style.top = a.y + "px";
-  });
-  arrows = arrows.filter(a=>{
-    if(a.finished){ return false; }
-    if(a.y < -80 || a.x < -60 || a.x > playWidth() + 20){
-      a.el.remove();
-      return false;
-    }
-    return true;
-  });
+    arrows.forEach(a=>{
+      if(a.finished) return;
+      a.x += a.vx;
+      a.y += a.vy;
+      a.el.style.left = a.x + "px";
+      a.el.style.top = a.y + "px";
+    });
+    arrows = arrows.filter(a=>{
+      if(a.finished){ return false; }
+      if(a.y < -80 || a.x < -60 || a.x > playWidth() + 20){
+        a.el.remove();
+        return false;
+      }
+      return true;
+    });
 
-  balloons.forEach(b=>{
-    b.y += b.speed;
-    b.el.style.top = b.y+"px";
-  });
+    balloons.forEach(b=>{
+      b.y += b.speed;
+      b.el.style.top = b.y+"px";
+    });
 
-  balloons = balloons.filter(b=>{
-    if(b.y > playHeight()-80){
-      b.el.remove();
-      return false;
-    }
-    return true;
-  });
+    balloons = balloons.filter(b=>{
+      if(b.y > playHeight()-80){
+        b.el.remove();
+        return false;
+      }
+      return true;
+    });
 
-  if(active) checkHits();
+    if(active) checkHits();
+  }
   requestAnimationFrame(gameLoop);
 }
 
@@ -861,6 +915,7 @@ document.getElementById("btn-start")?.addEventListener("click", startGame);
 document.getElementById("btn-next")?.addEventListener("click", nextQuestion);
 document.getElementById("btn-restart")?.addEventListener("click", restartGame);
 document.getElementById("btn-play-again")?.addEventListener("click", playAgain);
+document.getElementById("btn-pause")?.addEventListener("click", togglePause);
 </script>
 </body>
 </html>

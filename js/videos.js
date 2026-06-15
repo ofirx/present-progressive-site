@@ -311,6 +311,17 @@ async function loadVideosFromGitHub() {
       video.hidden = true;
       slot.classList.remove("has-video");
       if (placeholder) placeholder.style.display = "";
+
+      const saveStatus = document.getElementById(`save-status-${id}`);
+      if (saveStatus) {
+        saveStatus.hidden = false;
+        saveStatus.classList.add("bilingual-block", "save-status", "save-status-error");
+        saveStatus.innerHTML = `
+          <span class="en">This video format is not supported in your browser. Re-export as H.264 MP4.</span>
+          <span class="he" dir="rtl" lang="he">פורמט הסרטון אינו נתמך בדפדפן. יש לייצא מחדש כ-H.264 MP4.</span>
+        `;
+      }
+
       video.removeEventListener("error", onError);
     };
 

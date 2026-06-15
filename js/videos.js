@@ -301,13 +301,26 @@ async function loadVideosFromGitHub() {
 
     const video = document.getElementById(`video-${id}`);
     const slot = document.querySelector(`.video-slot[data-slot="${id}"]`);
+    const placeholder = document.getElementById(`placeholder-${id}`);
     if (!video || !slot) return;
 
-    const url = storage.videoPublicUrl(entry.file, entry.updatedAt || "");
+    const url = storage.videoPublicUrl(entry.file, entry.updatedAt || Date.now());
+    const onError = () => {
+      video.removeAttribute("src");
+      video.load();
+      video.hidden = true;
+      slot.classList.remove("has-video");
+      if (placeholder) placeholder.style.display = "";
+      video.removeEventListener("error", onError);
+    };
+
+    video.addEventListener("error", onError);
     video.src = url;
     video.load();
     video.hidden = false;
+    video.removeAttribute("hidden");
     slot.classList.add("has-video");
+    if (placeholder) placeholder.style.display = "none";
 
     const playBtn = document.querySelector(`.btn-play[data-video="${id}"]`);
     const pauseBtn = document.querySelector(`.btn-pause[data-video="${id}"]`);

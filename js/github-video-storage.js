@@ -29,11 +29,22 @@
     return Boolean(getToken());
   }
 
+  function siteBasePath() {
+    if (cfg.siteBasePath) {
+      return cfg.siteBasePath.endsWith("/") ? cfg.siteBasePath : `${cfg.siteBasePath}/`;
+    }
+
+    const path = window.location.pathname;
+    if (path.endsWith("/")) return path;
+    if (/\.[a-z0-9]+$/i.test(path)) {
+      return path.replace(/\/[^/]*$/, "/");
+    }
+    return `${path}/`;
+  }
+
   function videoPublicUrl(fileName, cacheBust) {
-    const base = `${cfg.videosDir}/${fileName}`;
-    const root = window.location.pathname.replace(/\/[^/]*$/, "");
-    const prefix = root.endsWith("/") ? root : `${root}/`;
-    const url = `${prefix}${base}`;
+    const relative = `${siteBasePath()}${cfg.videosDir}/${fileName}`.replace(/\/{2,}/g, "/");
+    const url = new URL(relative, window.location.origin).href;
     return cacheBust ? `${url}?v=${encodeURIComponent(cacheBust)}` : url;
   }
 
@@ -94,7 +105,7 @@
 
   async function fetchManifest() {
     try {
-      const res = await fetch(videoPublicUrl("manifest.json"), { cache: "no-store" });
+      const res = await fetch(videoPublicUrl("manifest.json", Date.now()), { cache: "no-store" });
       if (!res.ok) return { version: 1, slots: { 1: null, 2: null, 3: null, 4: null } };
       return await res.json();
     } catch {

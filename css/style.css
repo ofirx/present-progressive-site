@@ -1187,6 +1187,40 @@ h3 .he {
   line-height: 1.5;
 }
 
+.reporter-input--model {
+  border-color: #93c5fd;
+  background: #f8fafc;
+  color: #64748b;
+}
+
+.reporter-result-card--model {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.reporter-status--model {
+  background: #2563eb;
+  color: #fff;
+}
+
+.reporter-feedback--model {
+  margin: 0 0 0.35rem;
+  padding-left: 0;
+  color: #1e40af;
+  font-weight: 700;
+}
+
+.reporter-model-sentence {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  background: #fff;
+  border: 2px solid #bfdbfe;
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #0f172a;
+}
+
 .reporter-result-card {
   margin: 0;
   padding: 0.85rem 1rem;

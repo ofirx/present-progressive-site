@@ -11,8 +11,39 @@
     { base: "run", ing: "running" },
   ];
 
-  const form = document.getElementById("reporter-form");
-  if (!form) return;
+  const MODEL_BY_VERB = {
+    reading: "A boy is reading a book on the bench.",
+    writing: "A girl is writing in her notebook.",
+    playing: "The children are playing soccer.",
+    eating: "A boy is eating an apple on the grass.",
+    drawing: "A girl is drawing a picture on the grass.",
+    running: "A boy is running in the park.",
+  };
+
+  const MODEL_BY_SLOT = [
+    "A boy is reading a book on the bench.",
+    "A girl is writing in her notebook.",
+    "The children are playing soccer.",
+    "A boy is eating an apple on the grass.",
+  ];
+
+  let submitAttempt = 0;
+
+  function escapeHtml(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function getModelAnswer(row, text) {
+    const verbs = targetVerbsInSentence(text);
+    if (verbs.length && MODEL_BY_VERB[verbs[0].ing]) {
+      return MODEL_BY_VERB[verbs[0].ing];
+    }
+    return MODEL_BY_SLOT[row.index] || MODEL_BY_SLOT[0];
+  }
 
   const inputs = Array.from(form.querySelectorAll(".reporter-input"));
   const resultsEl = document.getElementById("reporter-results");
@@ -110,7 +141,7 @@
     };
   }
 
-  function renderResults(rows) {
+  function renderResults(rows, showModels) {
     resultsEl.hidden = false;
     resultsEl.innerHTML = rows
       .map((row) => {
@@ -118,7 +149,13 @@
         let detail;
         let cardClass = "reporter-result-card";
 
-        if (row.status === "correct") {
+        if (showModels && row.status !== "correct") {
+          statusHtml = '<span class="reporter-status reporter-status--model">Answer</span>';
+          detail =
+            '<p class="reporter-feedback reporter-feedback--model">Correct sentence:</p>' +
+            '<p class="reporter-model-sentence">' + escapeHtml(row.modelAnswer) + "</p>";
+          cardClass += " reporter-result-card--model";
+        } else if (row.status === "correct") {
           statusHtml = '<span class="reporter-status reporter-status--ok">Correct</span>';
           detail =
             '<p class="reporter-feedback reporter-feedback--ok">Great job! This sentence uses Present Progressive well.</p>';
@@ -153,19 +190,22 @@
       rows.reduce((sum, row) => sum + row.score, 0) / rows.length
     );
     const correctCount = rows.filter((r) => r.status === "correct").length;
-    const almostCount = rows.filter((r) => r.status === "almost").length;
 
     let summary = "Your score: <strong>" + totalScore + "%</strong>. ";
 
-    if (correctCount === rows.length) {
+    if (showModels && correctCount < rows.length) {
+      summary +=
+        "The boxes were cleared for sentences that were not 100% correct. " +
+        "Read the correct sentences above and continue.";
+    } else if (correctCount === rows.length) {
       summary += "Excellent reporting!";
     } else if (totalScore >= 90) {
-      summary += "Strong Present Progressive! Check the small fixes above.";
+      summary += "Strong Present Progressive! Fix the small tips and submit one more time.";
     } else {
-      summary += "Focus on <strong>am / is / are + verb-ing</strong>, then try again.";
+      summary += "Focus on <strong>am / is / are + verb-ing</strong>, fix your sentences, and submit again.";
     }
 
-    if (almostCount > 0) {
+    if (!showModels && rows.some((r) => r.status === "almost")) {
       summary +=
         " Sentences with only capital-letter or punctuation tips count as <strong>90%</strong>.";
     }
@@ -176,22 +216,50 @@
 
   function onSubmit(e) {
     e.preventDefault();
+    submitAttempt += 1;
+    const showModels = submitAttempt >= 2;
+
     const rows = inputs.map((input, index) => {
       const row = checkSentence(input.value, index);
-      input.classList.remove("reporter-input--ok", "reporter-input--bad", "reporter-input--almost");
-      if (row.status === "correct") input.classList.add("reporter-input--ok");
-      else if (row.status === "almost") input.classList.add("reporter-input--almost");
-      else if (input.value.trim()) input.classList.add("reporter-input--bad");
+      row.modelAnswer = getModelAnswer(row, input.value);
+      input.classList.remove(
+        "reporter-input--ok",
+        "reporter-input--bad",
+        "reporter-input--almost",
+        "reporter-input--model"
+      );
+      input.disabled = false;
+
+      if (showModels && row.status !== "correct") {
+        input.value = "";
+        input.disabled = true;
+        input.classList.add("reporter-input--model");
+      } else if (row.status === "correct") {
+        input.classList.add("reporter-input--ok");
+      } else if (row.status === "almost") {
+        input.classList.add("reporter-input--almost");
+      } else if (input.value.trim()) {
+        input.classList.add("reporter-input--bad");
+      }
+
       return row;
     });
-    renderResults(rows);
+
+    renderResults(rows, showModels);
     resultsEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function onClear() {
+    submitAttempt = 0;
     inputs.forEach((input) => {
       input.value = "";
-      input.classList.remove("reporter-input--ok", "reporter-input--bad", "reporter-input--almost");
+      input.disabled = false;
+      input.classList.remove(
+        "reporter-input--ok",
+        "reporter-input--bad",
+        "reporter-input--almost",
+        "reporter-input--model"
+      );
     });
     resultsEl.hidden = true;
     resultsEl.innerHTML = "";

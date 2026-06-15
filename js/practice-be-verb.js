@@ -22,6 +22,7 @@
   const resultsEl = document.getElementById("be-results");
   const summaryEl = document.getElementById("be-summary");
   const timerDisplay = document.getElementById("be-timer-display");
+  const timerFloat = document.getElementById("be-timer-float");
   const timerSelect = document.getElementById("be-timer-minutes");
   const btnStart = document.getElementById("be-start");
   const btnPause = document.getElementById("be-pause");
@@ -72,15 +73,21 @@
     }
   }
 
+  function showTimerFloat(show) {
+    if (!timerFloat) return;
+    timerFloat.hidden = !show;
+    timerFloat.setAttribute("aria-hidden", show ? "false" : "true");
+  }
+
   function startTimer() {
     stopTimer();
     if (!isTimedMode()) {
-      timerDisplay.hidden = true;
+      showTimerFloat(false);
       return;
     }
     const minutes = Number(timerSelect?.value || 5);
     timeLeftMs = minutes * 60 * 1000;
-    timerDisplay.hidden = false;
+    showTimerFloat(true);
     updateTimerDisplay();
     timerId = setInterval(() => {
       if (paused) return;
@@ -201,6 +208,7 @@
     finished = true;
     paused = false;
     stopTimer();
+    showTimerFloat(false);
     setInteractive(false);
     btnPause.textContent = "Pause";
 

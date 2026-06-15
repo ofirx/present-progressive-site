@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=10" />
+  <link rel="stylesheet" href="css/style.css?v=11" />
 </head>
 <body>
   <header class="site-header">
@@ -41,10 +41,10 @@
         </h1>
         <p class="lead bilingual-block">
           <span class="en">
-            Work through five short tasks. Read the instructions on the right, then complete the activity on the left.
+            Match the colored parts to build correct present progressive sentences.
           </span>
           <span class="he" dir="rtl" lang="he">
-            עברו על חמש משימות קצרות. קראו את ההוראות מימין והשלימו את הפעילות משמאל.
+            התאימו את החלקים הצבעוניים כדי לבנות משפטים נכונים בזמן הווה מתמשך.
           </span>
         </p>
       </div>
@@ -52,14 +52,46 @@
 
     <section id="practice" class="section section-alt practice-page">
       <div class="container practice-container">
-        <p class="section-intro bilingual-block">
-          <span class="en">
-            Each colored section has space for your own activity and instructions.
-          </span>
-          <span class="he" dir="rtl" lang="he">
-            לכל אזור צבעוני יש מקום לפעילות ולהוראות משלכם.
-          </span>
-        </p>
+        <div id="match-worksheet" class="match-worksheet">
+          <header class="match-instructions">
+            <p class="match-instructions-en">
+              Drag each colored word into the boxes above it to form a correct
+              <strong>present progressive</strong> sentence
+              (<em>subject + am/is/are + verb-ing + rest</em>).
+              You can also tap a word, then tap a box. When all 5 sentences are complete, click
+              <strong>Check answers</strong>. The correct answer will appear below any sentence you got wrong.
+            </p>
+            <p class="match-instructions-he" dir="rtl" lang="he">
+              גררו כל מילה צבעונית לתיבות שמעליה כדי ליצור משפט נכון בזמן
+              <strong>הווה מתמשך</strong>
+              (<em>נושא + am/is/are + verb-ing + המשך המשפט</em>).
+              אפשר גם ללחוץ על מילה ואז על תיבה. כשכל 5 המשפטים מוכנים, לחצו על
+              <strong>בדוק תשובות</strong>. התשובה הנכונה תופיע מתחת לכל משפט שטעיתם בו.
+            </p>
+          </header>
+
+          <div class="match-legend bilingual-block" aria-label="Color key">
+            <span class="match-legend-item match-chip--subject">Subject</span>
+            <span class="match-legend-item match-chip--be">am / is / are</span>
+            <span class="match-legend-item match-chip--verb">verb-ing</span>
+            <span class="match-legend-item match-chip--rest">Rest of sentence</span>
+          </div>
+
+          <div id="match-exercises" class="match-exercises"></div>
+
+          <div class="match-actions">
+            <button type="button" class="btn btn-primary btn-bilingual" id="match-submit">
+              <span class="btn-en">Check answers</span>
+              <span class="btn-he" dir="rtl" lang="he">בדוק תשובות</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-bilingual" id="match-reset">
+              <span class="btn-en">Start over</span>
+              <span class="btn-he" dir="rtl" lang="he">התחל מחדש</span>
+            </button>
+          </div>
+
+          <p id="match-score" class="match-score bilingual-block" hidden aria-live="polite"></p>
+        </div>
 
         <div class="practice-sections">
           <section class="practice-section practice-section--1" aria-labelledby="practice-section-1-title">
@@ -217,6 +249,6 @@
     </div>
   </footer>
 
-  <script src="js/practice.js?v=10"></script>
+  <script src="js/practice-match.js?v=11"></script>
 </body>
 </html>

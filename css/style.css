@@ -964,6 +964,236 @@ h3 .he {
   color: #9b2226;
 }
 
+/* —— Present progressive matching worksheet —— */
+.match-worksheet {
+  margin-bottom: 2.5rem;
+  padding: 1.75rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.match-instructions {
+  margin-bottom: 1.5rem;
+}
+
+.match-instructions-en {
+  margin: 0 0 1rem;
+  line-height: 1.65;
+  font-size: 1.05rem;
+}
+
+.match-instructions-he {
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  line-height: 1.7;
+  font-size: 1.02rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.match-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 1.5rem;
+}
+
+.match-legend-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 2px solid transparent;
+}
+
+.match-exercises {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.match-row {
+  padding: 1.1rem 1rem;
+  background: #faf9f7;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.match-row-header {
+  margin-bottom: 0.65rem;
+}
+
+.match-row-num {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--accent-dark);
+}
+
+.match-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  margin-bottom: 0.75rem;
+  padding: 0.55rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px dashed rgba(45, 106, 79, 0.28);
+  border-radius: 10px;
+}
+
+.match-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.5rem;
+  min-height: 2.6rem;
+  padding: 0.25rem;
+  border-radius: 10px;
+  border: 2px dashed rgba(26, 26, 26, 0.15);
+  background: rgba(255, 255, 255, 0.6);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.match-slot.is-drag-over {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.match-slot.is-filled {
+  border-style: solid;
+  border-color: transparent;
+  background: transparent;
+}
+
+.match-slot.is-correct {
+  box-shadow: inset 0 0 0 2px #2d6a4f;
+}
+
+.match-slot.is-incorrect {
+  box-shadow: inset 0 0 0 2px #9b2226;
+}
+
+.match-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+}
+
+.match-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.45rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  font: inherit;
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.match-chip:active {
+  cursor: grabbing;
+}
+
+.match-chip.is-dragging {
+  opacity: 0.55;
+  transform: scale(0.97);
+}
+
+.match-worksheet.is-graded .match-chip {
+  cursor: default;
+  pointer-events: none;
+}
+
+.match-chip--subject {
+  background: #dbeafe;
+  color: #1e3a8a;
+  border-color: #3b82f6;
+}
+
+.match-chip--be {
+  background: #d8f3dc;
+  color: #1b4332;
+  border-color: #2d6a4f;
+}
+
+.match-chip--verb {
+  background: #ede9fe;
+  color: #5b21b6;
+  border-color: #7c3aed;
+}
+
+.match-chip--rest {
+  background: #ffedd5;
+  color: #9a3412;
+  border-color: #ea580c;
+}
+
+.match-row-feedback {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.match-row-feedback .he {
+  display: block;
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+
+.match-row-feedback.is-correct {
+  background: #d8f3dc;
+  color: #1b4332;
+}
+
+.match-row-feedback.is-incorrect {
+  background: #ffe5e5;
+  color: #9b2226;
+}
+
+.match-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.match-score {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.match-score--ok {
+  background: #d8f3dc;
+  color: #1b4332;
+}
+
+.match-score--bad {
+  background: #ffe5e5;
+  color: #9b2226;
+}
+
+.match-score--warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+
 .quiz-card {
   max-width: 640px;
   padding: 1.75rem;
@@ -1087,6 +1317,20 @@ h3 .he {
 }
 
 @media (max-width: 760px) {
+  .match-slots {
+    min-height: auto;
+  }
+
+  .match-slot {
+    min-width: calc(50% - 0.5rem);
+    flex: 1 1 calc(50% - 0.5rem);
+  }
+
+  .match-chip {
+    font-size: 0.92rem;
+    padding: 0.4rem 0.7rem;
+  }
+
   .practice-section-layout {
     grid-template-columns: 1fr;
     gap: 1.25rem;

@@ -1,7 +1,13 @@
 {
   "version": 1,
   "slots": {
-    "1": null,
+    "1": {
+      "file": "slot-1.mp4",
+      "fileName": "1_comp.mp4",
+      "mimeType": "video/mp4",
+      "updatedAt": "2026-06-15T16:00:00.000Z",
+      "webm": "slot-1.webm"
+    },
     "2": {
       "file": "slot-2.mp4",
       "fileName": "2_presnting.mp4",

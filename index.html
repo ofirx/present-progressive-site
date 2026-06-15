@@ -138,7 +138,7 @@
         </div>
 
         <div class="video-gallery" aria-label="Lesson video gallery">
-          <article class="video-slot" data-slot="1">
+          <article class="video-slot has-video" data-slot="1" data-bundled-video="1_comp.mp4">
             <div class="video-number bilingual-block">
               <span class="en">Video 1</span>
               <span class="he" dir="rtl" lang="he">סרטון 1</span>
@@ -156,27 +156,33 @@
               <input id="upload-1" class="video-upload" type="file" accept="video/*" data-video="1" />
             </label>
             <div class="video-frame">
-              <video id="video-1" class="lesson-video" playsinline preload="metadata" hidden></video>
-              <p class="video-placeholder bilingual-block" id="placeholder-1">
+              <video id="video-1" class="lesson-video" playsinline preload="auto" data-bundled>
+                <source src="videos/slot-1.webm" type="video/webm" />
+                <source src="videos/slot-1.mp4" type="video/mp4" />
+              </video>
+              <p class="video-placeholder bilingual-block" id="placeholder-1" hidden>
                 <span class="en">No video uploaded yet</span>
                 <span class="he" dir="rtl" lang="he">עדיין לא הועלה סרטון</span>
               </p>
             </div>
-            <p class="save-status" id="save-status-1" hidden></p>
+            <p class="save-status bilingual-block" id="save-status-1">
+              <span class="en">Lesson video: 1_comp.mp4</span>
+              <span class="he" dir="rtl" lang="he">סרטון שיעור: 1_comp.mp4</span>
+            </p>
             <div class="video-controls">
-              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="1" disabled>
+              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="1">
                 <span class="btn-en"><span class="btn-icon" aria-hidden="true">▶</span> Play</span>
                 <span class="btn-he" dir="rtl" lang="he"><span class="btn-icon" aria-hidden="true">▶</span> נגן</span>
               </button>
-              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="1" disabled>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="1">
                 <span class="btn-en"><span class="btn-icon" aria-hidden="true">⏸</span> Pause</span>
                 <span class="btn-he" dir="rtl" lang="he"><span class="btn-icon" aria-hidden="true">⏸</span> השהה</span>
               </button>
-              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="1" disabled>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="1">
                 <span class="btn-en"><span class="btn-icon" aria-hidden="true">⏹</span> Stop</span>
                 <span class="btn-he" dir="rtl" lang="he"><span class="btn-icon" aria-hidden="true">⏹</span> עצור</span>
               </button>
-              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="1" disabled>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="1">
                 <span class="btn-en">Fullscreen</span>
                 <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
               </button>
@@ -346,8 +352,8 @@
     </div>
   </footer>
 
-  <script src="js/github-config.js?v=3"></script>
-  <script src="js/github-video-storage.js?v=3"></script>
-  <script src="js/videos.js?v=3"></script>
+  <script src="js/github-config.js?v=4"></script>
+  <script src="js/github-video-storage.js?v=4"></script>
+  <script src="js/videos.js?v=4"></script>
 </body>
 </html>

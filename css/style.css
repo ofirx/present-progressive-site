@@ -854,6 +854,10 @@ h3 .he {
   background: linear-gradient(to bottom, #7dd3fc 0%, #bae6fd 55%, #dcfce7 100%);
 }
 
+.practice-section--2 .match-instructions-he {
+  border-top-color: rgba(30, 58, 138, 0.22);
+}
+
 .practice-section--1 .match-instructions-he {
   border-top-color: rgba(27, 67, 50, 0.22);
 }

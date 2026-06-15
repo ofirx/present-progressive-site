@@ -69,18 +69,38 @@
     timerDisplay.classList.toggle("be-timer-display--low", timeLeftMs <= 30000 && timeLeftMs > 0);
   }
 
-  function setInteractive(enabled) {
-    root.classList.toggle("be-verb-activity--active", enabled);
+  function isPlayable() {
+    if (finished) return false;
+    if (paused) return false;
+    if (isTimedMode()) return started;
+    return true;
+  }
+
+  function syncControls() {
+    const playable = isPlayable();
+    root.classList.toggle("be-verb-activity--active", playable);
     sentencesEl.querySelectorAll(".be-verb-select").forEach((select) => {
-      select.disabled = !enabled || finished;
+      select.disabled = !playable;
     });
     const submitBtn = getSubmitBtn();
-    if (submitBtn) submitBtn.disabled = !enabled || finished;
-    btnPause.disabled = !started || finished;
+    if (submitBtn) submitBtn.disabled = !playable;
+
+    const timed = isTimedMode();
+    if (btnStart) {
+      btnStart.hidden = !timed;
+      btnStart.disabled = timed && started && !finished;
+      btnStart.textContent = finished ? "Try again" : started ? "Restart" : "Start";
+    }
+    if (btnPause) {
+      btnPause.hidden = !timed;
+      btnPause.disabled = !started || finished;
+      btnPause.textContent = paused ? "Resume" : "Pause";
+    }
+
     modeInputs.forEach((input) => {
-      input.disabled = started && !finished;
+      input.disabled = timed && started && !finished;
     });
-    if (timerSelect) timerSelect.disabled = !isTimedMode() || (started && !finished);
+    if (timerSelect) timerSelect.disabled = !timed || (started && !finished);
   }
 
   function stopTimer() {
@@ -109,7 +129,7 @@
     }
     if (!progressHint) return;
 
-    if (!started || finished) {
+    if (finished || (isTimedMode() && !started)) {
       progressHint.hidden = true;
       progressHint.classList.remove("is-complete");
       progressHint.textContent = "";
@@ -285,7 +305,7 @@
   }
 
   function onSelect(e) {
-    if (!started || paused || finished) return;
+    if (!isPlayable()) return;
     const select = e.currentTarget;
     const index = Number(select.dataset.index);
     picks[index] = select.value || null;
@@ -294,6 +314,7 @@
   }
 
   function onStart() {
+    if (!isTimedMode()) return;
     if (finished) {
       resetActivity();
     }
@@ -318,18 +339,15 @@
       select.classList.remove("is-selected", "is-correct", "is-wrong");
     });
 
-    btnStart.textContent = "Restart";
-    btnPause.textContent = "Pause";
-    setInteractive(true);
+    syncControls();
     updateProgress();
     startTimer();
   }
 
   function onPause() {
-    if (!started || finished) return;
+    if (!isTimedMode() || !started || finished) return;
     paused = !paused;
-    btnPause.textContent = paused ? "Resume" : "Pause";
-    setInteractive(!paused);
+    syncControls();
   }
 
   function normalizeAnswer(value) {
@@ -352,8 +370,7 @@
     paused = false;
     stopTimer();
     showTimerBlock(false);
-    setInteractive(false);
-    btnPause.textContent = "Pause";
+    syncControls();
 
     let correct = 0;
     const rows = SENTENCES.map((item, index) => {
@@ -440,7 +457,7 @@
     showTimerBlock(false);
     btnStart.textContent = "Start";
     btnPause.textContent = "Pause";
-    setInteractive(false);
+    syncControls();
     renderSentences();
     hideGradePanel();
     resultsEl.hidden = true;
@@ -449,12 +466,16 @@
   }
 
   function onModeChange() {
-    if (timerSelect) {
-      timerSelect.disabled = !isTimedMode() || (started && !finished);
-    }
     if (!isTimedMode()) {
+      stopTimer();
       showTimerBlock(false);
+      if (started && !finished) {
+        started = false;
+        paused = false;
+      }
     }
+    syncControls();
+    updateProgress();
   }
 
   modeInputs.forEach((input) => input.addEventListener("change", onModeChange));
@@ -467,7 +488,7 @@
   });
 
   renderSentences();
-  setInteractive(false);
+  syncControls();
   updateProgress();
   onModeChange();
 })();

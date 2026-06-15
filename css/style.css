@@ -696,9 +696,35 @@ h3 .he {
 }
 
 .video-controls .btn {
+  position: relative;
   min-width: 0;
   padding: 1.1rem 1rem;
   font-size: 1.7rem;
+  transition:
+    background-color 1.8s ease,
+    border-color 1.8s ease,
+    box-shadow 1.8s ease,
+    color 1.8s ease,
+    transform 0.15s ease;
+}
+
+.video-controls .btn.is-pressed:not(:disabled) {
+  background-color: var(--accent-light);
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 3px rgba(45, 106, 79, 0.28),
+    0 8px 22px rgba(45, 106, 79, 0.2);
+  color: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+.video-controls .btn-primary.is-pressed:not(:disabled) {
+  background-color: #74c69d;
+  border-color: #b7e4c7;
+  box-shadow:
+    0 0 0 4px rgba(216, 243, 220, 0.95),
+    0 10px 26px rgba(45, 106, 79, 0.35);
+  color: #fff;
 }
 
 .video-controls .btn:disabled {

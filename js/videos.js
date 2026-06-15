@@ -18,6 +18,22 @@ function canControlVideo(video) {
   );
 }
 
+function highlightControlButton(btn) {
+  if (!btn || btn.disabled) return;
+  btn.classList.add("is-pressed");
+  clearTimeout(btn._highlightFadeTimer);
+  btn._highlightFadeTimer = setTimeout(() => {
+    btn.classList.remove("is-pressed");
+  }, 350);
+}
+
+function wireControlHighlight(...buttons) {
+  buttons.forEach((btn) => {
+    if (!btn) return;
+    btn.addEventListener("click", () => highlightControlButton(btn));
+  });
+}
+
 videoSlots.forEach((id) => {
   const video = document.getElementById(`video-${id}`);
   if (!video) return;
@@ -67,6 +83,8 @@ videoSlots.forEach((id) => {
 
   const controlButtons = [playBtn, pauseBtn, restartBtn, fullscreenBtn];
   const isBundled = Boolean(video.dataset.bundled);
+
+  wireControlHighlight(...controlButtons);
 
   function setButtonsEnabled(enabled) {
     controlButtons.forEach((btn) => {

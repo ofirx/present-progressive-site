@@ -13,8 +13,8 @@ html.embed .stats{position:absolute;top:10px}
 html.embed body.playing .stats{top:6px}
 html.embed .questionBox{top:68px}
 html.embed .help{bottom:54px;font-size:13px;padding:8px 12px}
-html.embed .controls{bottom:8px}
-html.embed .controls button{padding:10px 14px;font-size:14px}
+html.embed .controls{bottom:8px;z-index:40}
+html.embed .controls button{padding:10px 14px;font-size:14px;pointer-events:auto}
 html.embed .pill{font-size:14px;padding:7px 12px;border-width:2px}
 html.embed .feedback{bottom:88px;font-size:18px}
 body{
@@ -274,6 +274,7 @@ body.playing .questionBox{display:none}
   z-index:40;
   display:flex;
   gap:10px;
+  pointer-events:auto;
 }
 button{
   border:0;border-radius:14px;
@@ -414,9 +415,9 @@ button{
 <div id="feedback" class="feedback"></div>
 
 <div class="controls">
-  <button class="start" onclick="startGame()">Start</button>
-  <button class="next" onclick="nextQuestion()">Next Drill</button>
-  <button class="restart" onclick="restartGame()">Restart</button>
+  <button type="button" class="start" id="btn-start">Start</button>
+  <button type="button" class="next" id="btn-next">Next Drill</button>
+  <button type="button" class="restart" id="btn-restart">Restart</button>
 </div>
 
 <div id="result" class="result">
@@ -424,7 +425,7 @@ button{
     <h2>Game Finished!</h2>
     <div id="grade" class="grade">0%</div>
     <p id="finalMessage"></p>
-    <button class="start" onclick="playAgain()">Play Again</button>
+    <button type="button" class="start" id="btn-play-again">Play Again</button>
   </div>
 </div>
 
@@ -856,6 +857,10 @@ function endGame(){
 updateTop();
 setQuestionIdle(true);
 if(!loopStarted){ loopStarted=true; requestAnimationFrame(gameLoop); }
+document.getElementById("btn-start")?.addEventListener("click", startGame);
+document.getElementById("btn-next")?.addEventListener("click", nextQuestion);
+document.getElementById("btn-restart")?.addEventListener("click", restartGame);
+document.getElementById("btn-play-again")?.addEventListener("click", playAgain);
 </script>
 </body>
 </html>

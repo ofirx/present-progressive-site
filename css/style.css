@@ -845,12 +845,18 @@ h3 .he {
   background: #bae6fd;
 }
 
+.practice-section--3 .match-instructions-he {
+  border-top-color: rgba(91, 33, 182, 0.22);
+}
+
+.practice-game-shell,
 .balloon-game-shell {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
+.practice-game-fullscreen-btn,
 .balloon-game-fullscreen-btn {
   position: absolute;
   top: 10px;
@@ -861,6 +867,8 @@ h3 .he {
   box-shadow: 0 4px 14px rgba(26, 26, 26, 0.14);
 }
 
+.practice-game-shell:fullscreen,
+.practice-game-shell:-webkit-full-screen,
 .balloon-game-shell:fullscreen,
 .balloon-game-shell:-webkit-full-screen {
   display: flex;
@@ -870,6 +878,15 @@ h3 .he {
   background: linear-gradient(to bottom, #7dd3fc 0%, #bae6fd 55%, #dcfce7 100%);
 }
 
+.practice-activity--airplane .practice-game-shell:fullscreen,
+.practice-activity--airplane .practice-game-shell:-webkit-full-screen {
+  background: linear-gradient(to bottom, #74c0fc 0%, #a5d8ff 70%, #91a7ff 100%);
+}
+
+.practice-game-shell:fullscreen .practice-game-frame,
+.practice-game-shell:fullscreen .balloon-game-frame,
+.practice-game-shell:-webkit-full-screen .practice-game-frame,
+.practice-game-shell:-webkit-full-screen .balloon-game-frame,
 .balloon-game-shell:fullscreen .balloon-game-frame,
 .balloon-game-shell:-webkit-full-screen .balloon-game-frame {
   flex: 1;
@@ -879,6 +896,10 @@ h3 .he {
   border-radius: 0;
 }
 
+.practice-game-shell:fullscreen .practice-game-fullscreen-btn,
+.practice-game-shell:fullscreen .balloon-game-fullscreen-btn,
+.practice-game-shell:-webkit-full-screen .practice-game-fullscreen-btn,
+.practice-game-shell:-webkit-full-screen .balloon-game-fullscreen-btn,
 .balloon-game-shell:fullscreen .balloon-game-fullscreen-btn,
 .balloon-game-shell:-webkit-full-screen .balloon-game-fullscreen-btn {
   position: fixed;
@@ -886,13 +907,25 @@ h3 .he {
   right: 14px;
 }
 
+.practice-game-frame,
 .balloon-game-frame {
   display: block;
   width: 100%;
   height: 620px;
   border: 0;
   border-radius: 10px;
+}
+
+.balloon-game-frame {
   background: linear-gradient(to bottom, #7dd3fc 0%, #bae6fd 55%, #dcfce7 100%);
+}
+
+.airplane-game-frame {
+  background: linear-gradient(to bottom, #74c0fc 0%, #a5d8ff 70%, #91a7ff 100%);
+}
+
+.practice-activity--airplane {
+  background: #a5d8ff;
 }
 
 .practice-section--2 .match-instructions-he {
@@ -1461,6 +1494,7 @@ h3 .he {
     order: 2;
   }
 
+  .practice-game-frame,
   .balloon-game-frame {
     height: 520px;
   }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=17" />
+  <link rel="stylesheet" href="css/style.css?v=18" />
 </head>
 <body>
   <header class="site-header">
@@ -56,18 +56,18 @@
           <section class="practice-section practice-section--1" aria-labelledby="practice-section-1-title">
             <div class="practice-section-layout">
               <div class="practice-activity practice-activity--game">
-                <div class="balloon-game-shell" id="balloon-game-shell">
+                <div class="practice-game-shell balloon-game-shell" id="balloon-game-shell">
                   <button
                     type="button"
-                    class="balloon-game-fullscreen-btn btn btn-secondary btn-bilingual"
-                    id="balloon-game-fullscreen"
+                    class="practice-game-fullscreen-btn btn btn-secondary btn-bilingual"
+                    data-fullscreen-btn
                     aria-label="Enter fullscreen"
                   >
                     <span class="btn-en">Fullscreen</span>
                     <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
                   </button>
                   <iframe
-                    class="balloon-game-frame"
+                    class="practice-game-frame balloon-game-frame"
                     title="Present Progressive Balloon Arrow Game"
                     src="games/present_progressive_balloon_arrow_game.html?embed=1"
                     loading="lazy"
@@ -172,10 +172,24 @@
 
           <section class="practice-section practice-section--3" aria-labelledby="practice-section-3-title">
             <div class="practice-section-layout">
-              <div class="practice-activity">
-                <div class="practice-activity-content bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
+              <div class="practice-activity practice-activity--game practice-activity--airplane">
+                <div class="practice-game-shell" id="airplane-game-shell">
+                  <button
+                    type="button"
+                    class="practice-game-fullscreen-btn btn btn-secondary btn-bilingual"
+                    data-fullscreen-btn
+                    aria-label="Enter fullscreen"
+                  >
+                    <span class="btn-en">Fullscreen</span>
+                    <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
+                  </button>
+                  <iframe
+                    class="practice-game-frame airplane-game-frame"
+                    title="Present Progressive Airplane Game"
+                    src="games/present_progressive_airplane_game.html?embed=1"
+                    loading="lazy"
+                    allow="fullscreen"
+                  ></iframe>
                 </div>
               </div>
               <aside class="practice-task">
@@ -184,13 +198,29 @@
                   <span class="he" dir="rtl" lang="he">חלק 3</span>
                 </p>
                 <h2 id="practice-section-3-title" class="practice-task-title bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
+                  <span class="en">Airplane cloud game</span>
+                  <span class="he" dir="rtl" lang="he">משחק מטוס ועננים</span>
                 </h2>
-                <p class="practice-task-text bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
-                </p>
+                <div class="match-instructions">
+                  <p class="match-instructions-en">
+                    Fly the airplane into the cloud with the correct <strong>Present Progressive</strong> answer
+                    (<em>am / is / are + verb-ing</em>).
+                    Use the arrow keys <strong>↑ ↓ ← →</strong> or <strong>W A S D</strong> to move the plane.
+                    Read the sentence at the top, then fly into the correct cloud — or click the cloud directly.
+                    There are <strong>10 questions</strong> and you start with <strong>3 lives</strong>.
+                    A wrong answer or running out of time costs one life. Click <strong>Start</strong> to begin.
+                    Use <strong>Fullscreen</strong> for a larger view.
+                  </p>
+                  <p class="match-instructions-he" dir="rtl" lang="he">
+                    הטיסו את המטוס לענן עם התשובה הנכונה בזמן <strong>הווה מתמשך</strong>
+                    (<em>am / is / are + פועל עם ing</em>).
+                    השתמשו במקשי החצים <strong>↑ ↓ ← →</strong> או ב<strong>W A S D</strong> כדי להזיז את המטוס.
+                    קראו את המשפט בחלק העליון, ואז טוסו לענן הנכון — או לחצו על הענן ישירות.
+                    יש <strong>10 שאלות</strong> ומתחילים עם <strong>3 לבבות</strong>.
+                    תשובה שגויה או סיום הזמן גורמים לאובדן לב אחד. לחצו <strong>Start</strong> כדי להתחיל.
+                    לחצו <strong>מסך מלא</strong> לתצוגה גדולה יותר.
+                  </p>
+                </div>
               </aside>
             </div>
           </section>
@@ -271,7 +301,7 @@
     </div>
   </footer>
 
-  <script src="js/practice-game-fullscreen.js?v=1"></script>
+  <script src="js/practice-game-fullscreen.js?v=2"></script>
   <script src="js/practice-match.js?v=16"></script>
 </body>
 </html>

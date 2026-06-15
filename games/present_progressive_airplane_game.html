@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present Progressive Airplane Game</title>
+<style>
+:root{
+  --sky1:#74c0fc;
+  --sky2:#d0ebff;
+  --blue:#1864ab;
+  --dark:#0b2545;
+  --green:#2f9e44;
+  --red:#e03131;
+  --orange:#f76707;
+}
+*{box-sizing:border-box}
+html.embed,html.embed body{height:100%;overflow:hidden}
+html.embed .header{display:none}
+html.embed #game{width:100%;height:100%;min-height:520px}
+html.embed .topbar{position:absolute;top:6px;left:0;right:0;padding:6px 12px}
+html.embed .topbar .pill{font-size:14px;padding:7px 12px}
+html.embed .questionBox{position:absolute;top:52px}
+html.embed .help{bottom:54px;font-size:13px}
+html.embed .controls{bottom:8px}
+html.embed .controls button{padding:10px 14px;font-size:14px}
+html.embed .feedback{bottom:82px;font-size:18px}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(to bottom,var(--sky1),var(--sky2));
+  min-height:100vh;
+  overflow:hidden;
+  color:var(--dark);
+}
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:20;
+  background:rgba(255,255,255,.94);
+  border-bottom:3px solid #91a7ff;
+  padding:10px 18px;
+  text-align:center;
+}
+.header h1{margin:0;font-size:28px;color:var(--blue)}
+.instructions{font-size:15px;margin-top:6px;line-height:1.4}
+.hebrew{direction:rtl;font-weight:bold;margin-top:4px}
+.topbar{
+  position:fixed;
+  top:112px;
+  left:0;
+  width:100%;
+  z-index:18;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 24px;
+  pointer-events:none;
+}
+.pill{
+  background:rgba(255,255,255,.92);
+  border:2px solid #74c0fc;
+  padding:10px 16px;
+  border-radius:999px;
+  font-weight:bold;
+  font-size:18px;
+}
+#game{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(255,255,255,.35) 0 55px, transparent 56px),
+    radial-gradient(circle at 75% 35%, rgba(255,255,255,.25) 0 80px, transparent 81px),
+    linear-gradient(to bottom,#74c0fc 0%,#a5d8ff 70%,#91a7ff 100%);
+}
+.questionBox{
+  position:fixed;
+  top:168px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:17;
+  width:min(850px,90vw);
+  background:rgba(11,37,69,.9);
+  color:white;
+  border-radius:18px;
+  padding:18px 22px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+#question{font-size:32px;font-weight:bold}
+.plane{
+  position:absolute;
+  left:70px;
+  top:520px;
+  z-index:10;
+  font-size:66px;
+  width:92px;
+  height:92px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  filter:drop-shadow(0 7px 4px rgba(0,0,0,.28));
+  user-select:none;
+}
+.cloud{
+  position:absolute;
+  right:-320px;
+  width:230px;
+  height:120px;
+  padding:34px 18px 16px;
+  color:#1e40af;
+  font-size:24px;
+  font-weight:bold;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+  animation:moveCloud linear forwards;
+  z-index:8;
+}
+.cloudShape{
+  position:absolute;
+  inset:0;
+  background:white;
+  border-radius:70px;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+}
+.cloudShape:before{
+  content:"";
+  position:absolute;
+  width:85px;
+  height:85px;
+  top:-35px;
+  left:32px;
+  background:white;
+  border-radius:50%;
+}
+.cloudShape:after{
+  content:"";
+  position:absolute;
+  width:105px;
+  height:105px;
+  top:-52px;
+  right:32px;
+  background:white;
+  border-radius:50%;
+}
+.cloud span{
+  position:relative;
+  z-index:3;
+  display:block;
+  margin-top:6px;
+}
+@keyframes moveCloud{
+  from{right:-320px}
+  to{right:110vw}
+}
+.feedback{
+  position:fixed;
+  bottom:95px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  padding:16px 28px;
+  border-radius:18px;
+  font-size:24px;
+  font-weight:bold;
+  text-align:center;
+  display:none;
+}
+.good{display:block;background:#d3f9d8;color:#2b8a3e;border:3px solid #51cf66}
+.bad{display:block;background:#ffe3e3;color:#c92a2a;border:3px solid #ff8787}
+.controls{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:24;
+  display:flex;
+  gap:12px;
+}
+button{
+  border:none;
+  border-radius:14px;
+  padding:14px 22px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.start{background:var(--green);color:white}
+.restart{background:var(--orange);color:white}
+.next{background:#1c7ed6;color:white}
+.result{
+  position:fixed;
+  inset:0;
+  z-index:60;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.resultCard{
+  width:min(620px,90vw);
+  background:white;
+  border-radius:26px;
+  padding:34px;
+  text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+.resultCard h2{font-size:38px;margin-top:0;color:var(--blue)}
+.grade{font-size:64px;font-weight:bold;color:var(--green);margin:12px 0}
+.ground{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:45px;
+  background:linear-gradient(to right,#2f9e44,#69db7c);
+  z-index:2;
+}
+.city{
+  position:fixed;
+  bottom:45px;
+  left:0;
+  width:100%;
+  height:105px;
+  opacity:.35;
+  background:
+    linear-gradient(to top,#4dabf7 0 100%,transparent 100%),
+    repeating-linear-gradient(90deg,transparent 0 36px,rgba(255,255,255,.35) 36px 43px);
+  z-index:1;
+}
+.help{
+  position:fixed;
+  left:20px;
+  bottom:72px;
+  background:rgba(255,255,255,.9);
+  border:2px solid #91a7ff;
+  border-radius:14px;
+  padding:8px 12px;
+  font-weight:bold;
+  z-index:23;
+}
+@media(max-width:700px){
+  .header h1{font-size:22px}
+  .instructions{font-size:13px}
+  .topbar{top:132px;padding:8px}
+  .questionBox{top:184px}
+  #question{font-size:23px}
+  .cloud{font-size:19px;width:190px}
+  .plane{font-size:54px;width:76px;height:76px}
+  .help{display:none}
+}
+</style>
+</head>
+<body>
+<script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("embed");</script>
+<div class="header">
+  <h1>Present Progressive Airplane Game</h1>
+  <div class="instructions">
+    Fly the airplane into the cloud with the correct Present Progressive answer.
+    Use: <b>am / is / are + verb-ing</b>.
+    <div class="hebrew">
+      הטיסו את המטוס לענן עם התשובה הנכונה בהווה ממושך. השתמשו ב־am / is / are + פועל עם ing.
+    </div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div id="progress" class="pill">Question 1 / 10</div>
+  <div id="score" class="pill">Score: 0</div>
+  <div id="lives" class="pill">Lives: ❤️❤️❤️</div>
+</div>
+
+<div class="questionBox">
+  <div id="question">Press Start</div>
+</div>
+
+<div id="game">
+  <div class="city"></div>
+  <div class="ground"></div>
+  <div id="plane" class="plane">✈️</div>
+</div>
+
+<div class="help">Move: ↑ ↓ ← →</div>
+<div id="feedback" class="feedback"></div>
+
+<div class="controls">
+  <button class="start" onclick="startGame()">Start</button>
+  <button class="next" onclick="nextQuestion()">Next Drill</button>
+  <button class="restart" onclick="restartGame()">Restart</button>
+</div>
+
+<div id="result" class="result">
+  <div class="resultCard">
+    <h2>Game Finished!</h2>
+    <div id="finalGrade" class="grade">0%</div>
+    <p id="finalMessage"></p>
+    <button class="restart" onclick="playAgain()">Play Again</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {q:"Dana ___ a book now.", answers:["is reading","are reading","am reading"], correct:"is reading"},
+  {q:"I ___ a sentence now.", answers:["is writing","am writing","are writing"], correct:"am writing"},
+  {q:"The boys ___ football now.", answers:["is playing","are playing","am playing"], correct:"are playing"},
+  {q:"He ___ lunch now.", answers:["is eating","are eating","am eating"], correct:"is eating"},
+  {q:"She ___ a picture now.", answers:["are drawing","is drawing","am drawing"], correct:"is drawing"},
+  {q:"We ___ in the park now.", answers:["is running","am running","are running"], correct:"are running"},
+  {q:"The girl is ___ now.", answers:["read","reading","reads"], correct:"reading"},
+  {q:"They are ___ now.", answers:["play","playing","plays"], correct:"playing"},
+  {q:"I am ___ now.", answers:["write","writes","writing"], correct:"writing"},
+  {q:"The child is ___ now.", answers:["drawing","draw","draws"], correct:"drawing"}
+];
+
+let current = 0;
+let score = 0;
+let lives = 3;
+let active = false;
+let clouds = [];
+let cloudTimer = null;
+let checkTimer = null;
+let planeX = 70;
+let planeY = 520;
+let keys = {};
+
+const game = document.getElementById("game");
+const plane = document.getElementById("plane");
+const questionBox = document.getElementById("question");
+const progress = document.getElementById("progress");
+const scoreBox = document.getElementById("score");
+const livesBox = document.getElementById("lives");
+const feedback = document.getElementById("feedback");
+const result = document.getElementById("result");
+const finalGrade = document.getElementById("finalGrade");
+const finalMessage = document.getElementById("finalMessage");
+
+function playWidth(){
+  return game.clientWidth || window.innerWidth;
+}
+
+function playHeight(){
+  return game.clientHeight || window.innerHeight;
+}
+
+document.addEventListener("keydown", e => {
+  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"].includes(e.key)){
+    keys[e.key] = true;
+    e.preventDefault();
+  }
+});
+document.addEventListener("keyup", e => keys[e.key] = false);
+
+function gameLoop(){
+  const speed = 8;
+  if(keys.ArrowUp || keys.w) planeY -= speed;
+  if(keys.ArrowDown || keys.s) planeY += speed;
+  if(keys.ArrowLeft || keys.a) planeX -= speed;
+  if(keys.ArrowRight || keys.d) planeX += speed;
+
+  const maxX = playWidth() - 120;
+  const maxY = playHeight() - 120;
+  planeX = Math.max(10, Math.min(maxX, planeX));
+  planeY = Math.max(180, Math.min(maxY, planeY));
+
+  plane.style.left = planeX + "px";
+  plane.style.top = planeY + "px";
+
+  if(active) checkCollisions();
+  requestAnimationFrame(gameLoop);
+}
+requestAnimationFrame(gameLoop);
+
+function updateTop(){
+  progress.textContent = "Question " + Math.min(current + 1, questions.length) + " / " + questions.length;
+  scoreBox.textContent = "Score: " + score;
+  livesBox.textContent = "Lives: " + "❤️".repeat(lives);
+}
+
+function clearClouds(){
+  clouds.forEach(c => c.remove());
+  clouds = [];
+  if(cloudTimer) clearTimeout(cloudTimer);
+  if(checkTimer) clearInterval(checkTimer);
+}
+
+function startGame(){
+  result.style.display = "none";
+  current = 0;
+  score = 0;
+  lives = 3;
+  planeX = 70;
+  planeY = Math.floor(playHeight() * .62);
+  loadQuestion();
+}
+
+function restartGame(){
+  clearClouds();
+  result.style.display = "none";
+  active = false;
+  current = 0;
+  score = 0;
+  lives = 3;
+  planeX = 70;
+  planeY = Math.floor(playHeight() * .62);
+  questionBox.textContent = "Press Start";
+  updateTop();
+  feedback.className = "feedback";
+}
+
+function playAgain(){
+  restartGame();
+  startGame();
+}
+
+function loadQuestion(){
+  if(current >= questions.length || lives <= 0){
+    endGame();
+    return;
+  }
+  clearClouds();
+  feedback.className = "feedback";
+  active = true;
+  const item = questions[current];
+  questionBox.textContent = item.q;
+  updateTop();
+
+  const positions = getScatteredPositions();
+  const shuffled = [...item.answers].sort(() => Math.random() - 0.5);
+
+  shuffled.forEach((ans, index) => {
+    const cloud = document.createElement("div");
+    cloud.className = "cloud";
+    cloud.dataset.answer = ans;
+    cloud.style.top = positions[index].y + "px";
+    cloud.style.animationDuration = positions[index].speed + "s";
+    cloud.style.animationDelay = positions[index].delay + "s";
+    cloud.innerHTML = '<div class="cloudShape"></div><span>' + ans + '</span>';
+    cloud.onclick = () => chooseAnswer(ans, cloud);
+    game.appendChild(cloud);
+    clouds.push(cloud);
+  });
+
+  cloudTimer = setTimeout(() => {
+    if(active){
+      lives--;
+      active = false;
+      showFeedback("Time is up! / הזמן נגמר!", false);
+      current++;
+      updateTop();
+      setTimeout(loadQuestion, 1000);
+    }
+  }, 11500);
+}
+
+function getScatteredPositions(){
+  const h = playHeight();
+  const topMin = 170;
+  const bottomMax = h - 210;
+  const y1 = topMin + Math.random() * 70;
+  const y2 = topMin + 105 + Math.random() * 85;
+  const y3 = Math.max(topMin + 230, bottomMax - Math.random() * 100);
+  return [
+    {y:y1, speed:10.5, delay:0},
+    {y:y2, speed:11.5, delay:.9},
+    {y:y3, speed:12.5, delay:1.8}
+  ].sort(() => Math.random() - .5);
+}
+
+function rectsOverlap(a,b){
+  return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+}
+
+function checkCollisions(){
+  const planeRect = plane.getBoundingClientRect();
+  for(const cloud of clouds){
+    const cloudRect = cloud.getBoundingClientRect();
+    if(rectsOverlap(planeRect, cloudRect)){
+      chooseAnswer(cloud.dataset.answer, cloud);
+      break;
+    }
+  }
+}
+
+function chooseAnswer(answer, cloud){
+  if(!active) return;
+  active = false;
+  clearTimeout(cloudTimer);
+
+  const correct = questions[current].correct;
+  if(answer === correct){
+    score++;
+    cloud.querySelector(".cloudShape").style.background = "#d3f9d8";
+    showFeedback("Correct! Good job! / נכון! כל הכבוד!", true);
+  }else{
+    lives--;
+    cloud.querySelector(".cloudShape").style.background = "#ffe3e3";
+    showFeedback("Wrong! Correct answer: " + correct + " / לא נכון!", false);
+  }
+
+  current++;
+  updateTop();
+  setTimeout(loadQuestion, 1200);
+}
+
+function nextQuestion(){
+  if(!active && current === 0){
+    startGame();
+    return;
+  }
+  active = false;
+  current++;
+  loadQuestion();
+}
+
+function showFeedback(text, good){
+  feedback.textContent = text;
+  feedback.className = "feedback " + (good ? "good" : "bad");
+}
+
+function endGame(){
+  clearClouds();
+  active = false;
+  const percent = Math.round((score / questions.length) * 100);
+  finalGrade.textContent = percent + "%";
+
+  if(percent >= 90){
+    finalMessage.textContent = "Excellent! You understand the Present Progressive very well.";
+  }else if(percent >= 70){
+    finalMessage.textContent = "Good work! Keep practicing am / is / are + verb-ing.";
+  }else{
+    finalMessage.textContent = "Keep practicing. Remember: am / is / are + verb-ing.";
+  }
+
+  result.style.display = "flex";
+}
+
+updateTop();
+</script>
+</body>
+</html>

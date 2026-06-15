@@ -287,7 +287,7 @@
     picks = Array(SENTENCES.length).fill(null);
     stopTimer();
     timeLeftMs = 0;
-    if (timerDisplay) timerDisplay.hidden = true;
+    showTimerFloat(false);
     btnStart.textContent = "Start";
     btnPause.textContent = "Pause";
     setInteractive(false);
@@ -302,8 +302,8 @@
     if (timerSelect) {
       timerSelect.disabled = !isTimedMode() || (started && !finished);
     }
-    if (!isTimedMode() && timerDisplay) {
-      timerDisplay.hidden = true;
+    if (!isTimedMode()) {
+      showTimerFloat(false);
     }
   }
 

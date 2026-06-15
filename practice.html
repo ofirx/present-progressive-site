@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=18" />
+  <link rel="stylesheet" href="css/style.css?v=19" />
 </head>
 <body>
   <header class="site-header">
@@ -231,9 +231,64 @@
           <section class="practice-section practice-section--4" aria-labelledby="practice-section-4-title">
             <div class="practice-section-layout">
               <div class="practice-activity">
-                <div class="practice-activity-content bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
+                <div class="reporter-activity">
+                  <div class="reporter-scene-wrap">
+                    <span class="reporter-live-badge">LIVE</span>
+                    <img
+                      class="reporter-scene-img"
+                      src="images/reporter-park-scene.png"
+                      alt="A sunny park: children reading, writing, playing soccer, eating, drawing, and running."
+                      width="900"
+                      height="500"
+                    />
+                  </div>
+
+                  <p class="reporter-prompt">
+                    <strong>You are a TV reporter.</strong> Look at the picture. Report what is happening <strong>now</strong>.
+                    Write <strong>4 sentences</strong> in the Present Progressive.
+                  </p>
+
+                  <ul class="reporter-word-bank" aria-label="Target words">
+                    <li>read → reading</li>
+                    <li>write → writing</li>
+                    <li>play → playing</li>
+                    <li>eat → eating</li>
+                    <li>draw → drawing</li>
+                    <li>run → running</li>
+                  </ul>
+
+                  <form id="reporter-form" class="reporter-form" novalidate>
+                    <div class="reporter-field">
+                      <label for="reporter-s1">Sentence 1</label>
+                      <textarea id="reporter-s1" class="reporter-input" rows="2" placeholder="e.g. A boy is reading a book on the bench."></textarea>
+                    </div>
+                    <div class="reporter-field">
+                      <label for="reporter-s2">Sentence 2</label>
+                      <textarea id="reporter-s2" class="reporter-input" rows="2" placeholder="e.g. A girl is writing in her notebook."></textarea>
+                    </div>
+                    <div class="reporter-field">
+                      <label for="reporter-s3">Sentence 3</label>
+                      <textarea id="reporter-s3" class="reporter-input" rows="2" placeholder="e.g. The children are playing soccer."></textarea>
+                    </div>
+                    <div class="reporter-field">
+                      <label for="reporter-s4">Sentence 4</label>
+                      <textarea id="reporter-s4" class="reporter-input" rows="2" placeholder="e.g. A boy is running with his dog."></textarea>
+                    </div>
+
+                    <div class="reporter-actions">
+                      <button type="submit" class="btn btn-primary btn-bilingual" id="reporter-submit">
+                        <span class="btn-en">Submit</span>
+                        <span class="btn-he" dir="rtl" lang="he">שלח</span>
+                      </button>
+                      <button type="button" class="btn btn-secondary btn-bilingual" id="reporter-clear">
+                        <span class="btn-en">Clear</span>
+                        <span class="btn-he" dir="rtl" lang="he">נקה</span>
+                      </button>
+                    </div>
+                  </form>
+
+                  <p id="reporter-summary" class="reporter-summary" hidden aria-live="polite"></p>
+                  <div id="reporter-results" class="reporter-results" hidden aria-live="polite"></div>
                 </div>
               </div>
               <aside class="practice-task">
@@ -242,13 +297,29 @@
                   <span class="he" dir="rtl" lang="he">חלק 4</span>
                 </p>
                 <h2 id="practice-section-4-title" class="practice-task-title bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
+                  <span class="en">TV reporter — live from the park</span>
+                  <span class="he" dir="rtl" lang="he">כתב טלוויזיה — שידור חי מהפארק</span>
                 </h2>
-                <p class="practice-task-text bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
-                </p>
+                <div class="match-instructions">
+                  <p class="match-instructions-en">
+                    Imagine you are a <strong>TV reporter</strong> doing a live report. Look at the picture and describe
+                    what people are doing <strong>right now</strong>.
+                    Write <strong>4 sentences</strong> in the <strong>Present Progressive</strong>
+                    (<em>am / is / are + verb-ing</em>).
+                    Use words from the word bank: <strong>reading, writing, playing, eating, drawing, running</strong>.
+                    Start with a capital letter and end with <strong>.</strong> Click <strong>Submit</strong> to see what is
+                    correct and what to fix. Click <strong>Clear</strong> to erase your writing and start again.
+                  </p>
+                  <p class="match-instructions-he" dir="rtl" lang="he">
+                    דמיינו שאתם <strong>כתב טלוויזיה</strong> בשידור חי. הסתכלו על התמונה ותארו מה אנשים עושים
+                    <strong>עכשיו</strong>.
+                    כתבו <strong>4 משפטים</strong> בזמן <strong>הווה מתמשך</strong>
+                    (<em>am / is / are + פועל עם ing</em>).
+                    השתמשו במילים: <strong>reading, writing, playing, eating, drawing, running</strong>.
+                    התחילו באות גדולה וסיימו ב<strong>.</strong> לחצו <strong>Submit / שלח</strong> כדי לראות מה נכון ומה לתקן.
+                    לחצו <strong>Clear / נקה</strong> כדי למחוק ולהתחיל מחדש.
+                  </p>
+                </div>
               </aside>
             </div>
           </section>
@@ -304,5 +375,6 @@
 
   <script src="js/practice-game-fullscreen.js?v=2"></script>
   <script src="js/practice-match.js?v=16"></script>
+  <script src="js/practice-reporter.js?v=1"></script>
 </body>
 </html>

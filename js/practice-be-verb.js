@@ -88,7 +88,7 @@
     const timed = isTimedMode();
     if (btnStart) {
       btnStart.hidden = !timed;
-      btnStart.disabled = timed && started && !finished;
+      btnStart.disabled = false;
       btnStart.textContent = finished ? "Try again" : started ? "Restart" : "Start";
     }
     if (btnPause) {

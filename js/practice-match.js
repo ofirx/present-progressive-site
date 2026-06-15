@@ -85,7 +85,7 @@
   function createChip(part, sentenceId, partIndex) {
     const chip = document.createElement("button");
     chip.type = "button";
-    chip.className = `match-chip match-chip--${part.type}`;
+    chip.className = `match-chip match-chip--s${sentenceId}-p${partIndex}`;
     chip.textContent = part.text;
     chip.draggable = true;
     chip.dataset.sentenceId = String(sentenceId);

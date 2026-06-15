@@ -1159,6 +1159,34 @@ h3 .he {
   line-height: 1.55;
 }
 
+.reporter-input--almost {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.reporter-result-card--almost {
+  background: #fffbeb;
+  border-color: #fcd34d;
+}
+
+.reporter-status--almost {
+  background: #f59e0b;
+  color: #fff;
+}
+
+.reporter-feedback--almost {
+  padding-left: 0;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.reporter-feedback--almost-list {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  color: #b45309;
+  line-height: 1.5;
+}
+
 .reporter-result-card {
   margin: 0;
   padding: 0.85rem 1rem;

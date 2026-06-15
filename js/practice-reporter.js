@@ -32,84 +32,142 @@
     });
   }
 
+  const MESSAGES = {
+    empty: "Please write a sentence here.",
+    capital: "Start with a capital letter.",
+    punctuation: "Finish with a full stop (.), ! or ?",
+    pp: "Use Present Progressive: subject + am / is / are + verb-ing.",
+    baseVerb: "Use the -ing form of the verb, not the base verb.",
+    picture: "Describe an action from the picture using a verb with -ing.",
+    length: "Try to write a fuller sentence (at least 4 words).",
+  };
+
   function checkSentence(text, index) {
-    const issues = [];
+    const coreIssues = [];
+    const minorIssues = [];
     const trimmed = text.trim();
 
     if (!trimmed) {
       return {
+        status: "needs-work",
+        score: 0,
+        issues: [MESSAGES.empty],
+        coreIssues: [MESSAGES.empty],
+        minorIssues: [],
         ok: false,
-        issues: ["Please write a sentence here."],
         verbs: [],
+        index,
       };
     }
 
     if (!/^[A-Z]/.test(trimmed)) {
-      issues.push("Start with a capital letter.");
+      minorIssues.push(MESSAGES.capital);
     }
 
     if (!/[.!?]$/.test(trimmed)) {
-      issues.push("Finish with a full stop (.), ! or ?");
+      minorIssues.push(MESSAGES.punctuation);
     }
 
     if (!hasPresentProgressive(trimmed)) {
-      issues.push("Use Present Progressive: subject + am / is / are + verb-ing.");
+      coreIssues.push(MESSAGES.pp);
     } else if (/\b(am|is|are)\s+(read|write|play|eat|draw|run)\b/i.test(trimmed)) {
-      issues.push("Use the -ing form of the verb, not the base verb.");
+      coreIssues.push(MESSAGES.baseVerb);
     }
 
     const verbs = targetVerbsInSentence(trimmed);
     if (verbs.length === 0) {
-      issues.push("Describe an action from the picture using a verb with -ing.");
+      coreIssues.push(MESSAGES.picture);
     }
 
     if (trimmed.split(/\s+/).length < 4) {
-      issues.push("Try to write a fuller sentence (at least 4 words).");
+      coreIssues.push(MESSAGES.length);
     }
 
-    return { ok: issues.length === 0, issues, verbs, index };
+    const issues = coreIssues.concat(minorIssues);
+    let status;
+    let score;
+
+    if (coreIssues.length === 0 && minorIssues.length === 0) {
+      status = "correct";
+      score = 100;
+    } else if (coreIssues.length === 0 && minorIssues.length > 0) {
+      status = "almost";
+      score = 90;
+    } else {
+      status = "needs-work";
+      score = 0;
+    }
+
+    return {
+      status,
+      score,
+      issues,
+      coreIssues,
+      minorIssues,
+      ok: status === "correct",
+      verbs,
+      index,
+    };
   }
 
   function renderResults(rows) {
     resultsEl.hidden = false;
     resultsEl.innerHTML = rows
       .map((row) => {
-        const status = row.ok
-          ? '<span class="reporter-status reporter-status--ok">Correct</span>'
-          : '<span class="reporter-status reporter-status--bad">Needs work</span>';
-        const detail = row.ok
-          ? "<p class=\"reporter-feedback reporter-feedback--ok\">Great job! This sentence uses Present Progressive well.</p>"
-          : "<ul class=\"reporter-feedback reporter-feedback--bad\">" +
+        let statusHtml;
+        let detail;
+        let cardClass = "reporter-result-card";
+
+        if (row.status === "correct") {
+          statusHtml = '<span class="reporter-status reporter-status--ok">Correct</span>';
+          detail =
+            '<p class="reporter-feedback reporter-feedback--ok">Great job! This sentence uses Present Progressive well.</p>';
+          cardClass += " reporter-result-card--ok";
+        } else if (row.status === "almost") {
+          statusHtml = '<span class="reporter-status reporter-status--almost">90%</span>';
+          detail =
+            '<p class="reporter-feedback reporter-feedback--almost">Good Present Progressive! Small fixes:</p>' +
+            '<ul class="reporter-feedback reporter-feedback--almost-list">' +
+            row.minorIssues.map((i) => "<li>" + i + "</li>").join("") +
+            "</ul>";
+          cardClass += " reporter-result-card--almost";
+        } else {
+          statusHtml = '<span class="reporter-status reporter-status--bad">Needs work</span>';
+          detail =
+            '<ul class="reporter-feedback reporter-feedback--bad">' +
             row.issues.map((i) => "<li>" + i + "</li>").join("") +
             "</ul>";
+          cardClass += " reporter-result-card--bad";
+        }
+
         return (
-          "<article class=\"reporter-result-card" +
-          (row.ok ? " reporter-result-card--ok" : " reporter-result-card--bad") +
-          "\">" +
-          "<h3>Sentence " +
-          (row.index + 1) +
-          " " +
-          status +
-          "</h3>" +
+          "<article class=\"" + cardClass + "\">" +
+          "<h3>Sentence " + (row.index + 1) + " " + statusHtml + "</h3>" +
           detail +
           "</article>"
         );
       })
       .join("");
 
-    const correctCount = rows.filter((r) => r.ok).length;
+    const totalScore = Math.round(
+      rows.reduce((sum, row) => sum + row.score, 0) / rows.length
+    );
+    const correctCount = rows.filter((r) => r.status === "correct").length;
+    const almostCount = rows.filter((r) => r.status === "almost").length;
 
-    let summary =
-      "You got <strong>" +
-      correctCount +
-      " / " +
-      rows.length +
-      "</strong> sentences correct.";
+    let summary = "Your score: <strong>" + totalScore + "%</strong>. ";
 
     if (correctCount === rows.length) {
-      summary += " Excellent reporting!";
+      summary += "Excellent reporting!";
+    } else if (totalScore >= 90) {
+      summary += "Strong Present Progressive! Check the small fixes above.";
     } else {
-      summary += " Read the tips and try again.";
+      summary += "Focus on <strong>am / is / are + verb-ing</strong>, then try again.";
+    }
+
+    if (almostCount > 0) {
+      summary +=
+        " Sentences with only capital-letter or punctuation tips count as <strong>90%</strong>.";
     }
 
     summaryEl.innerHTML = summary;
@@ -120,8 +178,10 @@
     e.preventDefault();
     const rows = inputs.map((input, index) => {
       const row = checkSentence(input.value, index);
-      input.classList.toggle("reporter-input--ok", row.ok);
-      input.classList.toggle("reporter-input--bad", !row.ok && input.value.trim());
+      input.classList.remove("reporter-input--ok", "reporter-input--bad", "reporter-input--almost");
+      if (row.status === "correct") input.classList.add("reporter-input--ok");
+      else if (row.status === "almost") input.classList.add("reporter-input--almost");
+      else if (input.value.trim()) input.classList.add("reporter-input--bad");
       return row;
     });
     renderResults(rows);
@@ -131,7 +191,7 @@
   function onClear() {
     inputs.forEach((input) => {
       input.value = "";
-      input.classList.remove("reporter-input--ok", "reporter-input--bad");
+      input.classList.remove("reporter-input--ok", "reporter-input--bad", "reporter-input--almost");
     });
     resultsEl.hidden = true;
     resultsEl.innerHTML = "";

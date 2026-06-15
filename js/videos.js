@@ -66,13 +66,24 @@ videoSlots.forEach((id) => {
   let isSeeking = false;
 
   const controlButtons = [playBtn, pauseBtn, restartBtn, fullscreenBtn];
+  const isBundled = Boolean(video.dataset.bundled);
 
-  function setControlsEnabled(enabled) {
+  function setButtonsEnabled(enabled) {
     controlButtons.forEach((btn) => {
       if (btn) btn.disabled = !enabled;
     });
-    if (seekBar) seekBar.disabled = !enabled;
-    timeline.hidden = !enabled;
+  }
+
+  function setTimelineVisible(visible) {
+    timeline.hidden = !visible;
+    if (seekBar) seekBar.disabled = !visible;
+  }
+
+  function setControlsEnabled(enabled) {
+    setButtonsEnabled(enabled);
+    if (!isBundled) {
+      setTimelineVisible(enabled);
+    }
   }
 
   function updateTimeline() {
@@ -97,6 +108,10 @@ videoSlots.forEach((id) => {
     }
     try {
       await video.play();
+      if (isBundled) {
+        setTimelineVisible(true);
+        updateTimeline();
+      }
     } catch {
       return;
     }
@@ -116,6 +131,15 @@ videoSlots.forEach((id) => {
 
   video.addEventListener("loadedmetadata", () => {
     seekBar.max = String(video.duration || 0);
+    updateTimeline();
+    if (isBundled && !video.paused && !video.ended) {
+      setTimelineVisible(true);
+    }
+  });
+
+  video.addEventListener("play", () => {
+    if (!isBundled) return;
+    setTimelineVisible(true);
     updateTimeline();
   });
 
@@ -163,7 +187,8 @@ videoSlots.forEach((id) => {
     video.removeAttribute("hidden");
     slot.classList.add("has-video");
     if (placeholder) placeholder.style.display = "none";
-    setControlsEnabled(true);
+    setButtonsEnabled(true);
+    setTimelineVisible(false);
     video.load();
 
     const bundledName = slot.dataset.bundledVideo || "lesson video";
@@ -175,7 +200,10 @@ videoSlots.forEach((id) => {
         if (video.currentTime < 0.01 && video.duration > 0.1) {
           video.currentTime = 0.01;
         }
-        setControlsEnabled(true);
+        setButtonsEnabled(true);
+        if (!video.paused && !video.ended) {
+          setTimelineVisible(true);
+        }
       },
       { once: true }
     );

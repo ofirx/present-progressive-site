@@ -21,6 +21,9 @@
   const sentencesEl = document.getElementById("be-sentences");
   const resultsEl = document.getElementById("be-results");
   const summaryEl = document.getElementById("be-summary");
+  const gradePanel = document.getElementById("be-grade-panel");
+  const chartStats = document.getElementById("be-chart-stats");
+  const chartCanvas = document.getElementById("be-chart");
   const timerDisplay = document.getElementById("be-timer-display");
   const timerBlock = document.getElementById("be-timer-block");
   const progressCounter = document.getElementById("be-progress-counter");
@@ -38,6 +41,7 @@
   let picks = Array(SENTENCES.length).fill(null);
   let timerId = null;
   let timeLeftMs = 0;
+  let chartInstance = null;
 
   function isTimedMode() {
     return root.querySelector('input[name="be-mode"]:checked')?.value === "timed";
@@ -114,6 +118,65 @@
       progressHint.classList.add("is-complete");
       progressHint.textContent = "Great job! You've answered every sentence.";
     }
+  }
+
+  function destroyChart() {
+    if (chartInstance) {
+      chartInstance.destroy();
+      chartInstance = null;
+    }
+  }
+
+  function renderChart(correct, total) {
+    destroyChart();
+    const Chart = window.Chart;
+    if (!Chart || !chartCanvas) return;
+
+    const wrong = total - correct;
+    chartInstance = new Chart(chartCanvas.getContext("2d"), {
+      type: "pie",
+      data: {
+        labels: ["Correct", "Incorrect"],
+        datasets: [
+          {
+            data: [correct, wrong],
+            backgroundColor: ["#db2777", "#9b2226"],
+            borderWidth: 2,
+            borderColor: "#fff",
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: {
+            callbacks: {
+              label(ctx) {
+                const n = ctx.raw;
+                const pct = total ? ((n / total) * 100).toFixed(0) : "0";
+                return ctx.label + ": " + n + " (" + pct + "%)";
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (chartStats) {
+      chartStats.textContent =
+        "Correct: " + correct + "/" + total + " · Incorrect: " + wrong + "/" + total;
+    }
+  }
+
+  function hideGradePanel() {
+    destroyChart();
+    if (gradePanel) gradePanel.hidden = true;
+    if (summaryEl) {
+      summaryEl.hidden = true;
+      summaryEl.textContent = "";
+    }
+    if (chartStats) chartStats.textContent = "";
   }
 
   function showTimerBlock(show) {
@@ -218,10 +281,9 @@
     paused = false;
     finished = false;
     picks = Array(SENTENCES.length).fill(null);
+    hideGradePanel();
     resultsEl.hidden = true;
     resultsEl.innerHTML = "";
-    summaryEl.hidden = true;
-    summaryEl.textContent = "";
 
     sentencesEl.querySelectorAll(".be-verb-row").forEach((row) => {
       row.classList.remove("be-verb-row--ok", "be-verb-row--bad");
@@ -342,8 +404,10 @@
 
     summaryEl.innerHTML = summary;
     summaryEl.hidden = false;
+    if (gradePanel) gradePanel.hidden = false;
+    renderChart(correct, SENTENCES.length);
     updateProgress();
-    resultsEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    gradePanel?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function resetActivity() {
@@ -358,10 +422,9 @@
     btnPause.textContent = "Pause";
     setInteractive(false);
     renderSentences();
+    hideGradePanel();
     resultsEl.hidden = true;
     resultsEl.innerHTML = "";
-    summaryEl.hidden = true;
-    summaryEl.textContent = "";
     updateProgress();
   }
 

@@ -1618,11 +1618,59 @@ h3 .he {
   color: #991b1b;
 }
 
+.be-verb-submit-row {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.35rem 0 0.15rem 1.35rem;
+}
+
+.be-verb-grade {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  border: 2px solid #f9a8d4;
+  background: #fff7fa;
+}
+
+.be-verb-grade[hidden] {
+  display: none !important;
+}
+
+.be-verb-grade-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #9d174d;
+}
+
+.be-verb-chart-box {
+  max-width: 280px;
+  margin: 0.75rem auto 0;
+  padding: 0.85rem;
+  border-radius: 12px;
+  border: 2px solid #fbcfe8;
+  background: #fff;
+}
+
+.be-verb-chart-box canvas {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+}
+
+.be-verb-chart-stats {
+  margin: 0.55rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: #9d174d;
+}
+
 .be-verb-summary {
   margin: 0;
   padding: 0.85rem 1rem;
   border-radius: 12px;
-  background: #fdf2f8;
+  background: #fff;
   border: 2px solid #f9a8d4;
   line-height: 1.55;
 }
@@ -1697,7 +1745,8 @@ h3 .he {
 
   .be-verb-line--rest,
   .be-verb-picker,
-  .be-verb-row-feedback {
+  .be-verb-row-feedback,
+  .be-verb-submit-row {
     padding-left: 0;
   }
 

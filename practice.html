@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=26" />
+  <link rel="stylesheet" href="css/style.css?v=27" />
 </head>
 <body>
   <header class="site-header">
@@ -343,10 +343,6 @@
                     <div class="be-verb-controls">
                       <button type="button" class="btn btn-primary" id="be-start">Start</button>
                       <button type="button" class="btn btn-secondary" id="be-pause" disabled>Pause</button>
-                      <button type="button" class="btn btn-primary btn-bilingual" id="be-submit" disabled>
-                        <span class="btn-en">Submit</span>
-                        <span class="btn-he" dir="rtl" lang="he">שלח</span>
-                      </button>
                     </div>
                   </div>
 
@@ -370,7 +366,25 @@
                     <div class="be-verb-body">
                       <div id="be-sentences" class="be-sentences" aria-label="Choose am, is, or are"></div>
 
-                      <p id="be-summary" class="be-verb-summary" hidden aria-live="polite"></p>
+                      <div class="be-verb-submit-row">
+                        <button type="button" class="btn btn-primary btn-bilingual" id="be-submit" disabled>
+                          <span class="btn-en">Submit</span>
+                          <span class="btn-he" dir="rtl" lang="he">שלח</span>
+                        </button>
+                      </div>
+
+                      <div id="be-grade-panel" class="be-verb-grade" hidden aria-live="polite">
+                        <h3 class="be-verb-grade-title bilingual-block">
+                          <span class="en">Your grade</span>
+                          <span class="he" dir="rtl" lang="he">הציון שלך</span>
+                        </h3>
+                        <p id="be-summary" class="be-verb-summary" hidden></p>
+                        <div class="be-verb-chart-box">
+                          <canvas id="be-chart" width="240" height="200" aria-label="Score pie chart"></canvas>
+                          <p class="be-verb-chart-stats" id="be-chart-stats"></p>
+                        </div>
+                      </div>
+
                       <div id="be-results" class="be-verb-results" hidden aria-live="polite"></div>
                     </div>
                   </div>
@@ -392,9 +406,9 @@
                     <strong>2 sentences are negative</strong> — choose <strong>am not</strong>, <strong>isn't</strong>, or
                     <strong>aren't</strong>.
                     Pick <strong>No timer</strong> or <strong>Timed</strong> (4, 5, or 6 minutes). Click
-                    <strong>Start</strong>, then click your answer for each sentence. Use <strong>Pause</strong> to stop
-                    the clock, and <strong>Submit</strong> when you finish. In timed mode, answers are sent automatically
-                    when time runs out. Choose your answer from the <strong>dropdown</strong> under each sentence.
+                    <strong>Start</strong>, then choose your answer from the <strong>dropdown</strong> under each sentence.
+                    Use <strong>Pause</strong> to stop the clock. Scroll down and click <strong>Submit / שלח</strong> after
+                    question 7 when you finish. In timed mode, answers are sent automatically when time runs out.
                   </p>
                   <p class="match-instructions-he" dir="rtl" lang="he">
                     יש <strong>7 משפטים</strong> בזמן הווה מתמשך. בחרו את צורת <strong>be</strong> הנכונה לכל רווח:
@@ -432,9 +446,10 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="js/practice-game-fullscreen.js?v=2"></script>
   <script src="js/practice-match.js?v=16"></script>
   <script src="js/practice-reporter.js?v=5"></script>
-  <script src="js/practice-be-verb.js?v=6"></script>
+  <script src="js/practice-be-verb.js?v=7"></script>
 </body>
 </html>

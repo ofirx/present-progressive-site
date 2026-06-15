@@ -85,6 +85,7 @@ videoSlots.forEach((id) => {
   const fullscreenBtn = document.querySelector(`.btn-fullscreen[data-video="${id}"]`);
   const saveStatus = document.getElementById(`save-status-${id}`);
   const slot = document.querySelector(`.video-slot[data-slot="${id}"]`);
+  if (!slot) return;
   const controlsWrap = slot.querySelector(".video-controls");
 
   const timeline = document.createElement("div");
@@ -227,7 +228,7 @@ videoSlots.forEach((id) => {
   });
 
   playBtn.addEventListener("click", async () => {
-    if (!video.src) return;
+    if (!video.src && !video.currentSrc) return;
     try {
       await video.play();
     } catch {
@@ -236,12 +237,12 @@ videoSlots.forEach((id) => {
   });
 
   pauseBtn.addEventListener("click", () => {
-    if (!video.src) return;
+    if (!video.src && !video.currentSrc) return;
     video.pause();
   });
 
   restartBtn.addEventListener("click", () => {
-    if (!video.src) return;
+    if (!video.src && !video.currentSrc) return;
     video.pause();
     video.currentTime = 0;
     updateTimeline();
@@ -275,7 +276,7 @@ videoSlots.forEach((id) => {
   });
 
   fullscreenBtn.addEventListener("click", async () => {
-    if (!video.src) return;
+    if (!video.src && !video.currentSrc) return;
 
     try {
       if (video.webkitEnterFullscreen) {
@@ -289,6 +290,28 @@ videoSlots.forEach((id) => {
       return;
     }
   });
+
+  if (video.dataset.bundled) {
+    const placeholder = document.getElementById(`placeholder-${id}`);
+    video.hidden = false;
+    video.removeAttribute("hidden");
+    slot.classList.add("has-video");
+    if (placeholder) placeholder.style.display = "none";
+    setControlsEnabled(true);
+
+    const bundledName = slot.dataset.bundledVideo || "lesson video";
+    setSaveStatus(`Lesson video: ${bundledName}`, `סרטון שיעור: ${bundledName}`);
+
+    video.addEventListener(
+      "loadeddata",
+      () => {
+        if (video.currentTime < 0.01 && video.duration > 0.1) {
+          video.currentTime = 0.01;
+        }
+      },
+      { once: true }
+    );
+  }
 });
 
 async function loadVideosFromGitHub() {
@@ -303,6 +326,7 @@ async function loadVideosFromGitHub() {
     const slot = document.querySelector(`.video-slot[data-slot="${id}"]`);
     const placeholder = document.getElementById(`placeholder-${id}`);
     if (!video || !slot) return;
+    if (slot.dataset.bundledVideo || video.dataset.bundled) return;
 
     const url = storage.videoPublicUrl(entry.file, entry.updatedAt || Date.now());
     const onError = () => {

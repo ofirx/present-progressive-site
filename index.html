@@ -183,7 +183,7 @@
             </div>
           </article>
 
-          <article class="video-slot" data-slot="2">
+          <article class="video-slot has-video" data-slot="2" data-bundled-video="2_presnting.mp4">
             <div class="video-number bilingual-block">
               <span class="en">Video 2</span>
               <span class="he" dir="rtl" lang="he">סרטון 2</span>
@@ -201,27 +201,33 @@
               <input id="upload-2" class="video-upload" type="file" accept="video/*" data-video="2" />
             </label>
             <div class="video-frame">
-              <video id="video-2" class="lesson-video" playsinline preload="metadata" hidden></video>
-              <p class="video-placeholder bilingual-block" id="placeholder-2">
+              <video id="video-2" class="lesson-video" playsinline preload="auto" data-bundled>
+                <source src="videos/slot-2.webm" type="video/webm" />
+                <source src="videos/slot-2.mp4" type="video/mp4" />
+              </video>
+              <p class="video-placeholder bilingual-block" id="placeholder-2" hidden>
                 <span class="en">No video uploaded yet</span>
                 <span class="he" dir="rtl" lang="he">עדיין לא הועלה סרטון</span>
               </p>
             </div>
-            <p class="save-status" id="save-status-2" hidden></p>
+            <p class="save-status bilingual-block" id="save-status-2">
+              <span class="en">Lesson video: 2_presnting.mp4</span>
+              <span class="he" dir="rtl" lang="he">סרטון שיעור: 2_presnting.mp4</span>
+            </p>
             <div class="video-controls">
-              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="2" disabled>
+              <button type="button" class="btn btn-primary btn-bilingual btn-play" data-video="2">
                 <span class="btn-en"><span class="btn-icon" aria-hidden="true">▶</span> Play</span>
                 <span class="btn-he" dir="rtl" lang="he"><span class="btn-icon" aria-hidden="true">▶</span> נגן</span>
               </button>
-              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="2" disabled>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-pause" data-video="2">
                 <span class="btn-en"><span class="btn-icon" aria-hidden="true">⏸</span> Pause</span>
                 <span class="btn-he" dir="rtl" lang="he"><span class="btn-icon" aria-hidden="true">⏸</span> השהה</span>
               </button>
-              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="2" disabled>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-restart" data-video="2">
                 <span class="btn-en"><span class="btn-icon" aria-hidden="true">⏹</span> Stop</span>
                 <span class="btn-he" dir="rtl" lang="he"><span class="btn-icon" aria-hidden="true">⏹</span> עצור</span>
               </button>
-              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="2" disabled>
+              <button type="button" class="btn btn-secondary btn-bilingual btn-fullscreen" data-video="2">
                 <span class="btn-en">Fullscreen</span>
                 <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
               </button>

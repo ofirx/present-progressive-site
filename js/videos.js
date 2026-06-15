@@ -10,6 +10,15 @@ function formatTime(seconds) {
   return `${mins}:${secs}`;
 }
 
+function canControlVideo(video) {
+  return (
+    video.readyState > 0 ||
+    Boolean(video.src) ||
+    Boolean(video.currentSrc) ||
+    Boolean(video.querySelector("source[src]"))
+  );
+}
+
 function initGitHubPanel() {
   const panel = document.getElementById("githubStoragePanel");
   if (!panel || !storage) return;
@@ -77,16 +86,18 @@ videoSlots.forEach((id) => {
   const video = document.getElementById(`video-${id}`);
   if (!video) return;
 
-  const frame = video.closest(".video-frame");
-  const upload = document.querySelector(`.video-upload[data-video="${id}"]`);
-  const playBtn = document.querySelector(`.btn-play[data-video="${id}"]`);
-  const pauseBtn = document.querySelector(`.btn-pause[data-video="${id}"]`);
-  const restartBtn = document.querySelector(`.btn-restart[data-video="${id}"]`);
-  const fullscreenBtn = document.querySelector(`.btn-fullscreen[data-video="${id}"]`);
-  const saveStatus = document.getElementById(`save-status-${id}`);
   const slot = document.querySelector(`.video-slot[data-slot="${id}"]`);
   if (!slot) return;
+
+  const frame = video.closest(".video-frame");
+  const upload = slot.querySelector(`.video-upload[data-video="${id}"]`);
+  const playBtn = slot.querySelector(".btn-play");
+  const pauseBtn = slot.querySelector(".btn-pause");
+  const restartBtn = slot.querySelector(".btn-restart");
+  const fullscreenBtn = slot.querySelector(".btn-fullscreen");
+  const saveStatus = document.getElementById(`save-status-${id}`);
   const controlsWrap = slot.querySelector(".video-controls");
+  if (!controlsWrap) return;
 
   const timeline = document.createElement("div");
   timeline.className = "video-timeline";
@@ -123,9 +134,9 @@ videoSlots.forEach((id) => {
 
   function setControlsEnabled(enabled) {
     controlButtons.forEach((btn) => {
-      btn.disabled = !enabled;
+      if (btn) btn.disabled = !enabled;
     });
-    seekBar.disabled = !enabled;
+    if (seekBar) seekBar.disabled = !enabled;
     timeline.hidden = !enabled;
   }
 
@@ -221,14 +232,16 @@ videoSlots.forEach((id) => {
     }
   }
 
-  upload.addEventListener("change", () => {
+  upload?.addEventListener("change", () => {
     const file = upload.files[0];
     if (file) handleVideoFile(file);
     upload.value = "";
   });
 
-  playBtn.addEventListener("click", async () => {
-    if (!video.src && !video.currentSrc) return;
+  playBtn?.addEventListener("click", async () => {
+    if (video.readyState === 0 && video.querySelector("source[src]")) {
+      video.load();
+    }
     try {
       await video.play();
     } catch {
@@ -236,13 +249,13 @@ videoSlots.forEach((id) => {
     }
   });
 
-  pauseBtn.addEventListener("click", () => {
-    if (!video.src && !video.currentSrc) return;
+  pauseBtn?.addEventListener("click", () => {
+    if (!canControlVideo(video)) return;
     video.pause();
   });
 
-  restartBtn.addEventListener("click", () => {
-    if (!video.src && !video.currentSrc) return;
+  restartBtn?.addEventListener("click", () => {
+    if (!canControlVideo(video)) return;
     video.pause();
     video.currentTime = 0;
     updateTimeline();
@@ -275,13 +288,13 @@ videoSlots.forEach((id) => {
     updateTimeline();
   });
 
-  fullscreenBtn.addEventListener("click", async () => {
-    if (!video.src && !video.currentSrc) return;
+  fullscreenBtn?.addEventListener("click", async () => {
+    if (!canControlVideo(video)) return;
 
     try {
       if (video.webkitEnterFullscreen) {
         video.webkitEnterFullscreen();
-      } else if (frame.requestFullscreen) {
+      } else if (frame?.requestFullscreen) {
         await frame.requestFullscreen();
       } else if (video.requestFullscreen) {
         await video.requestFullscreen();
@@ -298,6 +311,7 @@ videoSlots.forEach((id) => {
     slot.classList.add("has-video");
     if (placeholder) placeholder.style.display = "none";
     setControlsEnabled(true);
+    video.load();
 
     const bundledName = slot.dataset.bundledVideo || "lesson video";
     setSaveStatus(`Lesson video: ${bundledName}`, `סרטון שיעור: ${bundledName}`);
@@ -308,6 +322,7 @@ videoSlots.forEach((id) => {
         if (video.currentTime < 0.01 && video.duration > 0.1) {
           video.currentTime = 0.01;
         }
+        setControlsEnabled(true);
       },
       { once: true }
     );

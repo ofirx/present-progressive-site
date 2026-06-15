@@ -22,7 +22,10 @@
   const resultsEl = document.getElementById("be-results");
   const summaryEl = document.getElementById("be-summary");
   const timerDisplay = document.getElementById("be-timer-display");
-  const timerFloat = document.getElementById("be-timer-float");
+  const timerBlock = document.getElementById("be-timer-block");
+  const progressCounter = document.getElementById("be-progress-counter");
+  const progressFill = document.getElementById("be-progress-fill");
+  const progressHint = document.getElementById("be-progress-hint");
   const timerSelect = document.getElementById("be-timer-minutes");
   const btnStart = document.getElementById("be-start");
   const btnPause = document.getElementById("be-pause");
@@ -73,21 +76,60 @@
     }
   }
 
-  function showTimerFloat(show) {
-    if (!timerFloat) return;
-    timerFloat.hidden = !show;
-    timerFloat.setAttribute("aria-hidden", show ? "false" : "true");
+  function countAnswered() {
+    return picks.filter((pick) => pick !== null).length;
+  }
+
+  function updateProgress() {
+    const answered = countAnswered();
+    const total = SENTENCES.length;
+    const remaining = total - answered;
+    const percent = total ? Math.round((answered / total) * 100) : 0;
+
+    if (progressCounter) {
+      progressCounter.textContent = answered + " / " + total;
+      progressCounter.setAttribute("aria-label", answered + " of " + total + " sentences answered");
+    }
+    if (progressFill) {
+      progressFill.style.width = percent + "%";
+    }
+    if (!progressHint) return;
+
+    if (!started || finished) {
+      progressHint.hidden = true;
+      progressHint.classList.remove("is-complete");
+      progressHint.textContent = "";
+      return;
+    }
+
+    if (remaining > 0) {
+      progressHint.hidden = false;
+      progressHint.classList.remove("is-complete");
+      progressHint.textContent =
+        remaining === 1
+          ? "You still have 1 sentence unanswered."
+          : "You still have " + remaining + " sentences unanswered.";
+    } else {
+      progressHint.hidden = false;
+      progressHint.classList.add("is-complete");
+      progressHint.textContent = "Great job! You've answered every sentence.";
+    }
+  }
+
+  function showTimerBlock(show) {
+    if (!timerBlock) return;
+    timerBlock.hidden = !show;
   }
 
   function startTimer() {
     stopTimer();
     if (!isTimedMode()) {
-      showTimerFloat(false);
+      showTimerBlock(false);
       return;
     }
     const minutes = Number(timerSelect?.value || 5);
     timeLeftMs = minutes * 60 * 1000;
-    showTimerFloat(true);
+    showTimerBlock(true);
     updateTimerDisplay();
     timerId = setInterval(() => {
       if (paused) return;
@@ -149,6 +191,7 @@
     row.querySelectorAll(".be-verb-choice").forEach((b) => {
       b.classList.toggle("is-selected", b === btn);
     });
+    updateProgress();
   }
 
   function onStart() {
@@ -179,6 +222,7 @@
     btnStart.textContent = "Restart";
     btnPause.textContent = "Pause";
     setInteractive(true);
+    updateProgress();
     startTimer();
   }
 
@@ -208,7 +252,7 @@
     finished = true;
     paused = false;
     stopTimer();
-    showTimerFloat(false);
+    showTimerBlock(false);
     setInteractive(false);
     btnPause.textContent = "Pause";
 
@@ -277,6 +321,7 @@
 
     summaryEl.innerHTML = summary;
     summaryEl.hidden = false;
+    updateProgress();
     resultsEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
@@ -287,7 +332,7 @@
     picks = Array(SENTENCES.length).fill(null);
     stopTimer();
     timeLeftMs = 0;
-    showTimerFloat(false);
+    showTimerBlock(false);
     btnStart.textContent = "Start";
     btnPause.textContent = "Pause";
     setInteractive(false);
@@ -296,6 +341,7 @@
     resultsEl.innerHTML = "";
     summaryEl.hidden = true;
     summaryEl.textContent = "";
+    updateProgress();
   }
 
   function onModeChange() {
@@ -303,7 +349,7 @@
       timerSelect.disabled = !isTimedMode() || (started && !finished);
     }
     if (!isTimedMode()) {
-      showTimerFloat(false);
+      showTimerBlock(false);
     }
   }
 
@@ -314,5 +360,6 @@
 
   renderSentences();
   setInteractive(false);
+  updateProgress();
   onModeChange();
 })();

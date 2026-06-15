@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=23" />
+  <link rel="stylesheet" href="css/style.css?v=24" />
 </head>
 <body>
   <header class="site-header">
@@ -350,15 +350,30 @@
                     </div>
                   </div>
 
-                  <div id="be-timer-float" class="be-timer-float" hidden aria-hidden="true">
-                    <span class="be-timer-float-label">Time</span>
-                    <span id="be-timer-display" class="be-timer-display">5:00</span>
+                  <div class="be-verb-layout">
+                    <div class="be-verb-body">
+                      <div id="be-sentences" class="be-sentences" aria-label="Choose am, is, or are"></div>
+
+                      <p id="be-summary" class="be-verb-summary" hidden aria-live="polite"></p>
+                      <div id="be-results" class="be-verb-results" hidden aria-live="polite"></div>
+                    </div>
+
+                    <aside class="be-verb-rail" aria-label="Activity progress">
+                      <div class="be-verb-sticky-bar">
+                        <p class="be-verb-rail-title">Progress</p>
+                        <p class="be-verb-counter" id="be-progress-counter" aria-live="polite" aria-atomic="true">0 / 7</p>
+                        <div class="be-verb-progress-track" aria-hidden="true">
+                          <div class="be-verb-progress-fill" id="be-progress-fill"></div>
+                        </div>
+                        <p class="be-verb-counter-hint" id="be-progress-hint" hidden aria-live="polite"></p>
+
+                        <div id="be-timer-block" class="be-verb-timer-block" hidden>
+                          <p class="be-verb-rail-title">Time</p>
+                          <p id="be-timer-display" class="be-timer-display">5:00</p>
+                        </div>
+                      </div>
+                    </aside>
                   </div>
-
-                  <div id="be-sentences" class="be-sentences" aria-label="Choose am, is, or are"></div>
-
-                  <p id="be-summary" class="be-verb-summary" hidden aria-live="polite"></p>
-                  <div id="be-results" class="be-verb-results" hidden aria-live="polite"></div>
                 </div>
               </div>
               <aside class="practice-task">
@@ -420,6 +435,6 @@
   <script src="js/practice-game-fullscreen.js?v=2"></script>
   <script src="js/practice-match.js?v=16"></script>
   <script src="js/practice-reporter.js?v=5"></script>
-  <script src="js/practice-be-verb.js?v=4"></script>
+  <script src="js/practice-be-verb.js?v=5"></script>
 </body>
 </html>

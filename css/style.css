@@ -974,8 +974,33 @@ h3 .he {
   box-shadow: var(--shadow);
 }
 
+.match-worksheet--embedded {
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 .match-instructions {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
+}
+
+.practice-task .match-instructions-en {
+  margin: 0 0 1rem;
+  line-height: 1.65;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.practice-task .match-instructions-he {
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(109, 40, 217, 0.2);
+  line-height: 1.7;
+  font-size: 0.98rem;
+  color: var(--muted);
+  text-align: right;
 }
 
 .match-instructions-en {
@@ -998,7 +1023,16 @@ h3 .he {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.match-worksheet--embedded .match-actions .btn {
+  padding: 0.85rem 1rem;
+  font-size: 1.15rem;
+}
+
+.match-worksheet--embedded .match-row {
+  padding: 0.85rem 0.75rem;
 }
 
 .match-legend-item {

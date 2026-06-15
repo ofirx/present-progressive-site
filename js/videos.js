@@ -1,5 +1,4 @@
 const videoSlots = [1, 2, 3, 4];
-const objectUrls = new Map();
 const storage = window.GitHubVideoStorage;
 
 function formatTime(seconds) {
@@ -19,69 +18,6 @@ function canControlVideo(video) {
   );
 }
 
-function initGitHubPanel() {
-  const panel = document.getElementById("githubStoragePanel");
-  if (!panel || !storage) return;
-
-  const form = document.getElementById("githubTokenForm");
-  const tokenInput = document.getElementById("githubTokenInput");
-  const statusEl = document.getElementById("githubConnectionStatus");
-  const disconnectBtn = document.getElementById("githubDisconnectBtn");
-
-  function setStatus(connected) {
-    if (!statusEl) return;
-    if (connected) {
-      statusEl.innerHTML = `
-        <span class="en">Connected to GitHub — uploads are saved in the repository.</span>
-        <span class="he" dir="rtl" lang="he">מחובר ל-GitHub — העלאות נשמרות במאגר.</span>
-      `;
-      statusEl.classList.add("is-connected");
-    } else {
-      statusEl.innerHTML = `
-        <span class="en">Not connected — connect GitHub to save uploads for everyone.</span>
-        <span class="he" dir="rtl" lang="he">לא מחובר — התחברו ל-GitHub כדי לשמור העלאות לכולם.</span>
-      `;
-      statusEl.classList.remove("is-connected");
-    }
-    statusEl.classList.add("bilingual-block");
-  }
-
-  setStatus(storage.hasToken());
-
-  if (disconnectBtn) {
-    disconnectBtn.hidden = !storage.hasToken();
-    disconnectBtn.addEventListener("click", () => {
-      storage.setToken("");
-      if (tokenInput) tokenInput.value = "";
-      setStatus(false);
-      disconnectBtn.hidden = true;
-    });
-  }
-
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const token = tokenInput?.value?.trim();
-      if (!token) return;
-
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) submitBtn.disabled = true;
-
-      try {
-        await storage.validateToken(token);
-        storage.setToken(token);
-        setStatus(true);
-        if (disconnectBtn) disconnectBtn.hidden = false;
-        if (tokenInput) tokenInput.value = "";
-      } catch (err) {
-        alert(err.message || "Could not connect to GitHub.");
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  }
-}
-
 videoSlots.forEach((id) => {
   const video = document.getElementById(`video-${id}`);
   if (!video) return;
@@ -90,7 +26,6 @@ videoSlots.forEach((id) => {
   if (!slot) return;
 
   const frame = video.closest(".video-frame");
-  const upload = slot.querySelector(`.video-upload[data-video="${id}"]`);
   const playBtn = slot.querySelector(".btn-play");
   const pauseBtn = slot.querySelector(".btn-pause");
   const restartBtn = slot.querySelector(".btn-restart");
@@ -149,94 +84,12 @@ videoSlots.forEach((id) => {
     }
   }
 
-  function resetTimeline() {
-    seekBar.value = "0";
-    seekBar.max = "100";
-    timeCurrent.textContent = "0:00";
-    timeDuration.textContent = "0:00";
-  }
-
-  function setSaveStatus(en, he, isError = false) {
+  function setSaveStatus(en, he) {
     if (!saveStatus) return;
     saveStatus.innerHTML = `<span class="en">${en}</span><span class="he" dir="rtl" lang="he">${he}</span>`;
     saveStatus.hidden = false;
-    saveStatus.classList.toggle("save-status-error", isError);
     saveStatus.classList.add("bilingual-block", "save-status");
   }
-
-  function revokeObjectUrl() {
-    const existing = objectUrls.get(id);
-    if (existing) {
-      URL.revokeObjectURL(existing);
-      objectUrls.delete(id);
-    }
-  }
-
-  function showVideoFromUrl(url, fileName) {
-    revokeObjectUrl();
-    resetTimeline();
-    video.src = url;
-    video.load();
-    video.hidden = false;
-    slot.classList.add("has-video");
-    setControlsEnabled(true);
-    setSaveStatus(
-      `Saved on GitHub: ${fileName}`,
-      `נשמר ב-GitHub: ${fileName}`
-    );
-  }
-
-  function showVideoFromBlob(blob, fileName) {
-    revokeObjectUrl();
-    resetTimeline();
-
-    const url = URL.createObjectURL(blob);
-    objectUrls.set(id, url);
-
-    video.src = url;
-    video.load();
-    video.hidden = false;
-    slot.classList.add("has-video");
-    setControlsEnabled(true);
-    setSaveStatus(`Preview: ${fileName}`, `תצוגה מקדימה: ${fileName}`);
-  }
-
-  async function handleVideoFile(file) {
-    if (!file) return;
-
-    const displayName = file.name || `video-${id}`;
-    if (file.type && !file.type.startsWith("video/")) return;
-
-    if (!storage?.hasToken()) {
-      setSaveStatus(
-        "Connect GitHub above to save this upload.",
-        "התחברו ל-GitHub למעלה כדי לשמור את ההעלאה.",
-        true
-      );
-      showVideoFromBlob(file, displayName);
-      return;
-    }
-
-    showVideoFromBlob(file, displayName);
-    setSaveStatus(`Saving to GitHub: ${displayName}…`, `שומר ב-GitHub: ${displayName}…`);
-
-    try {
-      const result = await storage.saveVideoToGitHub(id, file);
-      showVideoFromUrl(result.url, result.slot.fileName || displayName);
-    } catch (err) {
-      setSaveStatus(
-        err.message || "Could not save video on GitHub.",
-        "לא ניתן לשמור את הסרטון ב-GitHub.",
-        true
-      );
-    }
-  }
-
-  upload?.addEventListener("change", () => {
-    const file = upload.files[0];
-    if (file) handleVideoFile(file);
-    upload.value = "";
-  });
 
   playBtn?.addEventListener("click", async () => {
     if (video.readyState === 0 && video.querySelector("source[src]")) {
@@ -356,8 +209,8 @@ async function loadVideosFromGitHub() {
         saveStatus.hidden = false;
         saveStatus.classList.add("bilingual-block", "save-status", "save-status-error");
         saveStatus.innerHTML = `
-          <span class="en">This video format is not supported in your browser. Re-export as H.264 MP4.</span>
-          <span class="he" dir="rtl" lang="he">פורמט הסרטון אינו נתמך בדפדפן. יש לייצא מחדש כ-H.264 MP4.</span>
+          <span class="en">This video could not be loaded in your browser.</span>
+          <span class="he" dir="rtl" lang="he">לא ניתן לטעון את הסרטון בדפדפן שלכם.</span>
         `;
       }
 
@@ -372,10 +225,10 @@ async function loadVideosFromGitHub() {
     slot.classList.add("has-video");
     if (placeholder) placeholder.style.display = "none";
 
-    const playBtn = document.querySelector(`.btn-play[data-video="${id}"]`);
-    const pauseBtn = document.querySelector(`.btn-pause[data-video="${id}"]`);
-    const restartBtn = document.querySelector(`.btn-restart[data-video="${id}"]`);
-    const fullscreenBtn = document.querySelector(`.btn-fullscreen[data-video="${id}"]`);
+    const playBtn = slot.querySelector(".btn-play");
+    const pauseBtn = slot.querySelector(".btn-pause");
+    const restartBtn = slot.querySelector(".btn-restart");
+    const fullscreenBtn = slot.querySelector(".btn-fullscreen");
     [playBtn, pauseBtn, restartBtn, fullscreenBtn].forEach((btn) => {
       if (btn) btn.disabled = false;
     });
@@ -390,12 +243,11 @@ async function loadVideosFromGitHub() {
       saveStatus.hidden = false;
       saveStatus.classList.add("bilingual-block", "save-status");
       saveStatus.innerHTML = `
-        <span class="en">Saved on GitHub: ${entry.fileName || entry.file}</span>
-        <span class="he" dir="rtl" lang="he">נשמר ב-GitHub: ${entry.fileName || entry.file}</span>
+        <span class="en">Lesson video: ${entry.fileName || entry.file}</span>
+        <span class="he" dir="rtl" lang="he">סרטון שיעור: ${entry.fileName || entry.file}</span>
       `;
     }
   });
 }
 
-initGitHubPanel();
 loadVideosFromGitHub();

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present Progressive Balloon Arrow Game</title>
+<style>
+*{box-sizing:border-box}
+html.embed,html.embed body{height:100%;overflow:hidden}
+html.embed .header{display:none}
+html.embed .game{width:100%;height:100%;min-height:520px}
+html.embed .stats{position:absolute;top:10px}
+html.embed body.playing .stats{top:6px}
+html.embed .questionBox{top:68px}
+html.embed .help{bottom:54px;font-size:13px;padding:8px 12px}
+html.embed .controls{bottom:8px}
+html.embed .controls button{padding:10px 14px;font-size:14px}
+html.embed .pill{font-size:14px;padding:7px 12px;border-width:2px}
+html.embed .feedback{bottom:88px;font-size:18px}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(to bottom,#7dd3fc 0%,#bae6fd 55%,#dcfce7 100%);
+  overflow:hidden;
+  color:#0f172a;
+}
+.header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  background:rgba(255,255,255,.94);
+  border-bottom:4px solid #38bdf8;
+  text-align:center;
+  z-index:30;
+  padding:10px 16px;
+  transition:opacity .35s ease, transform .35s ease;
+}
+body.playing .header{
+  opacity:0;
+  transform:translateY(-110%);
+  pointer-events:none;
+}
+body.playing .stats{top:12px}
+body.playing .questionBox{display:none}
+.header h1{margin:0;color:#0369a1;font-size:28px}
+.instructions{font-size:15px;line-height:1.35;margin-top:5px}
+.hebrew{direction:rtl;font-weight:bold}
+.stats{
+  position:fixed;
+  top:105px;left:0;width:100%;
+  display:flex;justify-content:space-around;gap:10px;
+  z-index:25;
+  pointer-events:none;
+}
+.pill{
+  background:rgba(255,255,255,.92);
+  border:3px solid #38bdf8;
+  border-radius:999px;
+  padding:9px 16px;
+  font-weight:bold;
+  font-size:18px;
+}
+.questionBox{
+  position:fixed;
+  top:158px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(900px,92vw);
+  background:#0f172acc;
+  color:white;
+  border-radius:20px;
+  padding:16px 20px;
+  text-align:center;
+  z-index:24;
+  box-shadow:0 10px 22px #0005;
+  cursor:pointer;
+}
+.questionBox.idle:hover{background:#1e293bcc}
+#question{font-size:31px;font-weight:bold}
+.game{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+.ground{
+  position:absolute;
+  bottom:0;left:0;width:100%;height:70px;
+  background:linear-gradient(to right,#16a34a,#86efac);
+  border-top:4px solid #15803d;
+}
+.boy{
+  position:absolute;
+  bottom:62px;
+  left:50%;
+  margin-left:-40px;
+  width:80px;height:105px;
+  z-index:12;
+  font-size:70px;
+  display:flex;align-items:center;justify-content:center;
+  filter:drop-shadow(0 8px 4px #0003);
+  transform-origin:50% 100%;
+}
+.arrow{
+  position:absolute;
+  width:12px;height:54px;
+  background:linear-gradient(to bottom,#e8c99b,#c9a66b 45%,#b8895a);
+  border-radius:6px;
+  z-index:20;
+  box-shadow:0 2px 6px #0003;
+  pointer-events:none;
+  transform-origin:50% 100%;
+}
+.arrow.arrow-stuck{
+  z-index:22;
+  filter:drop-shadow(0 0 4px #c9a66b88);
+}
+.arrow:before{
+  content:"";
+  position:absolute;
+  top:-16px;left:-7px;
+  border-left:13px solid transparent;
+  border-right:13px solid transparent;
+  border-bottom:18px solid #8fa4b4;
+}
+.arrow:after{
+  content:"";
+  position:absolute;
+  bottom:-6px;left:-8px;
+  width:28px;height:14px;
+  background:linear-gradient(90deg,#d32f2f,#ef5350 50%,#d32f2f);
+  clip-path:polygon(0 0,50% 35%,100% 0,75% 100%,25% 100%);
+}
+.balloon{
+  position:absolute;
+  width:145px;height:145px;
+  z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  color:#111827;
+  font-weight:bold;
+  font-size:13px;
+  cursor:pointer;
+  user-select:none;
+  padding:14px 10px 34px;
+}
+.balloonBody{
+  position:absolute;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:132px;height:115px;
+  border-radius:50% 50% 45% 45%;
+  box-shadow:inset -10px -12px 16px #0002,0 6px 14px #0003;
+  border:2px solid #ffffffaa;
+}
+.balloonBody:after{
+  content:"";
+  position:absolute;
+  bottom:-10px;left:50%;
+  transform:translateX(-50%);
+  width:0;height:0;
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-top:14px solid currentColor;
+}
+.string{
+  position:absolute;
+  top:108px;left:50%;
+  width:2px;height:32px;
+  background:#334155;
+}
+.balloon span{
+  position:relative;
+  z-index:2;
+  max-width:118px;
+  line-height:1.12;
+  font-size:12px;
+}
+.pop{
+  animation:pop .28s ease forwards;
+}
+.balloon.explode{
+  pointer-events:none;
+  z-index:21;
+}
+.balloon.explode .balloonBody{
+  animation:balloonBurst .42s ease-out forwards;
+}
+.balloon.explode .string,
+.balloon.explode span{
+  animation:balloonFade .35s ease-out forwards;
+}
+.burst-particle{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:23;
+  animation:particleFly .5s ease-out forwards;
+}
+@keyframes pop{
+  to{transform:scale(1.45) rotate(15deg);opacity:0}
+}
+@keyframes balloonBurst{
+  0%{transform:translateX(-50%) scale(1);opacity:1}
+  35%{transform:translateX(-50%) scale(1.25);opacity:.85}
+  100%{transform:translateX(-50%) scale(1.7);opacity:0}
+}
+@keyframes balloonFade{
+  to{opacity:0;transform:scale(.6)}
+}
+@keyframes particleFly{
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}
+}
+.feedback{
+  position:fixed;
+  bottom:100px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:50;
+  padding:15px 24px;
+  border-radius:18px;
+  font-size:22px;
+  font-weight:bold;
+  display:none;
+  text-align:center;
+}
+.good{display:block;background:#dcfce7;color:#166534;border:3px solid #22c55e}
+.bad{display:block;background:#fee2e2;color:#991b1b;border:3px solid #ef4444}
+.lives-pill{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-width:170px;
+  justify-content:center;
+}
+.stage-label{
+  margin-left:4px;
+  padding-left:10px;
+  border-left:2px solid #38bdf8;
+  font-size:17px;
+  white-space:nowrap;
+}
+.heart{
+  font-size:22px;
+  line-height:1;
+  transition:transform .25s ease, opacity .25s ease;
+}
+.heart.off{
+  opacity:.35;
+  transform:scale(.85);
+  filter:grayscale(1);
+}
+.heart.lost{
+  animation:heartPop .45s ease;
+}
+@keyframes heartPop{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.35)}
+  100%{transform:scale(.85);opacity:.35}
+}
+.balloon.hit-shake{
+  animation:shake .35s ease;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-8px)}
+  75%{transform:translateX(8px)}
+}
+.controls{
+  position:fixed;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:40;
+  display:flex;
+  gap:10px;
+}
+button{
+  border:0;border-radius:14px;
+  padding:13px 20px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.start{background:#2563eb;color:white}
+.restart{background:#f97316;color:white}
+.next{background:#2563eb;color:white}
+.help{
+  position:fixed;
+  left:18px;
+  bottom:85px;
+  background:#ffffffe6;
+  border:3px solid #38bdf8;
+  border-radius:16px;
+  padding:10px 14px;
+  font-weight:bold;
+  z-index:30;
+}
+.result{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:#0008;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.card{
+  background:white;
+  border-radius:28px;
+  width:min(620px,90vw);
+  text-align:center;
+  padding:32px;
+  box-shadow:0 14px 35px #0007;
+}
+.card h2{font-size:36px;color:#0369a1;margin-top:0}
+.grade{font-size:62px;color:#16a34a;font-weight:bold}
+.cloud{
+  position:absolute;
+  background:#fff;
+  border-radius:60px;
+  opacity:.65;
+  width:210px;height:65px;
+  z-index:2;
+  pointer-events:none;
+  will-change:transform;
+}
+.cloud:before,.cloud:after{
+  content:"";position:absolute;background:white;border-radius:50%;
+}
+.cloud:before{width:80px;height:80px;left:35px;top:-35px}
+.cloud:after{width:105px;height:105px;right:28px;top:-52px}
+.cloud-1{
+  top:180px;
+  animation:cloudDrift1 75s linear infinite;
+}
+.cloud-2{
+  top:300px;
+  opacity:.55;
+  transform:scale(.82);
+  animation:cloudDrift2 95s linear infinite;
+  animation-delay:-35s;
+}
+.cloud-3{
+  top:420px;
+  width:170px;
+  height:52px;
+  opacity:.45;
+  transform:scale(.7);
+  animation:cloudDrift3 120s linear infinite;
+  animation-delay:-70s;
+}
+.cloud-3:before{width:64px;height:64px;left:28px;top:-28px}
+.cloud-3:after{width:82px;height:82px;right:22px;top:-40px}
+@keyframes cloudDrift1{
+  from{transform:translateX(-260px)}
+  to{transform:translateX(calc(100vw + 260px))}
+}
+@keyframes cloudDrift2{
+  from{transform:translateX(-300px) scale(.82)}
+  to{transform:translateX(calc(100vw + 300px)) scale(.82)}
+}
+@keyframes cloudDrift3{
+  from{transform:translateX(-220px) scale(.7)}
+  to{transform:translateX(calc(100vw + 220px)) scale(.7)}
+}
+@media(max-width:700px){
+  .header h1{font-size:22px}
+  .instructions{font-size:13px}
+  .stats{top:125px;flex-wrap:wrap}
+  .questionBox{top:205px}
+  #question{font-size:22px}
+  .balloon{width:118px;height:118px;font-size:11px;padding:10px 8px 28px}
+  .balloonBody{width:108px;height:94px}
+  .balloon span{max-width:96px;font-size:10px}
+  .string{top:88px;height:24px}
+  .boy{font-size:58px}
+}
+</style>
+</head>
+<body>
+<script>if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.classList.add("embed");</script>
+<div class="header">
+  <h1>Present Progressive Balloon Arrow Game</h1>
+  <div class="instructions">
+    Hit the balloon that contains a sentence that is grammatically correct in the Present Progressive tense.
+    Remember the rule: <b>Subject + am / is / are + verb-ing</b>.
+    Watch the <b>bow swing</b> left and right. Press <b>Enter</b> to shoot — the arrow flies where the bow points.
+    Only correct Present Progressive sentences will pop.
+    <div class="hebrew">פגעו בבלון שמכיל משפט תקין מבחינה דקדוקית בזמן הווה מתמשך.
+    זכרו את הכלל: נושא + am / is / are + פועל עם ing.
+    <b>הקשת</b> מתנדנדת ימינה ושמאלה — לחצו Enter כדי לירות בכיוון שהקשת מצביעה.
+    רק משפטים נכונים בהווה מתמשך יתפוצצו.</div>
+  </div>
+</div>
+
+<div class="stats">
+  <div id="progress" class="pill">Question 1 / 12</div>
+  <div id="score" class="pill">Score: 0</div>
+  <div id="lives" class="pill lives-pill" aria-label="Lives and stage"></div>
+</div>
+
+<div class="questionBox" id="questionBox" role="button" tabindex="0" title="Click to start"><div id="question">Press Start</div></div>
+
+<div id="game" class="game">
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div id="boy" class="boy">🏹</div>
+  <div class="ground"></div>
+</div>
+
+<div class="help">Bow swings automatically &nbsp; | &nbsp; Shoot: Enter &nbsp; | &nbsp; <span class="hebrew" style="display:inline">הקשת מתנדנדת — Enter לירייה</span></div>
+<div id="feedback" class="feedback"></div>
+
+<div class="controls">
+  <button class="start" onclick="startGame()">Start</button>
+  <button class="next" onclick="nextQuestion()">Next Drill</button>
+  <button class="restart" onclick="restartGame()">Restart</button>
+</div>
+
+<div id="result" class="result">
+  <div class="card">
+    <h2>Game Finished!</h2>
+    <div id="grade" class="grade">0%</div>
+    <p id="finalMessage"></p>
+    <button class="start" onclick="playAgain()">Play Again</button>
+  </div>
+</div>
+
+<script>
+const easyQuestions = [
+  {q:"Stage 1: Hit the correct Present Progressive sentence.", choices:["Dana is reading now.","Dana are reading now.","Dana am reading now.","Dana read now."], correct:"Dana is reading now."},
+  {q:"Stage 1: Hit the correct Present Progressive sentence.", choices:["The boys are playing now.","The boys is playing now.","The boys am playing now.","The boys play now."], correct:"The boys are playing now."},
+  {q:"Stage 1: Hit the correct Present Progressive sentence.", choices:["I am eating now.","I is eating now.","I are eating now.","I eat now."], correct:"I am eating now."},
+  {q:"Stage 1: Hit the correct Present Progressive sentence.", choices:["She is drawing now.","She are drawing now.","She am drawing now.","She draw now."], correct:"She is drawing now."}
+];
+
+const hardQuestions = [
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["He is reading a book now.","He are reading a book now.","He reading a book now.","He is read a book now."], correct:"He is reading a book now."},
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["The children are running now.","The children is running now.","The children are runing now.","The children running now."], correct:"The children are running now."},
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["My parents are driving home now.","My parents is driving home now.","My parents driving home now.","My parents are driveing home now."], correct:"My parents are driving home now."},
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["She is writing a letter now.","She are writing a letter now.","She is writting a letter now.","She writing a letter now."], correct:"She is writing a letter now."},
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["I am eating lunch now.","I are eating lunch now.","I am eatting lunch now.","I eating lunch now."], correct:"I am eating lunch now."},
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["It is raining today.","It are raining today.","It amnt raining today.","It is rain today."], correct:"It is raining today."},
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["You are watching TV now.","You is watching TV now.","You am watching TV now.","You watching TV now."], correct:"You are watching TV now."},
+  {q:"Stage 2: Harder balloons - find the fully correct sentence.", choices:["The student is walking to school now.","The student are walking to school now.","The student amnt walking to school now.","The student is walk to school now."], correct:"The student is walking to school now."}
+];
+
+const questions = [...easyQuestions, ...hardQuestions];
+
+const colors = ["#f87171","#fb923c","#facc15","#4ade80","#38bdf8","#a78bfa","#f472b6","#2dd4bf"];
+const STAGE_EASY = { spawnMs: 15000, perWave: 1, speedMin: 0.45, speedMax: 0.85 };
+const STAGE_HARD = { spawnMs: 12000, perWave: 2, speedMin: 1.1, speedMax: 2.1 };
+const MAX_LIVES = 3;
+const SWING_AMPLITUDE = 90;
+const SWING_PERIOD = 3000;
+const ARROW_SPEED = 9;
+const ARROW_W = 12;
+const ARROW_SHAFT = 54;
+const ARROW_HEAD = 16;
+let current=0, score=0, lives=MAX_LIVES, active=false;
+let gameStarted = false;
+let bowAngle = 0;
+let swingStart = 0;
+let balloons = [];
+let arrows = [];
+let spawnTimer = null;
+let loopStarted = false;
+let resolvingHit = false;
+let feedbackTimer = null;
+
+const game = document.getElementById("game");
+const boy = document.getElementById("boy");
+const questionEl = document.getElementById("question");
+const scoreEl = document.getElementById("score");
+const livesEl = document.getElementById("lives");
+const progressEl = document.getElementById("progress");
+const feedback = document.getElementById("feedback");
+const result = document.getElementById("result");
+const grade = document.getElementById("grade");
+const finalMessage = document.getElementById("finalMessage");
+
+const questionBox = document.getElementById("questionBox");
+
+document.addEventListener("keydown", e=>{
+  if(e.key==="Enter"){
+    if(tryStartIfIdle()){ e.preventDefault(); return; }
+    if(active) shootArrow();
+    e.preventDefault();
+  }
+  if(e.key===" " && tryStartIfIdle()) e.preventDefault();
+});
+questionBox.addEventListener("click", ()=> tryStartIfIdle());
+questionBox.addEventListener("keydown", e=>{
+  if(e.key==="Enter" || e.key===" "){ tryStartIfIdle(); e.preventDefault(); }
+});
+
+function tryStartIfIdle(){
+  if(!gameStarted && result.style.display !== "flex"){
+    startGame();
+    return true;
+  }
+  return false;
+}
+
+function setQuestionIdle(idle){
+  questionBox.classList.toggle("idle", idle);
+  questionBox.style.cursor = idle ? "pointer" : "default";
+}
+
+function updateBowSwing(now){
+  if(!swingStart) swingStart = now;
+  const t = (now - swingStart) / SWING_PERIOD;
+  bowAngle = SWING_AMPLITUDE * Math.sin(t * Math.PI * 2);
+  boy.style.transform = "rotate(" + bowAngle + "deg)";
+}
+
+function isEasyStage(){
+  return score < easyQuestions.length;
+}
+
+function stageConfig(){
+  return isEasyStage() ? STAGE_EASY : STAGE_HARD;
+}
+
+function getStageNumber(){
+  return current < easyQuestions.length ? 1 : 2;
+}
+
+function updateTop(){
+  progressEl.textContent = "Question " + Math.min(current+1, questions.length) + " / " + questions.length;
+  scoreEl.textContent = "Score: " + score;
+  livesEl.innerHTML = "";
+  for(let i=0;i<MAX_LIVES;i++){
+    const heart = document.createElement("span");
+    heart.className = "heart" + (i < lives ? " on" : " off");
+    heart.textContent = i < lives ? "❤️" : "🖤";
+    heart.setAttribute("aria-hidden", "true");
+    livesEl.appendChild(heart);
+  }
+  const stageLabel = document.createElement("span");
+  stageLabel.className = "stage-label";
+  stageLabel.textContent = "Stage: " + getStageNumber();
+  livesEl.appendChild(stageLabel);
+  livesEl.setAttribute("aria-label", lives + " lives remaining, stage " + getStageNumber());
+}
+
+function loseLife(){
+  if(lives <= 0) return;
+  lives--;
+  updateTop();
+  const hearts = livesEl.querySelectorAll(".heart");
+  if(hearts[lives]){
+    hearts[lives].classList.add("lost");
+  }
+}
+
+function startGame(){
+  document.body.classList.add("playing");
+  gameStarted = true;
+  setQuestionIdle(false);
+  current=0; score=0; lives=MAX_LIVES; resolvingHit=false; swingStart=0; result.style.display="none";
+  boy.style.transform = "rotate(0deg)";
+  loadQuestion();
+  if(!loopStarted){ loopStarted=true; requestAnimationFrame(gameLoop); }
+}
+
+function playAgain(){
+  restartGame();
+  startGame();
+}
+
+function restartGame(){
+  document.body.classList.remove("playing");
+  clearAll();
+  gameStarted = false;
+  current=0; score=0; lives=MAX_LIVES; active=false; resolvingHit=false; swingStart=0;
+  questionEl.textContent="Press Start";
+  setQuestionIdle(true);
+  feedback.className="feedback";
+  if(feedbackTimer){ clearTimeout(feedbackTimer); feedbackTimer=null; }
+  result.style.display="none";
+  boy.style.transform = "rotate(0deg)";
+  updateTop();
+}
+
+function clearAll(){
+  balloons.forEach(b=>b.el.remove());
+  arrows.forEach(a=>a.el.remove());
+  balloons=[]; arrows=[];
+  if(spawnTimer) clearInterval(spawnTimer);
+}
+
+function loadQuestion(){
+  if(current>=questions.length || lives<=0){ endGame(); return; }
+  clearAll();
+  active=true;
+  resolvingHit=false;
+  if(feedbackTimer){ clearTimeout(feedbackTimer); feedbackTimer=null; }
+  feedback.className="feedback";
+  feedback.textContent="";
+  updateTop();
+  const cfg = stageConfig();
+  spawnBalloons();
+  spawnTimer = setInterval(spawnBalloons, cfg.spawnMs);
+}
+
+function pickChoicesForWave(q, cfg){
+  if(cfg.perWave === 1){
+    const wrongOnes = q.choices.filter(c => c !== q.correct);
+    const wrongPick = wrongOnes[Math.floor(Math.random() * wrongOnes.length)];
+    return [Math.random() < 0.55 ? q.correct : wrongPick];
+  }
+  const wrongOnes = q.choices.filter(c => c !== q.correct).sort(()=>Math.random()-0.5);
+  return [q.correct, wrongOnes[0]];
+}
+
+function playWidth(){
+  return game.clientWidth || window.innerWidth;
+}
+
+function playHeight(){
+  return game.clientHeight || window.innerHeight;
+}
+
+function spawnBalloons(){
+  if(!active || resolvingHit) return;
+  const q = questions[current];
+  const cfg = stageConfig();
+  const choices = pickChoicesForWave(q, cfg);
+  const balloonWidth = 145;
+  const areaW = playWidth();
+  choices.forEach((answer,i)=>{
+    const el = document.createElement("div");
+    el.className = "balloon";
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    const x = 30 + Math.random()*(areaW - balloonWidth - 60);
+    const y = -160 - i*50 - Math.random()*40;
+    const speed = cfg.speedMin + Math.random()*(cfg.speedMax - cfg.speedMin);
+    el.style.left = x+"px";
+    el.style.top = y+"px";
+    el.dataset.answer = answer;
+    el.innerHTML = `<div class="balloonBody" style="background:${color};color:${color}"></div><div class="string"></div><span>${answer}</span>`;
+    game.appendChild(el);
+    balloons.push({el,x,y,speed,answer});
+  });
+}
+
+function getBowPivot(){
+  const boyRect = boy.getBoundingClientRect();
+  const gameRect = game.getBoundingClientRect();
+  return {
+    x: boyRect.left + boyRect.width / 2 - gameRect.left,
+    y: boyRect.bottom - gameRect.top
+  };
+}
+
+function getArrowSpawn(){
+  const pivot = getBowPivot();
+  const rad = bowAngle * Math.PI / 180;
+  const left = pivot.x - ARROW_W / 2;
+  const top = pivot.y - ARROW_SHAFT;
+  const tipX = pivot.x + Math.sin(rad) * (ARROW_SHAFT + ARROW_HEAD);
+  const tipY = pivot.y - Math.cos(rad) * (ARROW_SHAFT + ARROW_HEAD);
+  return { left, top, pivotX: pivot.x, pivotY: pivot.y, tipX, tipY, rad };
+}
+
+function shootArrow(){
+  if(!active || resolvingHit) return;
+  if(arrows.some(a => !a.finished)) return;
+  const pos = getArrowSpawn();
+  const el = document.createElement("div");
+  el.className = "arrow";
+  el.style.left = pos.left + "px";
+  el.style.top = pos.top + "px";
+  el.style.transform = "rotate(" + bowAngle + "deg)";
+  game.appendChild(el);
+  arrows.push({
+    el,
+    x: pos.left,
+    y: pos.top,
+    vx: Math.sin(pos.rad) * ARROW_SPEED,
+    vy: -Math.cos(pos.rad) * ARROW_SPEED,
+    angle: bowAngle,
+    finished: false
+  });
+}
+
+function gameLoop(now){
+  updateBowSwing(now);
+
+  arrows.forEach(a=>{
+    if(a.finished) return;
+    a.x += a.vx;
+    a.y += a.vy;
+    a.el.style.left = a.x + "px";
+    a.el.style.top = a.y + "px";
+  });
+  arrows = arrows.filter(a=>{
+    if(a.finished){ return false; }
+    if(a.y < -80 || a.x < -60 || a.x > playWidth() + 20){
+      a.el.remove();
+      return false;
+    }
+    return true;
+  });
+
+  balloons.forEach(b=>{
+    b.y += b.speed;
+    b.el.style.top = b.y+"px";
+  });
+
+  balloons = balloons.filter(b=>{
+    if(b.y > playHeight()-80){
+      b.el.remove();
+      return false;
+    }
+    return true;
+  });
+
+  if(active) checkHits();
+  requestAnimationFrame(gameLoop);
+}
+
+function rectsOverlap(a,b){
+  return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+}
+
+function checkHits(){
+  if(resolvingHit) return;
+  for(const arrow of arrows){
+    if(arrow.finished) continue;
+    const ar = arrow.el.getBoundingClientRect();
+    for(const balloon of balloons){
+      const br = balloon.el.getBoundingClientRect();
+      if(rectsOverlap(ar, br)){
+        stickArrowToBalloon(arrow, balloon);
+        return;
+      }
+    }
+  }
+}
+
+function stickArrowToBalloon(arrow, balloon){
+  resolvingHit = true;
+  arrow.finished = true;
+  const gameRect = game.getBoundingClientRect();
+  const br = balloon.el.getBoundingClientRect();
+  arrow.el.classList.add("arrow-stuck");
+  arrow.el.style.transform = "rotate(" + arrow.angle + "deg)";
+  arrow.el.style.left = (br.left - gameRect.left + br.width / 2 - 6) + "px";
+  arrow.el.style.top = (br.top - gameRect.top + br.height / 2 - 22) + "px";
+  explodeBalloon(balloon);
+  setTimeout(() => {
+    handleHit(balloon, arrow);
+    arrow.el.remove();
+    arrows = arrows.filter(a => a !== arrow);
+    resolvingHit = false;
+  }, 480);
+}
+
+function explodeBalloon(balloon){
+  if(balloon.exploded) return;
+  balloon.exploded = true;
+  const body = balloon.el.querySelector(".balloonBody");
+  const color = body ? getComputedStyle(body).backgroundColor : "#f87171";
+  const rect = balloon.el.getBoundingClientRect();
+  const gameRect = game.getBoundingClientRect();
+  const cx = rect.left - gameRect.left + rect.width / 2;
+  const cy = rect.top - gameRect.top + rect.height / 2;
+
+  balloon.el.classList.add("explode");
+  for(let i=0;i<10;i++){
+    const p = document.createElement("div");
+    p.className = "burst-particle";
+    const size = 8 + Math.random() * 14;
+    const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.4;
+    const dist = 45 + Math.random() * 55;
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+    p.style.left = (cx - size / 2) + "px";
+    p.style.top = (cy - size / 2) + "px";
+    p.style.background = color;
+    p.style.setProperty("--dx", Math.cos(angle) * dist + "px");
+    p.style.setProperty("--dy", Math.sin(angle) * dist + "px");
+    game.appendChild(p);
+    setTimeout(()=>p.remove(), 520);
+  }
+  setTimeout(()=>{
+    balloon.el.remove();
+    balloons = balloons.filter(b => b !== balloon);
+  }, 430);
+}
+
+function handleHit(balloon, arrow){
+  const correct = questions[current].correct;
+
+  if(balloon.answer === correct){
+    score++;
+    showFeedback(
+      score === easyQuestions.length
+        ? "Correct! Stage 2 unlocked: more balloons! / נכון! שלב 2 נפתח: יותר בלונים!"
+        : "Correct! The correct sentence popped! / נכון! המשפט הנכון התפוצץ!",
+      true
+    );
+    active=false;
+    if(spawnTimer) clearInterval(spawnTimer);
+    current++;
+    updateTop();
+    setTimeout(loadQuestion, 1400);
+  }else{
+    loseLife();
+    showFeedback("Wrong sentence! You lose a heart but keep playing. / משפט לא נכון! איבדתם לב אבל ממשיכים.", false);
+    if(lives<=0){
+      active=false;
+      if(spawnTimer) clearInterval(spawnTimer);
+      setTimeout(endGame, 1100);
+    }
+  }
+}
+
+function nextQuestion(){
+  if(tryStartIfIdle()) return;
+  if(!active) return;
+  current++;
+  loadQuestion();
+}
+
+function showFeedback(text, good){
+  if(feedbackTimer){
+    clearTimeout(feedbackTimer);
+    feedbackTimer = null;
+  }
+  feedback.textContent = text;
+  feedback.className = "feedback " + (good ? "good" : "bad");
+  if(!good){
+    feedbackTimer = setTimeout(()=>{
+      feedback.className = "feedback";
+      feedback.textContent = "";
+      feedbackTimer = null;
+    }, 3000);
+  }
+}
+
+function endGame(){
+  clearAll();
+  active=false;
+  const percent = Math.round((score/questions.length)*100);
+  grade.textContent = percent + "%";
+  if(percent>=90) finalMessage.textContent="Excellent! You understand Present Progressive very well.";
+  else if(percent>=70) finalMessage.textContent="Good work! Keep practicing am / is / are + verb-ing.";
+  else finalMessage.textContent="Keep practicing. Remember: am / is / are + verb-ing.";
+  result.style.display="flex";
+}
+updateTop();
+setQuestionIdle(true);
+if(!loopStarted){ loopStarted=true; requestAnimationFrame(gameLoop); }
+</script>
+</body>
+</html>

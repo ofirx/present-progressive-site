@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=14" />
+  <link rel="stylesheet" href="css/style.css?v=15" />
 </head>
 <body>
   <header class="site-header">
@@ -55,11 +55,14 @@
         <div class="practice-sections">
           <section class="practice-section practice-section--1" aria-labelledby="practice-section-1-title">
             <div class="practice-section-layout">
-              <div class="practice-activity">
-                <div class="practice-activity-content bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
-                </div>
+              <div class="practice-activity practice-activity--game">
+                <iframe
+                  class="balloon-game-frame"
+                  title="Present Progressive Balloon Arrow Game"
+                  src="games/present_progressive_balloon_arrow_game.html?embed=1"
+                  loading="lazy"
+                  allow="fullscreen"
+                ></iframe>
               </div>
               <aside class="practice-task">
                 <p class="practice-section-label bilingual-block">
@@ -67,13 +70,33 @@
                   <span class="he" dir="rtl" lang="he">חלק 1</span>
                 </p>
                 <h2 id="practice-section-1-title" class="practice-task-title bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
+                  <span class="en">Balloon arrow game</span>
+                  <span class="he" dir="rtl" lang="he">משחק חצים ובלונים</span>
                 </h2>
-                <p class="practice-task-text bilingual-block">
-                  <span class="en"></span>
-                  <span class="he" dir="rtl" lang="he"></span>
-                </p>
+                <div class="match-instructions">
+                  <p class="match-instructions-en">
+                    Shoot the balloon that shows a sentence that is <strong>grammatically correct</strong> in the
+                    <strong>Present Progressive</strong> tense
+                    (<em>subject + am / is / are + verb-ing</em>).
+                    The <strong>bow swings</strong> left and right across 180°. Press <strong>Enter</strong> or click
+                    <strong>Start</strong> when the bow points at the correct balloon.
+                    A correct hit pops the balloon and moves you to the next question. A wrong hit costs one heart,
+                    but you keep playing the same question until you get it right or run out of hearts.
+                    <strong>Stage 1</strong> has fewer balloons. After 4 correct answers, <strong>Stage 2</strong>
+                    unlocks with more balloons. You start with 3 hearts.
+                  </p>
+                  <p class="match-instructions-he" dir="rtl" lang="he">
+                    ירו על הבלון שמציג משפט <strong>תקין דקדוקית</strong> בזמן
+                    <strong>הווה מתמשך</strong>
+                    (<em>נושא + am / is / are + פועל עם ing</em>).
+                    <strong>הקשת מתנדנדת</strong> ימינה ושמאלה על פני 180 מעלות. לחצו <strong>Enter</strong> או על
+                    <strong>Start</strong> כשהקשת מצביעה על הבלון הנכון.
+                    פגיעה נכונה מפוצצת את הבלון ומעבירה לשאלה הבאה. פגיעה שגויה גורמת לאובדן לב אחד,
+                    אבל ממשיכים באותה שאלה עד שפוגעים נכון או שנגמרים הלבבות.
+                    ב<strong>שלב 1</strong> יורדים פחות בלונים. אחרי 4 תשובות נכונות נפתח
+                    <strong>שלב 2</strong> עם יותר בלונים. מתחילים עם 3 לבבות.
+                  </p>
+                </div>
               </aside>
             </div>
           </section>
@@ -237,6 +260,6 @@
     </div>
   </footer>
 
-  <script src="js/practice-match.js?v=14"></script>
+  <script src="js/practice-match.js?v=15"></script>
 </body>
 </html>

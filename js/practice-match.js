@@ -109,8 +109,9 @@
       if (root.classList.contains("is-graded")) return;
       const slot = chip.closest(".match-slot");
       if (slot) {
+        const bank = getBank(sentenceId);
         clearSlot(slot);
-        exercisesEl.querySelector(`[data-bank="${sentenceId}"]`)?.appendChild(chip);
+        bank?.appendChild(chip);
         return;
       }
       const nextSlot = findNextEmptySlot(sentenceId);
@@ -132,18 +133,35 @@
     slot.removeAttribute("data-part-index");
   }
 
-  function placeChipInSlot(chip, slot) {
-    const bank = chip.parentElement;
-    const existing = slot.querySelector(".match-chip");
-    if (existing) {
-      bank.appendChild(existing);
+  function getBank(sentenceId) {
+    return exercisesEl.querySelector(`.match-bank[data-bank="${sentenceId}"]`);
+  }
+
+  function placeChipInSlot(chip, targetSlot) {
+    if (!chip || !targetSlot) return;
+
+    const sentenceId = chip.dataset.sentenceId;
+    const bank = getBank(sentenceId);
+    const sourceSlot = chip.closest(".match-slot");
+    const displaced = targetSlot.querySelector(".match-chip");
+
+    if (displaced === chip) return;
+
+    if (displaced) {
+      if (sourceSlot) {
+        sourceSlot.appendChild(displaced);
+        sourceSlot.classList.add("is-filled");
+        sourceSlot.dataset.partIndex = displaced.dataset.partIndex;
+      } else if (bank) {
+        bank.appendChild(displaced);
+      }
+    } else if (sourceSlot) {
+      clearSlot(sourceSlot);
     }
-    if (chip.parentElement?.classList.contains("match-slot")) {
-      clearSlot(chip.parentElement);
-    }
-    slot.appendChild(chip);
-    slot.classList.add("is-filled");
-    slot.dataset.partIndex = chip.dataset.partIndex;
+
+    targetSlot.appendChild(chip);
+    targetSlot.classList.add("is-filled");
+    targetSlot.dataset.partIndex = chip.dataset.partIndex;
   }
 
   function wireSlot(slot) {

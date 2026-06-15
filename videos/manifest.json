@@ -2,7 +2,12 @@
   "version": 1,
   "slots": {
     "1": null,
-    "2": null,
+    "2": {
+      "file": "slot-2.mp4",
+      "fileName": "2_presnting.mp4",
+      "mimeType": "video/mp4",
+      "updatedAt": "2026-06-12T12:00:00.000Z"
+    },
     "3": null,
     "4": null
   }

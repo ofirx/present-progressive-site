@@ -32,8 +32,17 @@
   const timerSelect = document.getElementById("be-timer-minutes");
   const btnStart = document.getElementById("be-start");
   const btnPause = document.getElementById("be-pause");
-  const btnSubmit = document.getElementById("be-submit");
   const modeInputs = root.querySelectorAll('input[name="be-mode"]');
+
+  function getSubmitBtn() {
+    return document.getElementById("be-submit");
+  }
+
+  const SUBMIT_BTN_HTML =
+    '<button type="button" class="btn btn-primary btn-bilingual be-verb-submit-inline" id="be-submit" disabled>' +
+    '<span class="btn-en">Submit</span>' +
+    '<span class="btn-he" dir="rtl" lang="he">שלח</span>' +
+    "</button>";
 
   let started = false;
   let paused = false;
@@ -65,7 +74,8 @@
     sentencesEl.querySelectorAll(".be-verb-select").forEach((select) => {
       select.disabled = !enabled || finished;
     });
-    btnSubmit.disabled = !enabled || finished;
+    const submitBtn = getSubmitBtn();
+    if (submitBtn) submitBtn.disabled = !enabled || finished;
     btnPause.disabled = !started || finished;
     modeInputs.forEach((input) => {
       input.disabled = started && !finished;
@@ -221,7 +231,7 @@
         .map((opt) => '<option value="' + opt + '">' + opt + "</option>")
         .join("");
 
-      return (
+      const rowHtml =
         '<div class="be-verb-row" data-index="' +
         index +
         '">' +
@@ -255,8 +265,18 @@
         "</select>" +
         "</div>" +
         '<p class="be-verb-row-feedback" hidden aria-live="polite"></p>' +
-        "</div>"
-      );
+        "</div>";
+
+      if (index === SENTENCES.length - 1) {
+        return (
+          '<div class="be-verb-last-group">' +
+          rowHtml +
+          SUBMIT_BTN_HTML +
+          "</div>"
+        );
+      }
+
+      return rowHtml;
     }).join("");
 
     sentencesEl.querySelectorAll(".be-verb-select").forEach((select) => {
@@ -440,7 +460,11 @@
   modeInputs.forEach((input) => input.addEventListener("change", onModeChange));
   btnStart?.addEventListener("click", onStart);
   btnPause?.addEventListener("click", onPause);
-  btnSubmit?.addEventListener("click", () => gradeActivity(false));
+  root.addEventListener("click", (e) => {
+    if (e.target.closest("#be-submit")) {
+      gradeActivity(false);
+    }
+  });
 
   renderSentences();
   setInteractive(false);

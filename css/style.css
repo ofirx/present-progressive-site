@@ -1618,10 +1618,21 @@ h3 .he {
   color: #991b1b;
 }
 
-.be-verb-submit-row {
+.be-verb-last-group {
   display: flex;
-  justify-content: flex-start;
-  padding: 0.35rem 0 0.15rem 1.35rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.be-verb-last-group .be-verb-row {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.be-verb-submit-inline {
+  flex: 0 0 auto;
+  align-self: center;
+  white-space: nowrap;
 }
 
 .be-verb-grade {
@@ -1745,9 +1756,17 @@ h3 .he {
 
   .be-verb-line--rest,
   .be-verb-picker,
-  .be-verb-row-feedback,
-  .be-verb-submit-row {
+  .be-verb-row-feedback {
     padding-left: 0;
+  }
+
+  .be-verb-last-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .be-verb-submit-inline {
+    align-self: flex-start;
   }
 
   .be-verb-select {

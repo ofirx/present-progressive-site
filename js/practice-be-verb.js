@@ -117,7 +117,6 @@
         (index + 1) +
         ".</span> " +
         item.text.replace("___", '<span class="be-verb-blank">___</span>') +
-        (item.negative ? ' <span class="be-verb-tag">negative</span>' : "") +
         "</p>" +
         '<div class="be-verb-choices">' +
         choices +

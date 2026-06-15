@@ -1292,15 +1292,20 @@ h3 .he {
 }
 
 .be-verb-toolbar {
+  position: sticky;
+  top: 4.25rem;
+  z-index: 12;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.85rem;
   padding: 0.85rem 1rem;
-  background: #fff7fa;
+  background: rgba(255, 247, 250, 0.96);
   border: 2px solid #fbcfe8;
   border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(26, 26, 26, 0.06);
+  backdrop-filter: blur(8px);
 }
 
 .be-verb-mode {
@@ -1380,7 +1385,11 @@ h3 .he {
 }
 
 .be-verb-row {
-  padding: 0.85rem 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.85rem;
+  padding: 0.75rem 0.95rem;
   background: #fff;
   border: 2px solid #fce7f3;
   border-radius: 12px;
@@ -1398,9 +1407,11 @@ h3 .he {
 }
 
 .be-verb-prompt {
-  margin: 0 0 0.55rem;
+  margin: 0;
   font-size: 1.02rem;
-  line-height: 1.45;
+  line-height: 1.35;
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 
 .be-verb-num {
@@ -1417,23 +1428,14 @@ h3 .he {
 }
 
 .be-verb-tag {
-  display: inline-block;
-  margin-left: 0.35rem;
-  padding: 0.1rem 0.45rem;
-  border-radius: 999px;
-  background: #831843;
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  vertical-align: middle;
+  display: none;
 }
 
 .be-verb-choices {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
+  flex: 1 1 auto;
 }
 
 .be-verb-choice {
@@ -1477,9 +1479,10 @@ h3 .he {
 }
 
 .be-verb-row-feedback {
-  margin: 0.45rem 0 0;
+  margin: 0;
   font-size: 0.92rem;
   font-weight: 700;
+  flex: 1 1 100%;
 }
 
 .be-verb-row-feedback.is-ok {

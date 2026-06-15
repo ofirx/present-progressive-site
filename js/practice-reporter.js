@@ -45,6 +45,9 @@
     return MODEL_BY_SLOT[row.index] || MODEL_BY_SLOT[0];
   }
 
+  const form = document.getElementById("reporter-form");
+  if (!form) return;
+
   const inputs = Array.from(form.querySelectorAll(".reporter-input"));
   const resultsEl = document.getElementById("reporter-results");
   const summaryEl = document.getElementById("reporter-summary");

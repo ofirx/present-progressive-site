@@ -55,14 +55,12 @@
     if (!hasPresentProgressive(trimmed)) {
       issues.push("Use Present Progressive: subject + am / is / are + verb-ing.");
     } else if (/\b(am|is|are)\s+(read|write|play|eat|draw|run)\b/i.test(trimmed)) {
-      issues.push("Use the -ing form (reading, writing, playing…), not the base verb.");
+      issues.push("Use the -ing form of the verb, not the base verb.");
     }
 
     const verbs = targetVerbsInSentence(trimmed);
     if (verbs.length === 0) {
-      issues.push(
-        "Include one of these verbs in the -ing form: reading, writing, playing, eating, drawing, running."
-      );
+      issues.push("Describe an action from the picture using a verb with -ing.");
     }
 
     if (trimmed.split(/\s+/).length < 4) {
@@ -100,8 +98,6 @@
       .join("");
 
     const correctCount = rows.filter((r) => r.ok).length;
-    const allVerbs = new Set();
-    rows.forEach((r) => r.verbs.forEach((v) => allVerbs.add(v.ing)));
 
     let summary =
       "You got <strong>" +
@@ -109,13 +105,6 @@
       " / " +
       rows.length +
       "</strong> sentences correct.";
-
-    if (allVerbs.size > 0) {
-      summary +=
-        " Verbs used: <strong>" +
-        Array.from(allVerbs).join(", ") +
-        "</strong>.";
-    }
 
     if (correctCount === rows.length) {
       summary += " Excellent reporting!";

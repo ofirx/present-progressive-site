@@ -813,6 +813,28 @@ h3 .he {
   box-shadow: 0 8px 24px rgba(26, 26, 26, 0.06);
 }
 
+.practice-activity-content {
+  min-height: 140px;
+}
+
+.practice-activity-content .en,
+.practice-activity-content .he {
+  display: block;
+  min-height: 1.5rem;
+}
+
+.practice-task-title .en,
+.practice-task-title .he {
+  display: block;
+  min-height: 1.4rem;
+}
+
+.practice-task-text .en,
+.practice-task-text .he {
+  display: block;
+  min-height: 3rem;
+}
+
 .practice-task {
   padding: 0.25rem 0.5rem;
 }

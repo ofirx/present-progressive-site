@@ -292,6 +292,94 @@ nav a:hover {
   max-width: 720px;
 }
 
+.hero-content--bilingual {
+  max-width: 960px;
+}
+
+.hero .intro-instructions-layout {
+  margin-bottom: 0;
+}
+
+.hero .intro-title-en,
+.hero .intro-title-he {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.bilingual-intro-subtitle-en,
+.bilingual-intro-subtitle-he {
+  margin: 0.85rem 0 0.5rem;
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.bilingual-intro-subtitle-he {
+  text-align: right;
+}
+
+.task-instructions-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem 1.25rem;
+  align-items: start;
+}
+
+.task-instructions-en-block,
+.task-instructions-he-block {
+  min-width: 0;
+}
+
+.practice-section-label-en,
+.practice-section-label-he {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.practice-section-label-he {
+  text-align: right;
+}
+
+.practice-task-title-en,
+.practice-task-title-he {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.practice-task-title-he {
+  text-align: right;
+}
+
+.task-instructions-en-block .match-instructions-en,
+.task-instructions-he-block .match-instructions-he {
+  margin: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.task-instructions-en-block .match-instructions-en {
+  line-height: 1.65;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.task-instructions-he-block .match-instructions-he {
+  line-height: 1.7;
+  font-size: 0.98rem;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .task-instructions-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 .eyebrow {
   margin: 0 0 0.75rem;
   font-size: 0.85rem;

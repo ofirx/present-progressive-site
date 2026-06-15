@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Quiz on the Present Progressive tense." />
   <title>Quiz — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=31" />
   <link rel="stylesheet" href="css/quiz-form.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
@@ -31,53 +31,43 @@
   </header>
   <main>
     <section class="hero hero-compact">
-      <div class="container hero-content">
+      <div class="container hero-content hero-content--bilingual">
         <p class="eyebrow bilingual-block">
           <span class="en">English grammar</span>
           <span class="he" dir="rtl" lang="he">דקדוק אנגלי</span>
         </p>
-        <h1 class="bilingual-block">
-          <span class="en">Quiz</span>
-          <span class="he" dir="rtl" lang="he">חידון</span>
-        </h1>
-      </div>
-    </section>
-
-    <section id="quiz" class="section">
-      <div class="container">
-        <h2 class="bilingual-block">
-          <span class="en">Quiz</span>
-          <span class="he" dir="rtl" lang="he">חידון</span>
-        </h2>
-        <p class="section-intro bilingual-block">
-          <span class="en">
-            Ten self-check questions in three parts. Review the grammar notes, answer every question,
-            then click <strong>Finish &amp; see results</strong> for your score.
-          </span>
-          <span class="he" dir="rtl" lang="he">
-            עשר שאלות לבדיקה עצמית בשלושה חלקים. עברו על הכללים, ענו על כל השאלות,
-            ואז לחצו על <strong>Finish &amp; see results</strong> כדי לראות את הציון.
-          </span>
-        </p>
-
-        <div class="quiz-instructions-block" aria-label="Quiz instructions">
-          <h3 class="quiz-instructions-title bilingual-block">
-            <span class="en"><strong>Instructions</strong></span>
-            <span class="he" dir="rtl" lang="he"><strong>הוראות</strong></span>
-          </h3>
-          <div class="quiz-instructions">
-            <p class="quiz-instr-en">
+        <div class="intro-instructions-layout">
+          <div class="intro-instructions-en-block">
+            <h1 class="intro-title-en">Quiz</h1>
+            <p class="intro-instructions-en">
+              Ten self-check questions in three parts. Review the grammar notes, answer every question,
+              then click <strong>Finish &amp; see results</strong> for your score.
+            </p>
+            <h2 class="bilingual-intro-subtitle-en"><strong>Instructions</strong></h2>
+            <p class="intro-instructions-en">
               Read the grammar notes below and answer the questions in the short quiz. You have three sections.
               After you finish, click <strong>Finish &amp; see results</strong> to see your correct and incorrect
               answers in each section, and your grade.
             </p>
-            <p class="quiz-instr-he" lang="he" dir="rtl">
+          </div>
+          <div class="intro-instructions-he-block" dir="rtl" lang="he">
+            <h1 class="intro-title-he">חידון</h1>
+            <p class="intro-instructions-he">
+              עשר שאלות לבדיקה עצמית בשלושה חלקים. עברו על הכללים, ענו על כל השאלות,
+              ואז לחצו על <strong>Finish &amp; see results</strong> כדי לראות את הציון.
+            </p>
+            <h2 class="bilingual-intro-subtitle-he"><strong>הוראות</strong></h2>
+            <p class="intro-instructions-he">
               קראו את כללי הדקדוק למטה וענו על השאלות בחידון הקצר. יש לכם שלושה חלקים. אחרי שסיימתם, לחצו על
               <strong>Finish &amp; see results</strong> כדי לראות את התשובות הנכונות והשגויות בכל חלק, ואת הציון.
             </p>
           </div>
         </div>
+      </div>
+    </section>
 
+    <section id="quiz" class="section">
+      <div class="container">
         <div class="quiz-reference-block" aria-label="Grammar reference">
           <h3 class="bilingual-block">
             <span class="en">Grammar notes</span>

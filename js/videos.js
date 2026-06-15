@@ -1,4 +1,4 @@
-const videoSlots = [1, 2, 3, 4];
+const videoSlots = [1, 2, 3];
 const storage = window.GitHubVideoStorage;
 
 function formatTime(seconds) {

@@ -106,10 +106,10 @@
   async function fetchManifest() {
     try {
       const res = await fetch(videoPublicUrl("manifest.json", Date.now()), { cache: "no-store" });
-      if (!res.ok) return { version: 1, slots: { 1: null, 2: null, 3: null, 4: null } };
+      if (!res.ok) return { version: 1, slots: { 1: null, 2: null, 3: null } };
       return await res.json();
     } catch {
-      return { version: 1, slots: { 1: null, 2: null, 3: null, 4: null } };
+      return { version: 1, slots: { 1: null, 2: null, 3: null } };
     }
   }
 

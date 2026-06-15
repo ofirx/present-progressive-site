@@ -15,7 +15,12 @@
       "updatedAt": "2026-06-15T14:00:00.000Z",
       "webm": "slot-2.webm"
     },
-    "3": null,
-    "4": null
+    "3": {
+      "file": "slot-3.mp4",
+      "fileName": "3 songs (1).mp4",
+      "mimeType": "video/mp4",
+      "updatedAt": "2026-06-15T18:00:00.000Z",
+      "webm": "slot-3.webm"
+    }
   }
 }

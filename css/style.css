@@ -574,18 +574,29 @@ h2 {
 }
 
 .credits-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.75rem;
+  align-items: start;
+  counter-increment: credits;
+}
+
+.credits-item::before {
+  content: counter(credits) ".";
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: #000;
+  padding-top: 1rem;
+}
+
+.credits-item-card {
   padding: 1rem 1.15rem;
   background: #000;
   border: 1px solid #1a1a1a;
   border-radius: var(--radius);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   color: #fff;
-  counter-increment: credits;
-}
-
-.credits-item::before {
-  content: counter(credits) ". ";
-  font-weight: 800;
 }
 
 .credits-container .page-pager {

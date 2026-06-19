@@ -545,19 +545,29 @@ h2 {
 }
 
 .credits-container {
-  max-width: 720px;
+  max-width: 900px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 2rem;
+  row-gap: 2rem;
+  align-items: start;
 }
 
 .credits-title {
-  margin: 0 0 1.75rem;
+  margin: 0;
   font-size: clamp(1.75rem, 4vw, 2.4rem);
   letter-spacing: -0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+  padding-top: 1rem;
 }
 
 .credits-list {
-  margin: 0 0 2.5rem;
-  padding-left: 1.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: credits;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -570,6 +580,26 @@ h2 {
   border-radius: var(--radius);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   color: #fff;
+  counter-increment: credits;
+}
+
+.credits-item::before {
+  content: counter(credits) ". ";
+  font-weight: 800;
+}
+
+.credits-container .page-pager {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .credits-container {
+    grid-template-columns: 1fr;
+  }
+
+  .credits-title {
+    padding-top: 0;
+  }
 }
 
 .credits-label {

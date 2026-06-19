@@ -209,9 +209,6 @@ videoSlots.forEach((id) => {
     setTimelineVisible(false);
     video.load();
 
-    const bundledName = slot.dataset.bundledVideo || "lesson video";
-    setSaveStatus(`Lesson video: ${bundledName}`, `סרטון שיעור: ${bundledName}`);
-
     video.addEventListener(
       "loadeddata",
       () => {
@@ -283,16 +280,6 @@ async function loadVideosFromGitHub() {
     const seekBar = slot.querySelector(".video-seek");
     if (timeline) timeline.hidden = false;
     if (seekBar) seekBar.disabled = false;
-
-    const saveStatus = document.getElementById(`save-status-${id}`);
-    if (saveStatus) {
-      saveStatus.hidden = false;
-      saveStatus.classList.add("bilingual-block", "save-status");
-      saveStatus.innerHTML = `
-        <span class="en">Lesson video: ${entry.fileName || entry.file}</span>
-        <span class="he" dir="rtl" lang="he">סרטון שיעור: ${entry.fileName || entry.file}</span>
-      `;
-    }
   });
 }
 

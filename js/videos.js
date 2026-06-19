@@ -74,7 +74,12 @@ videoSlots.forEach((id) => {
       <span class="time-duration">0:00</span>
     </div>
   `;
-  controlsWrap.before(timeline);
+  const playerRow = slot.querySelector(".video-player-row");
+  if (playerRow) {
+    playerRow.after(timeline);
+  } else {
+    controlsWrap.before(timeline);
+  }
 
   const seekBar = timeline.querySelector(".video-seek");
   const timeCurrent = timeline.querySelector(".time-current");

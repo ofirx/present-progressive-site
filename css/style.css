@@ -906,10 +906,31 @@ h3 .he {
 .video-frame {
   position: relative;
   aspect-ratio: 16 / 9;
-  margin-bottom: 0.85rem;
   border-radius: 12px;
   overflow: hidden;
   background: #1a1a1a;
+}
+
+.video-player-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.6rem;
+}
+
+.video-player-row .video-frame {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.video-player-row .video-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: min(38%, 8.5rem);
+  margin-top: 0;
+  gap: 0.3rem;
 }
 
 .lesson-video {
@@ -947,17 +968,47 @@ h3 .he {
   margin-top: auto;
 }
 
+.video-player-row + .video-timeline {
+  margin-top: 0.65rem;
+}
+
 .video-controls .btn {
   position: relative;
   min-width: 0;
-  padding: 1.1rem 1rem;
-  font-size: 1.7rem;
+  width: 100%;
+  padding: 0.55rem 0.5rem;
+  font-size: 0.85rem;
   transition:
     background-color 1.8s ease,
     border-color 1.8s ease,
     box-shadow 1.8s ease,
     color 1.8s ease,
     transform 0.15s ease;
+}
+
+.video-controls .btn-bilingual {
+  gap: 0.1rem;
+  padding: 0.55rem 0.5rem;
+}
+
+.video-controls .btn-bilingual .btn-he {
+  font-size: 0.78rem;
+}
+
+@media (max-width: 520px) {
+  .video-player-row {
+    flex-direction: column;
+  }
+
+  .video-player-row .video-controls {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .video-player-row .video-controls .btn {
+    flex: 1 1 calc(50% - 0.15rem);
+  }
 }
 
 .video-controls .btn.is-pressed:not(:disabled) {

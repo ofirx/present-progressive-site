@@ -518,6 +518,40 @@ h2 {
   }
 }
 
+.section-presentation {
+  padding-top: 3rem;
+}
+
+.intro-division {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 2px solid var(--border);
+  box-shadow: 0 1px 0 rgba(45, 106, 79, 0.12);
+}
+
+.intro-below-videos {
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: 0.5rem;
+}
+
+.intro-topic-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: -0.02em;
+}
+
+.intro-topic-lead {
+  margin: 0 0 1.75rem;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.intro-below-videos .rule-card {
+  margin-bottom: 2.5rem;
+}
+
 .rule-card {
   padding: 1.5rem;
   margin-bottom: 2rem;

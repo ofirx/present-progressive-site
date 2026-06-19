@@ -287,17 +287,11 @@
         '<p class="be-verb-row-feedback" hidden aria-live="polite"></p>' +
         "</div>";
 
-      if (index === SENTENCES.length - 1) {
-        return (
-          '<div class="be-verb-last-group">' +
-          rowHtml +
-          SUBMIT_BTN_HTML +
-          "</div>"
-        );
-      }
-
       return rowHtml;
-    }).join("");
+    }).join("") +
+    '<div class="be-verb-submit-wrap">' +
+    SUBMIT_BTN_HTML +
+    "</div>";
 
     sentencesEl.querySelectorAll(".be-verb-select").forEach((select) => {
       select.addEventListener("change", onSelect);

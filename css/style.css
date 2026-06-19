@@ -1781,20 +1781,14 @@ h3 .he {
   color: #991b1b;
 }
 
-.be-verb-last-group {
+.be-verb-submit-wrap {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.be-verb-last-group .be-verb-row {
-  flex: 1 1 auto;
-  min-width: 0;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
 }
 
 .be-verb-submit-inline {
-  flex: 0 0 auto;
-  align-self: center;
   white-space: nowrap;
 }
 
@@ -1923,13 +1917,13 @@ h3 .he {
     padding-left: 0;
   }
 
-  .be-verb-last-group {
-    flex-direction: column;
-    align-items: stretch;
+  .be-verb-submit-wrap {
+    justify-content: stretch;
   }
 
   .be-verb-submit-inline {
-    align-self: flex-start;
+    width: 100%;
+    max-width: 20rem;
   }
 
   .be-verb-select {

@@ -362,7 +362,69 @@ nav a:hover {
   color: var(--muted);
 }
 
+.task-instructions-layout--parallel-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.45rem 1.25rem;
+  align-items: start;
+}
+
+.task-instructions-layout--parallel-rows .practice-section-label-en,
+.task-instructions-layout--parallel-rows .practice-section-label-he {
+  margin: 0;
+}
+
+.task-instructions-layout--parallel-rows .practice-task-title-en,
+.task-instructions-layout--parallel-rows .practice-task-title-he {
+  margin: 0 0 0.35rem;
+}
+
+.task-instructions-layout--parallel-rows .match-instructions-en,
+.task-instructions-layout--parallel-rows .match-instructions-he {
+  margin: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.task-instructions-layout--parallel-rows .match-instructions-en {
+  line-height: 1.55;
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+.task-instructions-layout--parallel-rows .match-instructions-he {
+  line-height: 1.6;
+  font-size: 0.96rem;
+  color: var(--muted);
+  direction: rtl;
+  text-align: right;
+  font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
+}
+
+.task-instructions-layout--parallel-rows .match-instructions-en--lead,
+.task-instructions-layout--parallel-rows .match-instructions-he--lead {
+  margin-top: 0.15rem;
+  font-weight: 800;
+}
+
+.task-instructions-layout--parallel-rows .task-instructions-spacer {
+  min-height: 0.35rem;
+}
+
 @media (max-width: 900px) {
+  .task-instructions-layout--parallel-rows {
+    grid-template-columns: 1fr;
+  }
+
+  .task-instructions-layout--parallel-rows .match-instructions-he {
+    margin-top: -0.2rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .task-instructions-layout--parallel-rows .task-instructions-spacer {
+    display: none;
+  }
+
   .task-instructions-layout {
     grid-template-columns: 1fr;
   }

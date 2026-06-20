@@ -36,6 +36,32 @@
     { id: 3, keys: ["q9", "q10", "q11", "q12"], label: "Part C" },
   ];
 
+  const QUESTION_LABELS = {
+    q1: "1. I … (read) a book now.",
+    q2: "2. She … (write) a story at the moment.",
+    q3: "3. They … (play) football right now.",
+    q4: "4. He … (eat) an apple now.",
+    q5: "5. I am drawing a picture now.",
+    q6: "6. She is running right now.",
+    q7: "7. They are reading a book at the moment.",
+    q8: "8. He is writing a letter now.",
+    q11: "11. Write one sentence about what a classmate is doing right now.",
+    q12: "12. Write sentences about what you are doing now and what you are not doing now.",
+  };
+
+  const CORRECT_DISPLAY = {
+    q1: "am reading",
+    q2: "is writing",
+    q3: "are playing",
+    q4: "is eating",
+    q5: "I am not drawing a picture now.",
+    q6: "She is not running right now.",
+    q7: "They are not reading a book at the moment.",
+    q8: "He is not writing a letter now.",
+    q11: "Example: My classmate is listening to the teacher right now.",
+    q12: "a. Example: I am doing this quiz now. · b. Example: I am not watching TV now.",
+  };
+
   const PROGRESSIVE =
     /\b(?:i|you|he|she|it|we|they|'m|'re|'s|am|is|are)\b[^.?!]{0,40}\b\w+ing\b/i;
   const NEGATIVE_PROGRESSIVE =
@@ -57,6 +83,119 @@
   let current = 0;
   const totalSteps = panes.length;
   let chartInstances = [];
+
+  function escapeHtml(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function getUserAnswer(key) {
+    if (key === "q12") {
+      const a = getTextValue("q12a").trim();
+      const b = getTextValue("q12b").trim();
+      if (!a && !b) return "—";
+      return `a. ${a || "—"} · b. ${b || "—"}`;
+    }
+
+    if (SELECT_ANSWERS[key]) {
+      const value = getSelectValue(key);
+      return value || "—";
+    }
+
+    if (TEXT_ANSWERS[key] || key === "q11") {
+      return getTextValue(key).trim() || "—";
+    }
+
+    const checked = document.querySelector(`input[name="${key}"]:checked`);
+    if (!checked) return "—";
+    const label = checked.closest("label");
+    return label ? label.textContent.trim() : checked.value;
+  }
+
+  function isAutoGraded(key) {
+    return key !== "q9" && key !== "q10";
+  }
+
+  function getFeedbackMessage(pct) {
+    if (pct > 80) {
+      return {
+        className: "quiz-feedback--excellent",
+        en: "Excellent work! You have a strong grasp of the Present Progressive. Keep it up!",
+        he: "עבודה מצוינת! יש לך שליטה טובה בזמן הווה מתמשך. המשיכו כך!",
+      };
+    }
+
+    if (pct > 60) {
+      return {
+        className: "quiz-feedback--good",
+        en: "Good job! You are making solid progress with the Present Progressive.",
+        he: "כל הכבוד! אתם מתקדמים יפה עם זמן הווה מתמשך.",
+      };
+    }
+
+    return {
+      className: "quiz-feedback--support",
+      en: "Don't worry — please see me after class to work on an adapted program.",
+      he: "אל דאגה — אנא פנו אלי אחרי השיעור כדי לעבוד על תוכנית מותאמת.",
+    };
+  }
+
+  function renderFeedback(pct) {
+    const feedbackEl = document.getElementById("quizFeedback");
+    if (!feedbackEl) return;
+
+    const message = getFeedbackMessage(pct);
+    feedbackEl.className = `quiz-feedback bilingual-block ${message.className}`;
+    feedbackEl.innerHTML = `
+      <span class="en">${escapeHtml(message.en)}</span>
+      <span class="he" dir="rtl" lang="he">${escapeHtml(message.he)}</span>
+    `;
+    feedbackEl.hidden = false;
+  }
+
+  function renderCorrections() {
+    PARTS.forEach((part) => {
+      const el = document.getElementById(`correctionsPart${part.id}`);
+      if (!el) return;
+
+      const wrongItems = part.keys
+        .filter(isAutoGraded)
+        .filter((key) => isQuestionCorrect(key) === false)
+        .map((key) => ({
+          key,
+          label: QUESTION_LABELS[key] || key,
+          user: getUserAnswer(key),
+          correct: CORRECT_DISPLAY[key] || "—",
+        }));
+
+      if (!wrongItems.length) {
+        el.hidden = true;
+        el.innerHTML = "";
+        return;
+      }
+
+      el.hidden = false;
+      el.innerHTML = `
+        <h5 class="quiz-corrections-title">Review incorrect answers</h5>
+        <ul class="quiz-corrections-list">
+          ${wrongItems
+            .map(
+              (item) => `
+            <li class="quiz-correction-item">
+              <p class="quiz-correction-q">${escapeHtml(item.label)}</p>
+              <p class="quiz-correction-your"><strong>Your answer:</strong> ${escapeHtml(item.user)}</p>
+              <p class="quiz-correction-answer"><strong>Correct answer:</strong> ${escapeHtml(item.correct)}</p>
+            </li>
+          `
+            )
+            .join("")}
+        </ul>
+      `;
+    });
+  }
 
   function normalizeText(value) {
     return String(value || "")
@@ -305,9 +444,11 @@
           <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100) — שאלות 9 ו-10 לא נבדקות אוטומטית.</span>
         `;
       }
+      renderFeedback(pct);
       if (resultsEl) {
         resultsEl.hidden = false;
         renderCharts(result);
+        renderCorrections();
         resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });

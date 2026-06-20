@@ -329,21 +329,25 @@ Spelling: run → running (double the final consonant)
               <span class="he" dir="rtl" lang="he">תוצאות</span>
             </h3>
             <p class="quiz-results-summary bilingual-block" id="quizScoreText"></p>
+            <div class="quiz-feedback bilingual-block" id="quizFeedback" hidden></div>
             <div class="quiz-charts">
               <div class="quiz-chart-box">
                 <h4>Part A</h4>
                 <canvas id="chartPart1" width="240" height="200"></canvas>
                 <div class="quiz-chart-stats" id="statsPart1"></div>
+                <div class="quiz-corrections" id="correctionsPart1" hidden></div>
               </div>
               <div class="quiz-chart-box quiz-chart-box--p2">
                 <h4>Part B</h4>
                 <canvas id="chartPart2" width="240" height="200"></canvas>
                 <div class="quiz-chart-stats" id="statsPart2"></div>
+                <div class="quiz-corrections" id="correctionsPart2" hidden></div>
               </div>
               <div class="quiz-chart-box">
                 <h4>Part C</h4>
                 <canvas id="chartPart3" width="240" height="200"></canvas>
                 <div class="quiz-chart-stats" id="statsPart3"></div>
+                <div class="quiz-corrections" id="correctionsPart3" hidden></div>
               </div>
             </div>
           </div>
@@ -371,6 +375,6 @@ Spelling: run → running (double the final consonant)
       <p class="he" dir="rtl" lang="he">הווה מתמשך — מדריך דקדוק</p>
     </div>
   </footer>
-  <script src="js/quiz.js?v=3"></script>
+  <script src="js/quiz.js?v=4"></script>
 </body>
 </html>

@@ -2,24 +2,41 @@
  * Present Progressive: 3-part self-graded quiz with step navigation and Chart.js results.
  */
 (function () {
-  const ANSWERS = {
-    q1: "b",
-    q2: "c",
-    q3: "b",
-    q4: "a",
-    q5: "b",
-    q6: "a",
-    q7: "b",
-    q8: "a",
-    q9: "b",
-    q10: "b",
+  const TEXT_ANSWERS = {
+    q1: ["am reading"],
+    q2: ["is writing"],
+    q3: ["are playing"],
+    q4: ["is eating"],
+    q5: [
+      "i am not drawing a picture now",
+      "i'm not drawing a picture now",
+    ],
+    q6: [
+      "she is not running right now",
+      "she's not running right now",
+      "she is not running right now.",
+      "she's not running right now.",
+    ],
+    q7: [
+      "they are not reading a book at the moment",
+      "they're not reading a book at the moment",
+    ],
+    q8: [
+      "he is not writing a letter now",
+      "he's not writing a letter now",
+    ],
   };
 
   const PARTS = [
-    { id: 1, keys: ["q1", "q2", "q3", "q4"], label: "Part 1" },
-    { id: 2, keys: ["q5", "q6", "q7"], label: "Part 2" },
-    { id: 3, keys: ["q8", "q9", "q10"], label: "Part 3" },
+    { id: 1, keys: ["q1", "q2", "q3", "q4"], label: "Part A" },
+    { id: 2, keys: ["q5", "q6", "q7", "q8"], label: "Part B" },
+    { id: 3, keys: ["q9", "q10", "q11", "q12"], label: "Part C" },
   ];
+
+  const PROGRESSIVE =
+    /\b(?:i|you|he|she|it|we|they|'m|'re|'s|am|is|are)\b[^.?!]{0,40}\b\w+ing\b/i;
+  const NEGATIVE_PROGRESSIVE =
+    /\b(?:am|is|are|'m|'re|'s)\s+not\b|\b(?:isn't|aren't|i'm not|he's not|she's not|it's not|we're not|they're not)\b/i;
 
   const quizRoot = document.getElementById("ppQuiz");
   if (!quizRoot) return;
@@ -38,10 +55,59 @@
   const totalSteps = panes.length;
   let chartInstances = [];
 
+  function normalizeText(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/['']/g, "'")
+      .replace(/\s+/g, " ")
+      .replace(/[.!?]+$/, "");
+  }
+
+  function getTextValue(name) {
+    const el = document.querySelector(`input[name="${name}"]`);
+    return el ? el.value : "";
+  }
+
+  function isQuestionAnswered(key) {
+    if (key === "q12") {
+      return Boolean(getTextValue("q12a").trim() && getTextValue("q12b").trim());
+    }
+
+    if (TEXT_ANSWERS[key] || key === "q11") {
+      return Boolean(getTextValue(key).trim());
+    }
+
+    return Boolean(document.querySelector(`input[name="${key}"]:checked`));
+  }
+
+  function matchesTextAnswer(key, value) {
+    const accepted = TEXT_ANSWERS[key];
+    if (!accepted) return false;
+    const normalized = normalizeText(value);
+    return accepted.some((answer) => normalizeText(answer) === normalized);
+  }
+
+  function isQuestionCorrect(key) {
+    if (TEXT_ANSWERS[key]) {
+      return matchesTextAnswer(key, getTextValue(key));
+    }
+
+    if (key === "q11") {
+      return PROGRESSIVE.test(getTextValue("q11"));
+    }
+
+    if (key === "q12") {
+      const a = getTextValue("q12a");
+      const b = getTextValue("q12b");
+      return PROGRESSIVE.test(a) && NEGATIVE_PROGRESSIVE.test(b) && /\b\w+ing\b/i.test(b);
+    }
+
+    return null;
+  }
+
   function countAnsweredInPart(keys) {
-    return keys.reduce((n, key) => {
-      return document.querySelector(`input[name="${key}"]:checked`) ? n + 1 : n;
-    }, 0);
+    return keys.reduce((n, key) => (isQuestionAnswered(key) ? n + 1 : n), 0);
   }
 
   function updatePartCounters() {
@@ -128,9 +194,9 @@
     chartInstances = [];
   }
 
-  function gradeMc() {
+  function gradeQuiz() {
     let correct = 0;
-    const total = Object.keys(ANSWERS).length;
+    let total = 0;
     const byPart = [
       { c: 0, t: 0 },
       { c: 0, t: 0 },
@@ -139,10 +205,15 @@
 
     PARTS.forEach((part, pi) => {
       part.keys.forEach((key) => {
+        if (key === "q9" || key === "q10") {
+          return;
+        }
+
         byPart[pi].t++;
-        const el = document.querySelector(`input[name="${key}"]:checked`);
-        const value = el ? el.value : "";
-        if (value === ANSWERS[key]) {
+        total++;
+
+        const isCorrect = isQuestionCorrect(key);
+        if (isCorrect) {
           correct++;
           byPart[pi].c++;
         }
@@ -207,15 +278,15 @@
 
   if (btnSubmit) {
     btnSubmit.addEventListener("click", () => {
-      const result = gradeMc();
+      const result = gradeQuiz();
       const scoreEl = document.getElementById("quizScoreText");
       const resultsEl = document.getElementById("quizResults");
-      const pct = Math.round((result.correct / result.total) * 100);
+      const pct = result.total ? Math.round((result.correct / result.total) * 100) : 0;
 
       if (scoreEl) {
         scoreEl.innerHTML = `
-          <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100)</span>
-          <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100)</span>
+          <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100) — Questions 9 and 10 are not auto-graded.</span>
+          <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100) — שאלות 9 ו-10 לא נבדקות אוטומטית.</span>
         `;
       }
       if (resultsEl) {
@@ -228,6 +299,12 @@
 
   quizRoot.addEventListener("change", (e) => {
     if (e.target?.matches?.('input[type="radio"]')) {
+      updatePartCounters();
+    }
+  });
+
+  quizRoot.addEventListener("input", (e) => {
+    if (e.target?.matches?.(".quiz-text-input")) {
       updatePartCounters();
     }
   });

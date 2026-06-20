@@ -4,7 +4,7 @@
 (function () {
   const RADIO_ANSWERS = {
     q9: "a",
-    q10: "b",
+    q10: "a",
   };
 
   const SELECT_ANSWERS = {
@@ -68,7 +68,7 @@
     q7: "7. They play football every day.",
     q8: "8. He reads a book after school.",
     q9: "9. Is she reading a book now?",
-    q10: "10. Are they playing football at the moment?",
+    q10: "10. Is he playing football at the moment?",
     q11: "11. Write one sentence about what a classmate is doing right now.",
     q12: "12. Write sentences about what you are doing now and what you are not doing now.",
   };
@@ -83,7 +83,7 @@
     q7: "They do not play football every day.",
     q8: "He does not read a book after school.",
     q9: "Yes, she is.",
-    q10: "No, they aren't.",
+    q10: "Yes, he is.",
     q11: "Example: My classmate is listening to the teacher right now.",
     q12: "a. Example: I am doing this quiz now. · b. Example: I am not watching TV now.",
   };
@@ -191,12 +191,12 @@
         </li>
         <li class="quiz-partc-picture-item ${q10Ok ? "is-correct" : "is-wrong"}">
           <span class="en">
-            <strong>10.</strong> Correct answer: <strong>No, they aren&rsquo;t.</strong>
+            <strong>10.</strong> Correct answer: <strong>Yes, he is.</strong>
             · Your answer: ${escapeHtml(q10User)}
             · <span class="quiz-partc-status">${q10Ok ? "Correct" : "Incorrect"}</span>
           </span>
           <span class="he" dir="rtl" lang="he">
-            <strong>10.</strong> תשובה נכונה: <strong>No, they aren&rsquo;t.</strong>
+            <strong>10.</strong> תשובה נכונה: <strong>Yes, he is.</strong>
             · התשובה שלך: ${escapeHtml(q10User)}
             · <span class="quiz-partc-status">${q10Ok ? "נכון" : "לא נכון"}</span>
           </span>
@@ -558,10 +558,10 @@
         scoreEl.innerHTML = `
           <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100)
             · Picture Q9: ${q9Ok ? "correct" : "incorrect"} (answer: Yes, she is.)
-            · Picture Q10: ${q10Ok ? "correct" : "incorrect"} (answer: No, they aren't.)</span>
+            · Picture Q10: ${q10Ok ? "correct" : "incorrect"} (answer: Yes, he is.)</span>
           <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100)
             · תמונה שאלה 9: ${q9Ok ? "נכון" : "לא נכון"} (תשובה: Yes, she is.)
-            · תמונה שאלה 10: ${q10Ok ? "נכון" : "לא נכון"} (תשובה: No, they aren't.)</span>
+            · תמונה שאלה 10: ${q10Ok ? "נכון" : "לא נכון"} (תשובה: Yes, he is.)</span>
         `;
       }
       renderPartCPictureSummary();

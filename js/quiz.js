@@ -148,6 +148,47 @@
     };
   }
 
+  function renderPartCPictureSummary() {
+    const el = document.getElementById("quizPartCPictureSummary");
+    if (!el) return;
+
+    const q9Ok = isQuestionCorrect("q9");
+    const q10Ok = isQuestionCorrect("q10");
+    const q9User = getUserAnswer("q9");
+    const q10User = getUserAnswer("q10");
+
+    el.innerHTML = `
+      <h4 class="quiz-partc-picture-title">Part C — Picture questions (9 &amp; 10)</h4>
+      <ul class="quiz-partc-picture-list">
+        <li class="quiz-partc-picture-item ${q9Ok ? "is-correct" : "is-wrong"}">
+          <span class="en">
+            <strong>9.</strong> Correct answer: <strong>Yes, she is.</strong>
+            · Your answer: ${escapeHtml(q9User)}
+            · <span class="quiz-partc-status">${q9Ok ? "Correct" : "Incorrect"}</span>
+          </span>
+          <span class="he" dir="rtl" lang="he">
+            <strong>9.</strong> תשובה נכונה: <strong>Yes, she is.</strong>
+            · התשובה שלך: ${escapeHtml(q9User)}
+            · <span class="quiz-partc-status">${q9Ok ? "נכון" : "לא נכון"}</span>
+          </span>
+        </li>
+        <li class="quiz-partc-picture-item ${q10Ok ? "is-correct" : "is-wrong"}">
+          <span class="en">
+            <strong>10.</strong> Correct answer: <strong>No, they aren&rsquo;t.</strong>
+            · Your answer: ${escapeHtml(q10User)}
+            · <span class="quiz-partc-status">${q10Ok ? "Correct" : "Incorrect"}</span>
+          </span>
+          <span class="he" dir="rtl" lang="he">
+            <strong>10.</strong> תשובה נכונה: <strong>No, they aren&rsquo;t.</strong>
+            · התשובה שלך: ${escapeHtml(q10User)}
+            · <span class="quiz-partc-status">${q10Ok ? "נכון" : "לא נכון"}</span>
+          </span>
+        </li>
+      </ul>
+    `;
+    el.hidden = false;
+  }
+
   function renderFeedback(pct) {
     const feedbackEl = document.getElementById("quizFeedback");
     if (!feedbackEl) return;
@@ -444,11 +485,18 @@
       const pct = result.total ? Math.round((result.correct / result.total) * 100) : 0;
 
       if (scoreEl) {
+        const q9Ok = isQuestionCorrect("q9");
+        const q10Ok = isQuestionCorrect("q10");
         scoreEl.innerHTML = `
-          <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100)</span>
-          <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100)</span>
+          <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100)
+            · Picture Q9: ${q9Ok ? "correct" : "incorrect"} (answer: Yes, she is.)
+            · Picture Q10: ${q10Ok ? "correct" : "incorrect"} (answer: No, they aren't.)</span>
+          <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100)
+            · תמונה שאלה 9: ${q9Ok ? "נכון" : "לא נכון"} (תשובה: Yes, she is.)
+            · תמונה שאלה 10: ${q10Ok ? "נכון" : "לא נכון"} (תשובה: No, they aren't.)</span>
         `;
       }
+      renderPartCPictureSummary();
       renderFeedback(pct);
       if (resultsEl) {
         resultsEl.hidden = false;

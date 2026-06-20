@@ -2,11 +2,14 @@
  * Present Progressive: 3-part self-graded quiz with step navigation and Chart.js results.
  */
 (function () {
+  const SELECT_ANSWERS = {
+    q1: "am reading",
+    q2: "is writing",
+    q3: "are playing",
+    q4: "is eating",
+  };
+
   const TEXT_ANSWERS = {
-    q1: ["am reading"],
-    q2: ["is writing"],
-    q3: ["are playing"],
-    q4: ["is eating"],
     q5: [
       "i am not drawing a picture now",
       "i'm not drawing a picture now",
@@ -64,6 +67,11 @@
       .replace(/[.!?]+$/, "");
   }
 
+  function getSelectValue(name) {
+    const el = document.querySelector(`select[name="${name}"]`);
+    return el ? el.value : "";
+  }
+
   function getTextValue(name) {
     const el = document.querySelector(`input[name="${name}"]`);
     return el ? el.value : "";
@@ -72,6 +80,10 @@
   function isQuestionAnswered(key) {
     if (key === "q12") {
       return Boolean(getTextValue("q12a").trim() && getTextValue("q12b").trim());
+    }
+
+    if (SELECT_ANSWERS[key]) {
+      return Boolean(getSelectValue(key));
     }
 
     if (TEXT_ANSWERS[key] || key === "q11") {
@@ -89,6 +101,10 @@
   }
 
   function isQuestionCorrect(key) {
+    if (SELECT_ANSWERS[key]) {
+      return getSelectValue(key) === SELECT_ANSWERS[key];
+    }
+
     if (TEXT_ANSWERS[key]) {
       return matchesTextAnswer(key, getTextValue(key));
     }
@@ -298,7 +314,7 @@
   }
 
   quizRoot.addEventListener("change", (e) => {
-    if (e.target?.matches?.('input[type="radio"]')) {
+    if (e.target?.matches?.('input[type="radio"], .quiz-select')) {
       updatePartCounters();
     }
   });

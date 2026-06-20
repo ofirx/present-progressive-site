@@ -118,33 +118,69 @@ Spelling: run → running (double the final consonant)
                         <div class="quiz-pane-instr-grid">
                           <div class="quiz-pane-instr-en">
                             <h3 class="quiz-pane-heading">Part A — Complete the Sentences</h3>
-                            <p class="quiz-pane-lead">Write the correct Present Progressive form. Use: <strong>am / is / are + verb-ing</strong>.</p>
+                            <p class="quiz-pane-lead">Choose the correct Present Progressive form from the menu. Use: <strong>am / is / are + verb-ing</strong>.</p>
                           </div>
                           <div class="quiz-pane-instr-he" lang="he" dir="rtl">
                             <p class="quiz-pane-heading-he">חלק א — השלמת משפטים</p>
-                            <p class="quiz-pane-lead-he">כתבו את צורת הווה מתמשך הנכונה. השתמשו ב: <strong>am / is / are + verb-ing</strong>.</p>
+                            <p class="quiz-pane-lead-he">בחרו את צורת הווה מתמשך הנכונה מהתפריט. השתמשו ב: <strong>am / is / are + verb-ing</strong>.</p>
                           </div>
                         </div>
                       </header>
 
                       <div class="quiz-q">
-                        <label class="quiz-q-label" for="q1">1. I ________ (read) a book <strong>now</strong>.</label>
-                        <input type="text" class="quiz-text-input" id="q1" name="q1" autocomplete="off" spellcheck="false" />
+                        <p class="quiz-q-label quiz-q-label--inline">
+                          1. I
+                          <select class="quiz-select" id="q1" name="q1" aria-label="Question 1 answer">
+                            <option value="">________</option>
+                            <option value="am reading">am reading</option>
+                            <option value="is reading">is reading</option>
+                            <option value="are reading">are reading</option>
+                            <option value="am read">am read</option>
+                          </select>
+                          (read) a book <strong>now</strong>.
+                        </p>
                       </div>
 
                       <div class="quiz-q">
-                        <label class="quiz-q-label" for="q2">2. She ________ (write) a story <strong>at the moment</strong>.</label>
-                        <input type="text" class="quiz-text-input" id="q2" name="q2" autocomplete="off" spellcheck="false" />
+                        <p class="quiz-q-label quiz-q-label--inline">
+                          2. She
+                          <select class="quiz-select" id="q2" name="q2" aria-label="Question 2 answer">
+                            <option value="">________</option>
+                            <option value="am writing">am writing</option>
+                            <option value="are writing">are writing</option>
+                            <option value="is writing">is writing</option>
+                            <option value="is write">is write</option>
+                          </select>
+                          (write) a story <strong>at the moment</strong>.
+                        </p>
                       </div>
 
                       <div class="quiz-q">
-                        <label class="quiz-q-label" for="q3">3. They ________ (play) football <strong>right now</strong>.</label>
-                        <input type="text" class="quiz-text-input" id="q3" name="q3" autocomplete="off" spellcheck="false" />
+                        <p class="quiz-q-label quiz-q-label--inline">
+                          3. They
+                          <select class="quiz-select" id="q3" name="q3" aria-label="Question 3 answer">
+                            <option value="">________</option>
+                            <option value="is playing">is playing</option>
+                            <option value="am playing">am playing</option>
+                            <option value="are play">are play</option>
+                            <option value="are playing">are playing</option>
+                          </select>
+                          (play) football <strong>right now</strong>.
+                        </p>
                       </div>
 
                       <div class="quiz-q">
-                        <label class="quiz-q-label" for="q4">4. He ________ (eat) an apple <strong>now</strong>.</label>
-                        <input type="text" class="quiz-text-input" id="q4" name="q4" autocomplete="off" spellcheck="false" />
+                        <p class="quiz-q-label quiz-q-label--inline">
+                          4. He
+                          <select class="quiz-select" id="q4" name="q4" aria-label="Question 4 answer">
+                            <option value="">________</option>
+                            <option value="am eating">am eating</option>
+                            <option value="is eating">is eating</option>
+                            <option value="are eating">are eating</option>
+                            <option value="is eat">is eat</option>
+                          </select>
+                          (eat) an apple <strong>now</strong>.
+                        </p>
                       </div>
                     </div>
                     <aside class="quiz-pane-rail" aria-label="Progress for this part">
@@ -335,6 +371,6 @@ Spelling: run → running (double the final consonant)
       <p class="he" dir="rtl" lang="he">הווה מתמשך — מדריך דקדוק</p>
     </div>
   </footer>
-  <script src="js/quiz.js?v=2"></script>
+  <script src="js/quiz.js?v=3"></script>
 </body>
 </html>

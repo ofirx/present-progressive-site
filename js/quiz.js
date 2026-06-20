@@ -21,12 +21,12 @@
       "she's not running right now.",
     ],
     q7: [
-      "they are not reading a book at the moment",
-      "they're not reading a book at the moment",
+      "they do not play football every day",
+      "they don't play football every day",
     ],
     q8: [
-      "he is not writing a letter now",
-      "he's not writing a letter now",
+      "he does not read a book after school",
+      "he doesn't read a book after school",
     ],
   };
 
@@ -43,8 +43,8 @@
     q4: "4. He … (eat) an apple now.",
     q5: "5. I am drawing a picture now.",
     q6: "6. She is running right now.",
-    q7: "7. They are reading a book at the moment.",
-    q8: "8. He is writing a letter now.",
+    q7: "7. They play football every day.",
+    q8: "8. He reads a book after school.",
     q11: "11. Write one sentence about what a classmate is doing right now.",
     q12: "12. Write sentences about what you are doing now and what you are not doing now.",
   };
@@ -56,8 +56,8 @@
     q4: "is eating",
     q5: "I am not drawing a picture now.",
     q6: "She is not running right now.",
-    q7: "They are not reading a book at the moment.",
-    q8: "He is not writing a letter now.",
+    q7: "They do not play football every day.",
+    q8: "He does not read a book after school.",
     q11: "Example: My classmate is listening to the teacher right now.",
     q12: "a. Example: I am doing this quiz now. · b. Example: I am not watching TV now.",
   };

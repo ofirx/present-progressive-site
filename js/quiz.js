@@ -2,6 +2,11 @@
  * Present Progressive: 3-part self-graded quiz with step navigation and Chart.js results.
  */
 (function () {
+  const RADIO_ANSWERS = {
+    q9: "a",
+    q10: "b",
+  };
+
   const SELECT_ANSWERS = {
     q1: "am reading",
     q2: "is writing",
@@ -45,6 +50,8 @@
     q6: "6. She is running right now.",
     q7: "7. They play football every day.",
     q8: "8. He reads a book after school.",
+    q9: "9. Is she reading a book now?",
+    q10: "10. Are they playing football at the moment?",
     q11: "11. Write one sentence about what a classmate is doing right now.",
     q12: "12. Write sentences about what you are doing now and what you are not doing now.",
   };
@@ -58,6 +65,8 @@
     q6: "She is not running right now.",
     q7: "They do not play football every day.",
     q8: "He does not read a book after school.",
+    q9: "Yes, she is.",
+    q10: "No, they aren't.",
     q11: "Example: My classmate is listening to the teacher right now.",
     q12: "a. Example: I am doing this quiz now. · b. Example: I am not watching TV now.",
   };
@@ -115,10 +124,6 @@
     return label ? label.textContent.trim() : checked.value;
   }
 
-  function isAutoGraded(key) {
-    return key !== "q9" && key !== "q10";
-  }
-
   function getFeedbackMessage(pct) {
     if (pct > 80) {
       return {
@@ -162,7 +167,6 @@
       if (!el) return;
 
       const wrongItems = part.keys
-        .filter(isAutoGraded)
         .filter((key) => isQuestionCorrect(key) === false)
         .map((key) => ({
           key,
@@ -240,6 +244,11 @@
   }
 
   function isQuestionCorrect(key) {
+    if (RADIO_ANSWERS[key]) {
+      const checked = document.querySelector(`input[name="${key}"]:checked`);
+      return checked ? checked.value === RADIO_ANSWERS[key] : false;
+    }
+
     if (SELECT_ANSWERS[key]) {
       return getSelectValue(key) === SELECT_ANSWERS[key];
     }
@@ -360,10 +369,6 @@
 
     PARTS.forEach((part, pi) => {
       part.keys.forEach((key) => {
-        if (key === "q9" || key === "q10") {
-          return;
-        }
-
         byPart[pi].t++;
         total++;
 
@@ -440,8 +445,8 @@
 
       if (scoreEl) {
         scoreEl.innerHTML = `
-          <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100) — Questions 9 and 10 are not auto-graded.</span>
-          <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100) — שאלות 9 ו-10 לא נבדקות אוטומטית.</span>
+          <span class="en">Overall score: ${result.correct} / ${result.total} (${pct}/100)</span>
+          <span class="he" dir="rtl" lang="he">ציון כולל: ${result.correct} / ${result.total} (${pct}/100)</span>
         `;
       }
       renderFeedback(pct);

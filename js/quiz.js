@@ -406,7 +406,7 @@
     updateMinSubmitHints();
   }
 
-  function showStep(i) {
+  function showStep(i, scrollIntoView = true) {
     current = Math.max(0, Math.min(i, totalSteps - 1));
     quizRoot.setAttribute("data-active-part", String(current + 1));
     panes.forEach((pane, idx) => {
@@ -424,6 +424,8 @@
     if (btnSubmit) btnSubmit.hidden = current < totalSteps - 1;
 
     updateMinSubmitHints();
+
+    if (!scrollIntoView) return;
 
     const activePane = panes[current];
     if (activePane) {
@@ -585,6 +587,11 @@
     }
   });
 
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  window.scrollTo(0, 0);
+
   updatePartCounters();
-  showStep(0);
+  showStep(0, false);
 })();

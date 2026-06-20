@@ -52,6 +52,19 @@
   const resultsEl = document.getElementById("reporter-results");
   const summaryEl = document.getElementById("reporter-summary");
   const btnClear = document.getElementById("reporter-clear");
+  const submitHint = document.getElementById("reporterSubmitRequiredHint");
+  const guard = window.PracticeSubmitGuard;
+
+  function isAllAnswered() {
+    return inputs.every((input) => input.value.trim());
+  }
+
+  function syncSubmitHint() {
+    if (!guard || !submitHint) return;
+    if (isAllAnswered()) {
+      guard.hideSubmitRequiredHint(submitHint);
+    }
+  }
 
   function hasPresentProgressive(sentence) {
     return /\b(am|is|are)\s+[a-z]+ing\b/i.test(sentence);
@@ -219,6 +232,12 @@
 
   function onSubmit(e) {
     e.preventDefault();
+    if (!isAllAnswered()) {
+      guard?.flashSubmitRequiredHint(submitHint);
+      return;
+    }
+
+    guard?.hideSubmitRequiredHint(submitHint);
     submitAttempt += 1;
     const showModels = submitAttempt >= 2;
 
@@ -268,8 +287,13 @@
     resultsEl.innerHTML = "";
     summaryEl.hidden = true;
     summaryEl.textContent = "";
+    guard?.hideSubmitRequiredHint(submitHint);
     inputs[0]?.focus();
   }
+
+  inputs.forEach((input) => {
+    input.addEventListener("input", syncSubmitHint);
+  });
 
   form.addEventListener("submit", onSubmit);
   btnClear?.addEventListener("click", onClear);

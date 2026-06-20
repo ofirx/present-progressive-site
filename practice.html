@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Practice the Present Progressive tense with fill-in-the-blank sentences." />
   <title>Practice — Present Progressive</title>
-  <link rel="stylesheet" href="css/style.css?v=42" />
+  <link rel="stylesheet" href="css/style.css?v=43" />
 </head>
 <body>
   <header class="site-header">
@@ -103,6 +103,11 @@
                       <span class="btn-en">Start over</span>
                       <span class="btn-he" dir="rtl" lang="he">התחל מחדש</span>
                     </button>
+                  </div>
+
+                  <div class="practice-submit-required-hint" id="matchSubmitRequiredHint" hidden aria-live="polite">
+                    <span class="practice-submit-required-en">You must answer all the questions before clicking Submit.</span>
+                    <span class="practice-submit-required-he" dir="rtl" lang="he">עליכם לענות על כל השאלות לפני שליחה.</span>
                   </div>
 
                   <p id="match-score" class="match-score bilingual-block" hidden aria-live="polite"></p>
@@ -210,6 +215,11 @@
                         <span class="btn-he" dir="rtl" lang="he">נקה</span>
                       </button>
                     </div>
+
+                    <div class="practice-submit-required-hint" id="reporterSubmitRequiredHint" hidden aria-live="polite">
+                      <span class="practice-submit-required-en">You must answer all the questions before clicking Submit.</span>
+                      <span class="practice-submit-required-he" dir="rtl" lang="he">עליכם לענות על כל השאלות לפני שליחה.</span>
+                    </div>
                   </form>
 
                   <p id="reporter-summary" class="reporter-summary" hidden aria-live="polite"></p>
@@ -285,6 +295,11 @@
                           <div class="be-verb-progress-fill" id="be-progress-fill"></div>
                         </div>
                         <p class="be-verb-counter-hint" id="be-progress-hint" hidden aria-live="polite"></p>
+
+                        <div class="practice-submit-required-hint" id="beSubmitRequiredHint" hidden aria-live="polite">
+                          <span class="practice-submit-required-en">You must answer all the questions before clicking Submit.</span>
+                          <span class="practice-submit-required-he" dir="rtl" lang="he">עליכם לענות על כל השאלות לפני שליחה.</span>
+                        </div>
 
                         <div id="be-timer-block" class="be-verb-timer-block" hidden>
                           <p class="be-verb-rail-title">Time</p>
@@ -363,9 +378,10 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/practice-submit-guard.js?v=1"></script>
   <script src="js/practice-game-fullscreen.js?v=2"></script>
-  <script src="js/practice-match.js?v=16"></script>
-  <script src="js/practice-reporter.js?v=5"></script>
-  <script src="js/practice-be-verb.js?v=11"></script>
+  <script src="js/practice-match.js?v=17"></script>
+  <script src="js/practice-reporter.js?v=6"></script>
+  <script src="js/practice-be-verb.js?v=12"></script>
 </body>
 </html>

@@ -1817,6 +1817,69 @@ h3 .he {
   color: #166534;
 }
 
+.practice-submit-required-hint {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: start;
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 2px solid #9b2226;
+  background: rgba(254, 202, 202, 0.95);
+  color: #000;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.practice-submit-required-hint[hidden] {
+  display: none !important;
+}
+
+.practice-submit-required-en {
+  text-align: left;
+}
+
+.practice-submit-required-he {
+  text-align: right;
+  direction: rtl;
+  font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
+}
+
+.practice-submit-required-hint.is-alert {
+  animation: practice-submit-required-blink 0.65s ease-in-out 4;
+}
+
+@keyframes practice-submit-required-blink {
+  0%,
+  100% {
+    background: rgba(254, 202, 202, 0.95);
+    border-color: #9b2226;
+    box-shadow: 0 0 0 0 rgba(155, 34, 38, 0);
+  }
+
+  50% {
+    background: rgba(252, 165, 165, 1);
+    border-color: #7f1d1d;
+    box-shadow:
+      0 0 0 3px rgba(155, 34, 38, 0.25),
+      0 0 20px rgba(155, 34, 38, 0.55);
+  }
+}
+
+.be-verb-sticky-bar .practice-submit-required-hint {
+  margin-top: 0.55rem;
+}
+
+.match-worksheet--embedded .practice-submit-required-hint {
+  margin-top: 0.85rem;
+}
+
+.reporter-form .practice-submit-required-hint {
+  margin-top: 0.85rem;
+}
+
 .be-verb-timer-block {
   padding-top: 0.35rem;
   border-top: 1px solid #fbcfe8;

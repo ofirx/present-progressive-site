@@ -33,6 +33,8 @@
   const btnStart = document.getElementById("be-start");
   const btnPause = document.getElementById("be-pause");
   const modeInputs = root.querySelectorAll('input[name="be-mode"]');
+  const submitHint = document.getElementById("beSubmitRequiredHint");
+  const guard = window.PracticeSubmitGuard;
 
   function getSubmitBtn() {
     return document.getElementById("be-submit");
@@ -147,6 +149,7 @@
       progressHint.hidden = false;
       progressHint.classList.add("is-complete");
       progressHint.textContent = "Great job! You've answered every sentence.";
+      guard?.hideSubmitRequiredHint(submitHint);
     }
   }
 
@@ -456,6 +459,7 @@
     hideGradePanel();
     resultsEl.hidden = true;
     resultsEl.innerHTML = "";
+    guard?.hideSubmitRequiredHint(submitHint);
     updateProgress();
   }
 
@@ -477,6 +481,11 @@
   btnPause?.addEventListener("click", onPause);
   root.addEventListener("click", (e) => {
     if (e.target.closest("#be-submit")) {
+      if (countAnswered() < SENTENCES.length) {
+        guard?.flashSubmitRequiredHint(submitHint);
+        return;
+      }
+      guard?.hideSubmitRequiredHint(submitHint);
       gradeActivity(false);
     }
   });

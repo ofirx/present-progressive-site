@@ -68,6 +68,8 @@
   const submitBtn = document.getElementById("match-submit");
   const resetBtn = document.getElementById("match-reset");
   const scoreEl = document.getElementById("match-score");
+  const submitHint = document.getElementById("matchSubmitRequiredHint");
+  const guard = window.PracticeSubmitGuard;
 
   if (!root || !exercisesEl || !submitBtn) return;
 
@@ -116,6 +118,7 @@
       }
       const nextSlot = findNextEmptySlot(sentenceId);
       if (nextSlot) placeChipInSlot(chip, nextSlot);
+      syncSubmitHint();
     });
 
     return chip;
@@ -180,6 +183,7 @@
       slot.classList.remove("is-drag-over");
       if (!draggedChip || root.classList.contains("is-graded")) return;
       placeChipInSlot(draggedChip, slot);
+      syncSubmitHint();
     });
   }
 
@@ -236,6 +240,17 @@
     return order.length > 0 && order.every((i) => i >= 0);
   }
 
+  function isAllComplete() {
+    return SENTENCES.every((s) => isRowComplete(s.id));
+  }
+
+  function syncSubmitHint() {
+    if (!guard || !submitHint) return;
+    if (isAllComplete()) {
+      guard.hideSubmitRequiredHint(submitHint);
+    }
+  }
+
   function gradeRow(sentence) {
     const order = getUserOrder(sentence.id);
     const correctOrder = sentence.parts.map((_, i) => i);
@@ -250,19 +265,16 @@
     root.classList.remove("is-graded");
     scoreEl.hidden = true;
     scoreEl.textContent = "";
+    guard?.hideSubmitRequiredHint(submitHint);
   }
 
   submitBtn.addEventListener("click", () => {
-    const incomplete = SENTENCES.find((s) => !isRowComplete(s.id));
-    if (incomplete) {
-      scoreEl.hidden = false;
-      scoreEl.className = "match-score match-score--warn bilingual-block";
-      scoreEl.innerHTML = `
-        <span class="en">Please complete all 5 sentences before checking.</span>
-        <span class="he" dir="rtl" lang="he">השלימו את כל 5 המשפטים לפני הבדיקה.</span>
-      `;
+    if (!isAllComplete()) {
+      guard?.flashSubmitRequiredHint(submitHint);
       return;
     }
+
+    guard?.hideSubmitRequiredHint(submitHint);
 
     let correctCount = 0;
     SENTENCES.forEach((sentence) => {

@@ -580,9 +580,33 @@ h2 {
   font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
 }
 
+.intro-instructions-layout.intro-instructions-layout--parallel-rows {
+  gap: 0.45rem 1.25rem;
+}
+
+.intro-instructions-layout--parallel-rows .intro-title-en,
+.intro-instructions-layout--parallel-rows .intro-title-he {
+  margin: 0 0 0.35rem;
+}
+
+.intro-instructions-layout--parallel-rows .intro-instructions-en,
+.intro-instructions-layout--parallel-rows .intro-instructions-he {
+  margin: 0;
+}
+
+.intro-instructions-layout--parallel-rows .intro-instructions-luck {
+  margin: 0.15rem 0 0;
+}
+
 @media (max-width: 760px) {
   .intro-instructions-layout {
     grid-template-columns: 1fr;
+  }
+
+  .intro-instructions-layout--parallel-rows .intro-instructions-he,
+  .intro-instructions-layout--parallel-rows .intro-instructions-luck-he {
+    margin-top: -0.2rem;
+    padding-bottom: 0.35rem;
   }
 }
 

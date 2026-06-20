@@ -500,6 +500,24 @@ h2 {
   font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
 }
 
+.intro-instructions-luck {
+  margin: 0.85rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--accent-dark);
+}
+
+.intro-instructions-luck-en {
+  text-align: left;
+}
+
+.intro-instructions-luck-he {
+  direction: rtl;
+  text-align: right;
+  font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
+}
+
 @media (max-width: 760px) {
   .intro-instructions-layout {
     grid-template-columns: 1fr;

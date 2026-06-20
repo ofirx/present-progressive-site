@@ -474,6 +474,57 @@
   margin: 0;
 }
 
+.quiz-image-placeholder {
+  margin: 0 0 0.85rem;
+  padding: 0;
+  border: 2px dashed rgba(217, 119, 6, 0.45);
+  border-radius: 12px;
+  background: rgba(254, 243, 199, 0.35);
+  overflow: hidden;
+}
+
+.quiz-image-placeholder img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  background: #fff;
+}
+
+.quiz-image-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 160px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.quiz-image-placeholder:has(img) .quiz-image-placeholder-inner {
+  display: none;
+}
+
+.quiz-image-placeholder-icon {
+  font-size: 2rem;
+  line-height: 1;
+  opacity: 0.55;
+}
+
+.quiz-image-placeholder-text {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.quiz-image-placeholder-text .he {
+  font-size: 0.82rem;
+  color: #a16207;
+}
+
 .quiz-form-options label {
   display: flex;
   align-items: center;

@@ -35,6 +35,23 @@
     ],
   };
 
+  const MIN_SUBMIT_COUNT = 8;
+
+  const ALL_QUESTION_KEYS = [
+    "q1",
+    "q2",
+    "q3",
+    "q4",
+    "q5",
+    "q6",
+    "q7",
+    "q8",
+    "q9",
+    "q10",
+    "q11",
+    "q12",
+  ];
+
   const PARTS = [
     { id: 1, keys: ["q1", "q2", "q3", "q4"], label: "Part A" },
     { id: 2, keys: ["q5", "q6", "q7", "q8"], label: "Part B" },
@@ -315,6 +332,29 @@
     return keys.reduce((n, key) => (isQuestionAnswered(key) ? n + 1 : n), 0);
   }
 
+  function countTotalAnswered() {
+    return ALL_QUESTION_KEYS.reduce((n, key) => (isQuestionAnswered(key) ? n + 1 : n), 0);
+  }
+
+  function updateMinSubmitHints() {
+    const totalAnswered = countTotalAnswered();
+    const needsMore = totalAnswered < MIN_SUBMIT_COUNT;
+
+    PARTS.forEach((part) => {
+      const el = document.getElementById(`quizMinSubmitHintPart${part.id}`);
+      if (!el) return;
+      el.hidden = !needsMore;
+    });
+
+    if (btnSubmit) {
+      btnSubmit.disabled = needsMore;
+      btnSubmit.setAttribute(
+        "aria-disabled",
+        needsMore ? "true" : "false"
+      );
+    }
+  }
+
   function updatePartCounters() {
     PARTS.forEach((part) => {
       const el = document.getElementById(`quizCounterPart${part.id}`);
@@ -346,6 +386,8 @@
         hintEl.textContent = "";
       }
     });
+
+    updateMinSubmitHints();
   }
 
   function showStep(i) {
@@ -364,6 +406,8 @@
     if (btnPrev) btnPrev.disabled = current === 0;
     if (btnNext) btnNext.hidden = current >= totalSteps - 1;
     if (btnSubmit) btnSubmit.hidden = current < totalSteps - 1;
+
+    updateMinSubmitHints();
 
     const activePane = panes[current];
     if (activePane) {
@@ -479,6 +523,13 @@
 
   if (btnSubmit) {
     btnSubmit.addEventListener("click", () => {
+      if (countTotalAnswered() < MIN_SUBMIT_COUNT) {
+        updateMinSubmitHints();
+        const hint = document.getElementById("quizMinSubmitHintPart3");
+        hint?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        return;
+      }
+
       const result = gradeQuiz();
       const scoreEl = document.getElementById("quizScoreText");
       const resultsEl = document.getElementById("quizResults");

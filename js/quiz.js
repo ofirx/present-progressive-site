@@ -347,12 +347,28 @@
     });
 
     if (btnSubmit) {
-      btnSubmit.disabled = needsMore;
-      btnSubmit.setAttribute(
-        "aria-disabled",
-        needsMore ? "true" : "false"
-      );
+      btnSubmit.classList.toggle("quiz-submit--blocked", needsMore);
+      btnSubmit.setAttribute("aria-describedby", needsMore ? "quizMinSubmitHintPart3" : "");
     }
+  }
+
+  function flashMinSubmitHint() {
+    const hint = document.getElementById("quizMinSubmitHintPart3");
+    if (!hint) return;
+
+    hint.hidden = false;
+    hint.classList.remove("is-alert");
+    void hint.offsetWidth;
+    hint.classList.add("is-alert");
+    hint.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    hint.addEventListener(
+      "animationend",
+      () => {
+        hint.classList.remove("is-alert");
+      },
+      { once: true }
+    );
   }
 
   function updatePartCounters() {
@@ -525,8 +541,7 @@
     btnSubmit.addEventListener("click", () => {
       if (countTotalAnswered() < MIN_SUBMIT_COUNT) {
         updateMinSubmitHints();
-        const hint = document.getElementById("quizMinSubmitHintPart3");
-        hint?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        flashMinSubmitHint();
         return;
       }
 

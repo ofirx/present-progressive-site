@@ -423,13 +423,46 @@
   font-family: "Segoe UI", "Arial Hebrew", "David", sans-serif;
 }
 
+.quiz-min-submit-hint.is-alert,
+.quiz-min-submit-hint.is-alert .quiz-min-submit-en,
+.quiz-min-submit-hint.is-alert .quiz-min-submit-he {
+  color: #9b2226;
+}
+
+.quiz-min-submit-hint.is-alert {
+  border-color: #9b2226;
+  background: rgba(155, 34, 38, 0.12);
+  animation: quiz-min-submit-alert 1.4s ease-out forwards;
+}
+
+@keyframes quiz-min-submit-alert {
+  0% {
+    opacity: 0.35;
+    box-shadow: 0 0 0 0 rgba(155, 34, 38, 0);
+    background: rgba(155, 34, 38, 0.04);
+  }
+
+  35% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 3px rgba(155, 34, 38, 0.22),
+      0 0 22px rgba(155, 34, 38, 0.55);
+    background: rgba(155, 34, 38, 0.18);
+  }
+
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(155, 34, 38, 0.28);
+    background: rgba(155, 34, 38, 0.1);
+  }
+}
+
 .quiz-pane-counter-hint:not([hidden]) + .quiz-min-submit-hint:not([hidden]) {
   margin-top: -0.15rem;
 }
 
-.quiz-submit:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
+.quiz-submit--blocked {
+  box-shadow: 0 4px 14px rgba(155, 34, 38, 0.22);
 }
 
 .quiz-q {

@@ -3507,12 +3507,6 @@ h3 .he {
   transform: scale(1.06);
 }
 
-.castle-move:disabled {
-  opacity: 0.25;
-  cursor: default;
-  transform: none;
-}
-
 .castle-move--up {
   top: 50%;
   right: 1.5rem;
@@ -3531,6 +3525,39 @@ h3 .he {
 
 .castle-move--down:hover:not(:disabled) {
   transform: translateY(40%) scale(1.06);
+}
+
+.castle-move--prev {
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-120%);
+}
+
+.castle-move--prev:hover:not(:disabled) {
+  transform: translateY(-120%) scale(1.06);
+}
+
+.castle-move--next {
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(40%);
+}
+
+.castle-move--next:hover:not(:disabled) {
+  transform: translateY(40%) scale(1.06);
+}
+
+.castle-move:disabled {
+  opacity: 0.25;
+  cursor: default;
+  transform: none;
+}
+
+.castle-move--prev:disabled:hover,
+.castle-move--next:disabled:hover,
+.castle-move--up:disabled:hover,
+.castle-move--down:disabled:hover {
+  transform: none;
 }
 
 .castle-exit {

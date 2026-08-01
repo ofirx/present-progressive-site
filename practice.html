@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=63" />
+  <link rel="stylesheet" href="css/style.css?v=64" />
 </head>
 <body class="castle-body">
   <header class="site-header castle-header">
@@ -68,6 +68,8 @@
 
       <button type="button" class="castle-move castle-move--up" id="btn-up" aria-label="Go higher">▲</button>
       <button type="button" class="castle-move castle-move--down" id="btn-down" aria-label="Go deeper">▼</button>
+      <button type="button" class="castle-move castle-move--prev" id="btn-win-prev" hidden aria-label="Previous window">◀</button>
+      <button type="button" class="castle-move castle-move--next" id="btn-win-next" hidden aria-label="Next window">▶</button>
       <button type="button" class="castle-exit" id="btn-exit" aria-label="Leave the castle">↩</button>
       <div class="castle-depth-dots" id="depth-dots" aria-hidden="true"></div>
     </section>
@@ -109,9 +111,26 @@
       const dots = document.getElementById("depth-dots");
       const btnUp = document.getElementById("btn-up");
       const btnDown = document.getElementById("btn-down");
+      const btnWinPrev = document.getElementById("btn-win-prev");
+      const btnWinNext = document.getElementById("btn-win-next");
 
       function currentFloor() {
         return floorsById[levelOrder[level]];
+      }
+
+      function setWindowNavVisible(visible) {
+        btnWinPrev.hidden = !visible;
+        btnWinNext.hidden = !visible;
+        btnUp.hidden = visible;
+        btnDown.hidden = visible;
+        dots.hidden = visible;
+      }
+
+      function updateWindowNavState() {
+        const floor = currentFloor();
+        const count = floor.windows.length;
+        btnWinPrev.disabled = openWindowIndex === null || openWindowIndex <= 0;
+        btnWinNext.disabled = openWindowIndex === null || openWindowIndex >= count - 1;
       }
 
       hotspotLayout.forEach((spot) => {
@@ -140,6 +159,7 @@
         openWindowIndex = null;
         floorPanel.hidden = false;
         windowPanel.hidden = true;
+        setWindowNavVisible(false);
         floorNameEl.textContent = floor.name;
         floorSubtitleEl.textContent = floor.subtitle;
         windowGrid.innerHTML = "";
@@ -165,9 +185,12 @@
       function openWindow(index) {
         const floor = currentFloor();
         const win = floor.windows[index];
+        if (!win) return;
         openWindowIndex = index;
         floorPanel.hidden = true;
         windowPanel.hidden = false;
+        setWindowNavVisible(true);
+        updateWindowNavState();
         windowLabel.textContent = `${floor.name} · ${win.label}`;
         windowTitle.textContent = win.title;
         windowBody.innerHTML = win.html;
@@ -207,6 +230,19 @@
         showFloorWindows();
       });
 
+      btnWinPrev.addEventListener("click", () => {
+        if (openWindowIndex !== null && openWindowIndex > 0) {
+          openWindow(openWindowIndex - 1);
+        }
+      });
+
+      btnWinNext.addEventListener("click", () => {
+        const floor = currentFloor();
+        if (openWindowIndex !== null && openWindowIndex < floor.windows.length - 1) {
+          openWindow(openWindowIndex + 1);
+        }
+      });
+
       document.getElementById("btn-exit").addEventListener("click", () => {
         showView("exterior");
       });
@@ -230,10 +266,16 @@
         if (e.key === "Escape") {
           if (!windowPanel.hidden) showFloorWindows();
           else document.getElementById("btn-exit").click();
-        } else if (e.key === "ArrowUp") {
+        } else if (!windowPanel.hidden && e.key === "ArrowLeft") {
+          e.preventDefault();
+          btnWinPrev.click();
+        } else if (!windowPanel.hidden && e.key === "ArrowRight") {
+          e.preventDefault();
+          btnWinNext.click();
+        } else if (windowPanel.hidden && e.key === "ArrowUp") {
           e.preventDefault();
           btnUp.click();
-        } else if (e.key === "ArrowDown") {
+        } else if (windowPanel.hidden && e.key === "ArrowDown") {
           e.preventDefault();
           btnDown.click();
         }

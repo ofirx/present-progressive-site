@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=64" />
+  <link rel="stylesheet" href="css/style.css?v=65" />
 </head>
 <body class="castle-body">
   <header class="site-header castle-header">
@@ -63,6 +63,7 @@
         <button type="button" class="castle-window-back" id="btn-window-back" aria-label="Back to windows">←</button>
         <p class="castle-window-label" id="window-label"></p>
         <h2 class="castle-window-title" id="window-title"></h2>
+        <img class="castle-window-hero" id="window-hero" alt="" />
         <div class="castle-window-body is-bolding" id="window-body"></div>
       </article>
 
@@ -75,7 +76,7 @@
     </section>
   </main>
 
-  <script src="js/castle-windows.js?v=1"></script>
+  <script src="js/castle-windows.js?v=2"></script>
   <script>
     (function () {
       // Bottom → top physical order in the house
@@ -106,6 +107,7 @@
       const windowPanel = document.getElementById("window-panel");
       const windowLabel = document.getElementById("window-label");
       const windowTitle = document.getElementById("window-title");
+      const windowHero = document.getElementById("window-hero");
       const windowBody = document.getElementById("window-body");
       const tint = document.getElementById("depth-tint");
       const dots = document.getElementById("depth-dots");
@@ -169,7 +171,10 @@
           link.type = "button";
           link.className = "castle-window-link";
           link.innerHTML = `
-            <span class="castle-window-link-glow" aria-hidden="true"></span>
+            <span class="castle-window-link-media">
+              <img src="${win.image}" alt="" loading="lazy" />
+              <span class="castle-window-link-glow" aria-hidden="true"></span>
+            </span>
             <span class="castle-window-link-label">${win.label}</span>
             <span class="castle-window-link-title">${win.title}</span>
           `;
@@ -193,6 +198,9 @@
         updateWindowNavState();
         windowLabel.textContent = `${floor.name} · ${win.label}`;
         windowTitle.textContent = win.title;
+        windowHero.src = win.image || "";
+        windowHero.alt = win.title;
+        windowHero.hidden = !win.image;
         windowBody.innerHTML = win.html;
         windowBody.classList.remove("is-bolding");
         void windowBody.offsetWidth;

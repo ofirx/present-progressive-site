@@ -1,4 +1,4 @@
-/* Castle floor + window content for The Split */
+﻿/* Castle floor + window content for The Split */
 window.CASTLE_FLOORS = [
   {
     id: "basement",
@@ -7,6 +7,7 @@ window.CASTLE_FLOORS = [
     windows: [
       {
         id: 14,
+        image: "images/windows/castle-win-14-freud.png",
         title: "Freud and The Haunted Mind",
         label: "Room 14",
         html: `
@@ -25,6 +26,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 15,
+        image: "images/windows/castle-win-15-repression.png",
         title: "Repression Always Returns",
         label: "Room 15",
         html: `
@@ -47,6 +49,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 16,
+        image: "images/windows/castle-win-16-monster.png",
         title: "Who Is the Real Monster?",
         label: "Room 16",
         html: `
@@ -69,6 +72,7 @@ window.CASTLE_FLOORS = [
     windows: [
       {
         id: 11,
+        image: "images/windows/castle-win-11-curated-self.png",
         title: "The Curated Self",
         label: "Window 11",
         html: `
@@ -88,6 +92,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 12,
+        image: "images/windows/castle-win-12-anxiety.png",
         title: "Anxiety, Obsession and the Need to Appear Sane",
         label: "Window 12",
         html: `
@@ -106,6 +111,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 13,
+        image: "images/windows/castle-win-13-loves-poe.png",
         title: "Why America Still Loves Poe",
         label: "Window 13",
         html: `
@@ -130,6 +136,7 @@ window.CASTLE_FLOORS = [
     windows: [
       {
         id: 8,
+        image: "images/windows/castle-win-08-america.png",
         title: "America in Poe’s Time",
         label: "Window 8",
         html: `
@@ -158,6 +165,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 9,
+        image: "images/windows/castle-win-09-individualism.png",
         title: "The Dark Side of Individualism",
         label: "Window 9",
         html: `
@@ -178,6 +186,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 10,
+        image: "images/windows/castle-win-10-respectability.png",
         title: "Crime, Respectability and Hidden Violence",
         label: "Window 10",
         html: `
@@ -206,6 +215,7 @@ window.CASTLE_FLOORS = [
     windows: [
       {
         id: 5,
+        image: "images/windows/castle-win-05-unreliable.png",
         title: "The Unreliable Mind",
         label: "Window 5",
         html: `
@@ -229,6 +239,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 6,
+        image: "images/windows/castle-win-06-mirrors-sound.png",
         title: "Sound, Mirrors and Repetition",
         label: "Window 6",
         html: `
@@ -257,6 +268,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 7,
+        image: "images/windows/castle-win-07-claustrophobic.png",
         title: "Claustrophobic Spaces",
         label: "Window 7",
         html: `
@@ -290,6 +302,7 @@ window.CASTLE_FLOORS = [
     windows: [
       {
         id: 2,
+        image: "images/windows/castle-win-02-wilson.png",
         title: "Inside “William Wilson”",
         label: "Window 2",
         html: `
@@ -308,6 +321,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 3,
+        image: "images/windows/castle-win-03-telltale.png",
         title: "Inside “The Tell-Tale Heart”",
         label: "Window 3",
         html: `
@@ -323,6 +337,7 @@ window.CASTLE_FLOORS = [
       },
       {
         id: 4,
+        image: "images/windows/castle-win-04-narrators.png",
         title: "The narrators and their crimes",
         label: "Window 4",
         html: `
@@ -354,6 +369,7 @@ window.CASTLE_FLOORS = [
     windows: [
       {
         id: 1,
+        image: "images/windows/castle-win-01-entrance.png",
         title: "Welcome to the House of the Divided Mind",
         label: "Window 1 — Front door",
         html: `

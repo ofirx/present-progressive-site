@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="3: The house — The Split." />
+  <meta name="description" content="3: The house — The Split. An animated haunted castle through Poe." />
   <title>3: The house — The Split</title>
-  <link rel="stylesheet" href="css/style.css?v=49" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=58" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <a class="logo" href="index.html"><strong>The Split</strong><img class="logo-icon" src="images/the-split-icon.png" alt="" width="40" height="40" /></a>
-                        <nav aria-label="Main">
+      <nav aria-label="Main">
         <a href="american-survey.html" class="nav-link">1: The reasons behind</a>
         <a href="index.html" class="nav-link">2: Presenting...</a>
         <a href="practice.html" class="nav-link" aria-current="page">3: The house</a>
@@ -21,361 +24,126 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero hero-compact">
-      <div class="container hero-content hero-content--bilingual">
-        <div class="intro-instructions-layout">
-          <div class="intro-instructions-en-block">
-            <h1 class="intro-title-en">Practice</h1>
-            <p class="intro-instructions-en">
-              In this section you will have 5 activities to practice including games.
-              Please read the instructions and do the activities.
-            </p>
-            <p class="intro-instructions-luck intro-instructions-luck-en">Good luck!</p>
-          </div>
-          <div class="intro-instructions-he-block" dir="rtl" lang="he">
-            <h1 class="intro-title-he">תרגול</h1>
-            <p class="intro-instructions-he">
-              בחלק זה יש לכם 5 פעילויות לתרגול, כולל משחקים.
-              אנא קראו את ההוראות ובצעו את הפעילויות.
-            </p>
-            <p class="intro-instructions-luck intro-instructions-luck-he">בהצלחה!</p>
-          </div>
-        </div>
+  <main class="castle-page">
+    <section class="castle-stage" aria-label="The haunted house">
+      <div class="castle-atmosphere" aria-hidden="true">
+        <span class="castle-fog castle-fog--1"></span>
+        <span class="castle-fog castle-fog--2"></span>
+        <span class="castle-bat castle-bat--1"></span>
+        <span class="castle-bat castle-bat--2"></span>
       </div>
-    </section>
 
-    <section id="practice" class="section section-alt practice-page">
-      <div class="container practice-container">
-        <div class="practice-sections">
-          <section class="practice-section practice-section--1" aria-labelledby="practice-section-1-title">
-            <div class="practice-section-layout">
-              <div class="practice-activity practice-activity--game">
-                <div class="practice-game-shell balloon-game-shell" id="balloon-game-shell">
-                  <button
-                    type="button"
-                    class="practice-game-fullscreen-btn btn btn-secondary btn-bilingual"
-                    data-fullscreen-btn
-                    aria-label="Enter fullscreen"
-                  >
-                    <span class="btn-en">Fullscreen</span>
-                    <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
-                  </button>
-                  <iframe
-                    class="practice-game-frame balloon-game-frame"
-                    title="Present Progressive Balloon Arrow Game"
-                    src="games/present_progressive_balloon_arrow_game.html?embed=1&v=4"
-                    loading="eager"
-                    allow="fullscreen"
-                  ></iframe>
-                </div>
-              </div>
-              <aside class="practice-task">
-                <div class="task-instructions-layout task-instructions-layout--parallel-rows">
-                  <p class="practice-section-label-en">Section 1</p>
-                  <p class="practice-section-label-he">חלק 1</p>
-                  <h2 id="practice-section-1-title" class="practice-task-title-en">Balloon arrow game</h2>
-                  <h2 class="practice-task-title-he">משחק חצים ובלונים</h2>
-                  <p class="match-instructions-en">Shoot the balloon that shows a grammatically correct sentence in the <strong>Present Progressive</strong> tense</p>
-                  <p class="match-instructions-he">ירו על הבלון שמציג משפט תקין מבחינה דקדוקית ב<strong>הווה מתמשך</strong></p>
-                  <p class="match-instructions-en">Stage 1 has fewer balloons than Stage 2.</p>
-                  <p class="match-instructions-he">בשלב 1 יש פחות בלונים מאשר בשלב 2.</p>
-                  <p class="match-instructions-en">Click <strong>Start</strong> to begin the game</p>
-                  <p class="match-instructions-he">לחצו על התחל להתחיל את המשחק</p>
-                </div>
-              </aside>
+      <div class="container castle-layout">
+        <div class="castle-visual" aria-hidden="false">
+          <h1 class="castle-title">The Split</h1>
+          <p class="castle-subtitle">Descend through the haunted house</p>
+
+          <div class="haunted-castle" role="img" aria-label="Animated haunted castle with four floors">
+            <div class="castle-towers">
+              <span class="castle-tower castle-tower--left"></span>
+              <span class="castle-tower castle-tower--right"></span>
             </div>
-          </section>
+            <div class="castle-roof"></div>
+            <button type="button" class="castle-floor" data-section="upper" aria-pressed="false">
+              <span class="castle-floor-label">Upper Floors</span>
+              <span class="castle-windows">
+                <i></i><i></i><i></i><i></i>
+              </span>
+            </button>
+            <button type="button" class="castle-floor" data-section="historical" aria-pressed="false">
+              <span class="castle-floor-label">Lower Windows</span>
+              <span class="castle-windows">
+                <i></i><i></i><i></i><i></i>
+              </span>
+            </button>
+            <button type="button" class="castle-floor is-active" data-section="entrance" aria-pressed="true">
+              <span class="castle-floor-label">Entrance Hall</span>
+              <span class="castle-door"></span>
+            </button>
+            <button type="button" class="castle-floor castle-floor--basement" data-section="basement" aria-pressed="false">
+              <span class="castle-floor-label">Basement</span>
+              <span class="castle-windows castle-windows--dim">
+                <i></i><i></i>
+              </span>
+            </button>
+            <div class="castle-ground"></div>
+          </div>
 
-          <div class="practice-divider" role="separator" aria-hidden="true"></div>
-
-          <section class="practice-section practice-section--2" aria-labelledby="practice-section-2-title">
-            <div class="practice-section-layout">
-              <div class="practice-activity">
-                <div id="match-worksheet" class="match-worksheet match-worksheet--embedded">
-                  <div id="match-exercises" class="match-exercises"></div>
-
-                  <div class="match-actions">
-                    <button type="button" class="btn btn-primary btn-bilingual" id="match-submit">
-                      <span class="btn-en">Submit</span>
-                      <span class="btn-he" dir="rtl" lang="he">שלח</span>
-                    </button>
-                    <button type="button" class="btn btn-secondary btn-bilingual" id="match-reset">
-                      <span class="btn-en">Start over</span>
-                      <span class="btn-he" dir="rtl" lang="he">התחל מחדש</span>
-                    </button>
-                  </div>
-
-                  <div class="practice-submit-required-hint" id="matchSubmitRequiredHint" hidden aria-live="polite">
-                    <span class="practice-submit-required-en">You must answer all the questions before clicking Submit.</span>
-                    <span class="practice-submit-required-he" dir="rtl" lang="he">עליכם לענות על כל השאלות לפני שליחה.</span>
-                  </div>
-
-                  <p id="match-score" class="match-score bilingual-block" hidden aria-live="polite"></p>
-                </div>
-              </div>
-              <aside class="practice-task">
-                <div class="task-instructions-layout task-instructions-layout--parallel-rows">
-                  <p class="practice-section-label-en">Section 2</p>
-                  <p class="practice-section-label-he">חלק 2</p>
-                  <h2 id="practice-section-2-title" class="practice-task-title-en">Match the sentence parts</h2>
-                  <h2 class="practice-task-title-he">התאימו את חלקי המשפט</h2>
-                  <p class="match-instructions-en">Drag the colored words into the boxes to create sentences in the correct order in the <strong>Present Progressive</strong></p>
-                  <p class="match-instructions-he">גררו את המילים הצבעוניות לתיבות כדי ליצור משפטים בסדר הנכון בהווה מתמשך</p>
-                </div>
-              </aside>
-            </div>
-          </section>
-
-          <div class="practice-divider" role="separator" aria-hidden="true"></div>
-
-          <section class="practice-section practice-section--3" aria-labelledby="practice-section-3-title">
-            <div class="practice-section-layout">
-              <div class="practice-activity practice-activity--game practice-activity--airplane">
-                <div class="practice-game-shell" id="airplane-game-shell">
-                  <button
-                    type="button"
-                    class="practice-game-fullscreen-btn btn btn-secondary btn-bilingual"
-                    data-fullscreen-btn
-                    aria-label="Enter fullscreen"
-                  >
-                    <span class="btn-en">Fullscreen</span>
-                    <span class="btn-he" dir="rtl" lang="he">מסך מלא</span>
-                  </button>
-                  <iframe
-                    class="practice-game-frame airplane-game-frame"
-                    title="Present Progressive Airplane Game"
-                    src="games/present_progressive_airplane_game.html?embed=1&v=3"
-                    loading="eager"
-                    allow="fullscreen"
-                  ></iframe>
-                </div>
-              </div>
-              <aside class="practice-task">
-                <div class="task-instructions-layout task-instructions-layout--parallel-rows">
-                  <p class="practice-section-label-en">Section 3</p>
-                  <p class="practice-section-label-he">חלק 3</p>
-                  <h2 id="practice-section-3-title" class="practice-task-title-en">Airplane cloud game</h2>
-                  <h2 class="practice-task-title-he">משחק מטוס ועננים</h2>
-                  <p class="match-instructions-en">Fly to the correct cloud according to the sentence in the <strong>Present Progressive</strong> by using the arrow keys</p>
-                  <p class="match-instructions-he">טוסו לענן הנכון לפי המשפט בהווה מתמשך על ידי שימוש במקשי החצים</p>
-                  <p class="match-instructions-en">To start, click the <strong>start</strong> button</p>
-                  <p class="match-instructions-he">להתחלה לחץ על הכפתור start</p>
-                </div>
-              </aside>
-            </div>
-          </section>
-
-          <div class="practice-divider" role="separator" aria-hidden="true"></div>
-
-          <section class="practice-section practice-section--4" aria-labelledby="practice-section-4-title">
-            <div class="practice-section-layout">
-              <div class="practice-activity">
-                <div class="reporter-activity">
-                  <div class="reporter-scene-wrap">
-                    <span class="reporter-live-badge">LIVE</span>
-                    <img
-                      class="reporter-scene-img"
-                      src="images/reporter-park-scene.png"
-                      alt="A sunny park: children reading, writing, playing soccer, eating, drawing, and running."
-                      width="900"
-                      height="500"
-                    />
-                  </div>
-
-                  <p class="reporter-prompt">
-                    <strong>You are a TV reporter.</strong> Look at the picture. Report what is happening <strong>now</strong>.
-                    Write <strong>4 sentences</strong> in the Present Progressive.
-                  </p>
-
-                  <form id="reporter-form" class="reporter-form" novalidate>
-                    <div class="reporter-field">
-                      <label for="reporter-s1">Sentence 1</label>
-                      <textarea id="reporter-s1" class="reporter-input" rows="2"></textarea>
-                    </div>
-                    <div class="reporter-field">
-                      <label for="reporter-s2">Sentence 2</label>
-                      <textarea id="reporter-s2" class="reporter-input" rows="2"></textarea>
-                    </div>
-                    <div class="reporter-field">
-                      <label for="reporter-s3">Sentence 3</label>
-                      <textarea id="reporter-s3" class="reporter-input" rows="2"></textarea>
-                    </div>
-                    <div class="reporter-field">
-                      <label for="reporter-s4">Sentence 4</label>
-                      <textarea id="reporter-s4" class="reporter-input" rows="2"></textarea>
-                    </div>
-
-                    <div class="reporter-actions">
-                      <button type="submit" class="btn btn-primary btn-bilingual" id="reporter-submit">
-                        <span class="btn-en">Submit</span>
-                        <span class="btn-he" dir="rtl" lang="he">שלח</span>
-                      </button>
-                      <button type="button" class="btn btn-secondary btn-bilingual" id="reporter-clear">
-                        <span class="btn-en">Clear</span>
-                        <span class="btn-he" dir="rtl" lang="he">נקה</span>
-                      </button>
-                    </div>
-
-                    <div class="practice-submit-required-hint" id="reporterSubmitRequiredHint" hidden aria-live="polite">
-                      <span class="practice-submit-required-en">You must answer all the questions before clicking Submit.</span>
-                      <span class="practice-submit-required-he" dir="rtl" lang="he">עליכם לענות על כל השאלות לפני שליחה.</span>
-                    </div>
-                  </form>
-
-                  <p id="reporter-summary" class="reporter-summary" hidden aria-live="polite"></p>
-                  <div id="reporter-results" class="reporter-results" hidden aria-live="polite"></div>
-                </div>
-              </div>
-              <aside class="practice-task">
-                <div class="task-instructions-layout">
-                  <div class="task-instructions-en-block">
-                    <p class="practice-section-label-en">Section 4</p>
-                    <h2 id="practice-section-4-title" class="practice-task-title-en">TV Reporter — Live from the Park</h2>
-                    <p class="match-instructions-en">
-                      You are a <strong>TV reporter</strong>. Look at the picture and write
-                      <strong>4 sentences</strong> about what is happening <strong>now</strong>
-                      (Present Progressive).
-                      Click <strong>Submit</strong> to check. Click <strong>Clear</strong> to start again.
-                    </p>
-                  </div>
-                  <div class="task-instructions-he-block" dir="rtl" lang="he">
-                    <p class="practice-section-label-he">חלק 4</p>
-                    <h2 class="practice-task-title-he">כתב טלוויזיה — שידור חי מהפארק</h2>
-                    <p class="match-instructions-he">
-                      את\ה <strong>כתב/ת טלוויזיה</strong>. הסתכל\י על התמונה וכתב\י
-                      <strong>4 משפטים</strong> על מה שקורה <strong>עכשיו</strong>
-                      (הווה מתמשך).
-                      לחץ/י <strong>Submit</strong> לבדיקה. לחץ/י <strong>Clear</strong> להתחלה מחדש.
-                    </p>
-                  </div>
-                </div>
-              </aside>
-            </div>
-          </section>
-
-          <div class="practice-divider" role="separator" aria-hidden="true"></div>
-
-          <section class="practice-section practice-section--5" aria-labelledby="practice-section-5-title">
-            <div class="practice-section-layout">
-              <div class="practice-activity">
-                <div class="be-verb-activity" id="be-verb-activity">
-                  <div class="be-verb-toolbar">
-                    <fieldset class="be-verb-mode">
-                      <legend class="be-verb-legend">Activity mode</legend>
-                      <label class="be-verb-mode-option">
-                        <input type="radio" name="be-mode" value="free" checked />
-                        No timer
-                      </label>
-                      <label class="be-verb-mode-option">
-                        <input type="radio" name="be-mode" value="timed" />
-                        Timed
-                      </label>
-                      <label class="be-verb-timer-pick">
-                        <span class="be-verb-timer-label">Time:</span>
-                        <select id="be-timer-minutes" disabled>
-                          <option value="4">4 minutes</option>
-                          <option value="5" selected>5 minutes</option>
-                          <option value="6">6 minutes</option>
-                        </select>
-                      </label>
-                    </fieldset>
-
-                    <div class="be-verb-controls">
-                      <button type="button" class="btn btn-primary" id="be-start">Start</button>
-                      <button type="button" class="btn btn-secondary" id="be-pause" disabled>Pause</button>
-                    </div>
-                  </div>
-
-                  <div class="be-verb-layout">
-                    <aside class="be-verb-rail" aria-label="Activity progress">
-                      <div class="be-verb-sticky-bar">
-                        <p class="be-verb-rail-title">Progress</p>
-                        <p class="be-verb-counter" id="be-progress-counter" aria-live="polite" aria-atomic="true">0 / 7</p>
-                        <div class="be-verb-progress-track" aria-hidden="true">
-                          <div class="be-verb-progress-fill" id="be-progress-fill"></div>
-                        </div>
-                        <p class="be-verb-counter-hint" id="be-progress-hint" hidden aria-live="polite"></p>
-
-                        <div class="practice-submit-required-hint" id="beSubmitRequiredHint" hidden aria-live="polite">
-                          <span class="practice-submit-required-en">You must answer all the questions before clicking Submit.</span>
-                          <span class="practice-submit-required-he" dir="rtl" lang="he">עליכם לענות על כל השאלות לפני שליחה.</span>
-                        </div>
-
-                        <div id="be-timer-block" class="be-verb-timer-block" hidden>
-                          <p class="be-verb-rail-title">Time</p>
-                          <p id="be-timer-display" class="be-timer-display">5:00</p>
-                        </div>
-                      </div>
-                    </aside>
-
-                    <div class="be-verb-body">
-                      <div id="be-sentences" class="be-sentences" aria-label="Choose am, is, or are"></div>
-
-                      <div id="be-grade-panel" class="be-verb-grade" hidden aria-live="polite">
-                        <h3 class="be-verb-grade-title bilingual-block">
-                          <span class="en">Your grade</span>
-                          <span class="he" dir="rtl" lang="he">הציון שלך</span>
-                        </h3>
-                        <p id="be-summary" class="be-verb-summary" hidden></p>
-                        <div class="be-verb-chart-box">
-                          <canvas id="be-chart" width="240" height="200" aria-label="Score pie chart"></canvas>
-                          <p class="be-verb-chart-stats" id="be-chart-stats"></p>
-                        </div>
-                      </div>
-
-                      <div id="be-results" class="be-verb-results" hidden aria-live="polite"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <aside class="practice-task">
-                <div class="task-instructions-layout task-instructions-layout--parallel-rows">
-                  <p class="practice-section-label-en">Section 5</p>
-                  <p class="practice-section-label-he">חלק 5</p>
-                  <h2 id="practice-section-5-title" class="practice-task-title-en">Choose the correct form of <em>be</em></h2>
-                  <h2 class="practice-task-title-he">בחרו את צורת הפועל <em>be</em> הנכונה</h2>
-                  <p class="match-instructions-en">Choose the correct form of the verb <strong>BE</strong></p>
-                  <p class="match-instructions-he">בחרו את הצורה הנכונה של הפועל BE</p>
-                  <p class="match-instructions-en">in the affirmative or negative</p>
-                  <p class="match-instructions-he">בחיוב או בשלילה</p>
-                  <p class="match-instructions-en">and click the <strong>Check</strong> button when you have finished choosing your answers</p>
-                  <p class="match-instructions-he">ולחצו על כפתור הבדיקה כשסיימתם לבחור את התשובות</p>
-                  <div class="task-instructions-spacer" aria-hidden="true"></div>
-                  <div class="task-instructions-spacer" aria-hidden="true"></div>
-                  <p class="match-instructions-en match-instructions-en--lead">Advanced option:</p>
-                  <p class="match-instructions-he match-instructions-he--lead">לאפשרות מתקדמת:</p>
-                  <p class="match-instructions-en">You can also choose <strong>timed</strong> practice</p>
-                  <p class="match-instructions-he">אפשר גם לבחור תרגול על זמן timed</p>
-                  <p class="match-instructions-en">and select the number of minutes from the menu</p>
-                  <p class="match-instructions-he">ואת מספר הדקות בתפריט</p>
-                  <p class="match-instructions-en">and click the <strong>Start</strong> button</p>
-                  <p class="match-instructions-he">וללחוץ על כפתור ה-start</p>
-                </div>
-              </aside>
-            </div>
-          </section>
+          <nav class="castle-floor-nav" aria-label="House sections">
+            <button type="button" class="castle-nav-btn is-active" data-section="entrance">Entrance Hall</button>
+            <button type="button" class="castle-nav-btn" data-section="upper">Upper Floors</button>
+            <button type="button" class="castle-nav-btn" data-section="historical">Lower Levels</button>
+            <button type="button" class="castle-nav-btn" data-section="basement">Basement</button>
+          </nav>
         </div>
 
-        <nav class="page-pager" aria-label="Page navigation">
-          <a class="page-pager-btn page-pager-back btn-round" href="index.html">
-            <span class="en">Back</span>
-            <span class="he" dir="rtl" lang="he">חזרה</span>
-          </a>
-          <a class="page-pager-btn page-pager-next btn-round" href="quiz.html">
-            <span class="en">Next</span>
-            <span class="he" dir="rtl" lang="he">הבא</span>
-          </a>
-        </nav>
+        <div class="castle-readings" aria-live="polite">
+          <article class="castle-section is-active" id="section-entrance" data-section="entrance">
+            <p class="castle-section-eyebrow">Entrance Hall</p>
+            <h2 class="castle-section-heading">Begin inside the mind</h2>
+            <p class="castle-section-text">
+              Visitors begin at the entrance hall, where the two stories and the central idea are introduced: in both texts, the apparent threat seems external, but the deeper source of horror lies within the narrator’s own mind.
+            </p>
+          </article>
+
+          <article class="castle-section" id="section-upper" data-section="upper" hidden>
+            <p class="castle-section-eyebrow">Upper Floors</p>
+            <h2 class="castle-section-heading">The surface of the stories</h2>
+            <p class="castle-section-text">
+              The upper floors present the visible elements of the stories, including brief summaries, key quotations, the narrators’ crimes, and Poe’s use of mirrors, repetition, sound, masks, enclosed spaces, and unreliable narration. These rooms are designed to feel relatively orderly, representing the surface level of the narratives.
+            </p>
+          </article>
+
+          <article class="castle-section" id="section-historical" data-section="historical" hidden>
+            <p class="castle-section-eyebrow">Lower Levels</p>
+            <h2 class="castle-section-heading">History, culture, and now</h2>
+            <p class="castle-section-text">
+              As the visitor moves lower through the house, the focus shifts towards historical and cultural interpretation. These windows explore Poe’s nineteenth-century American context, including individualism, social respectability, crime, urban growth, sensational print culture, and anxieties beneath national ideas of progress and rationality. The next level connects the stories to contemporary American life through issues such as curated online identities, narcissism, social pressure, anxiety, true-crime culture, and the need to appear controlled.
+            </p>
+          </article>
+
+          <article class="castle-section" id="section-basement" data-section="basement" hidden>
+            <p class="castle-section-eyebrow">Basement</p>
+            <h2 class="castle-section-heading">The deepest interpretation</h2>
+            <p class="castle-section-text">
+              The basement contains the project’s deepest interpretation. Freud’s ideas about the id, ego, superego, the uncanny, repression, and the fear of eyes provide a later psychoanalytic lens for reading Poe. The descent ends with the argument that guilt and conscience cannot simply be silenced or buried. In both stories, repression returns through reflection, sound, repetition, and confession.
+            </p>
+          </article>
+        </div>
       </div>
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="js/practice-submit-guard.js?v=1"></script>
-  <script src="js/practice-game-fullscreen.js?v=2"></script>
-  <script src="js/practice-match.js?v=17"></script>
-  <script src="js/practice-reporter.js?v=6"></script>
-  <script src="js/practice-be-verb.js?v=12"></script>
+  <script>
+    (function () {
+      const buttons = document.querySelectorAll("[data-section]");
+      const sections = document.querySelectorAll(".castle-section");
+
+      function showSection(id) {
+        sections.forEach((section) => {
+          const active = section.dataset.section === id;
+          section.hidden = !active;
+          section.classList.toggle("is-active", active);
+          if (active) {
+            section.classList.remove("is-bolding");
+            void section.offsetWidth;
+            section.classList.add("is-bolding");
+          }
+        });
+
+        document.querySelectorAll(".castle-floor, .castle-nav-btn").forEach((btn) => {
+          const active = btn.dataset.section === id;
+          btn.classList.toggle("is-active", active);
+          if (btn.hasAttribute("aria-pressed")) {
+            btn.setAttribute("aria-pressed", active ? "true" : "false");
+          }
+        });
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => showSection(btn.dataset.section));
+      });
+    })();
+  </script>
 </body>
 </html>

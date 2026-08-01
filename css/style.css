@@ -2868,23 +2868,31 @@ h3 .he {
 .presenting-layout {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: stretch;
+  text-align: left;
   max-width: 1100px;
+}
+
+.presenting-credits {
+  align-self: flex-start;
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
 }
 
 .presenting-line {
   margin: 0;
   font-family: "Poppins", var(--font);
-  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-  font-weight: 600;
+  font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+  font-weight: 700;
   line-height: 1.35;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--text);
+  text-align: left;
 }
 
 .presenting-line + .presenting-line {
-  margin-top: 0.85rem;
+  margin-top: 0.35rem;
 }
 
 .presenting-hero {
@@ -2894,6 +2902,7 @@ h3 .he {
   gap: 1rem 1.25rem;
   width: 100%;
   margin-top: 2rem;
+  text-align: center;
 }
 
 .presenting-image-link {

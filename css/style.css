@@ -3091,11 +3091,28 @@ h3 .he {
   position: absolute;
   left: 8%;
   right: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid transparent;
   border-radius: 12px;
   background: transparent;
   cursor: pointer;
   transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.castle-hotspot-name {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(6, 8, 7, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #f3f6f4;
+  font-family: "Poppins", var(--font);
+  font-size: clamp(0.78rem, 1.6vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
 }
 
 .castle-hotspot:hover,
@@ -3104,6 +3121,12 @@ h3 .he {
   border-color: rgba(255, 255, 255, 0.28);
   box-shadow: 0 0 28px rgba(255, 255, 255, 0.12);
   outline: none;
+}
+
+.castle-hotspot:hover .castle-hotspot-name,
+.castle-hotspot:focus-visible .castle-hotspot-name {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
 .castle-bg--interior {
@@ -3224,6 +3247,16 @@ h3 .he {
   border-radius: 18px;
   backdrop-filter: blur(10px);
   z-index: 6;
+}
+
+.castle-floor-name {
+  margin: 0 0 0.65rem;
+  font-family: "Poppins", var(--font);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 .castle-section-text {

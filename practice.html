@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=60" />
+  <link rel="stylesheet" href="css/style.css?v=61" />
 </head>
 <body class="castle-body">
   <header class="site-header castle-header">
@@ -34,12 +34,22 @@
       <div class="castle-vignette" aria-hidden="true"></div>
 
       <div class="castle-hotspots" aria-label="Castle levels">
-        <!-- top to bottom hotspots matching the cutaway -->
-        <button type="button" class="castle-hotspot" data-level="4" style="top: 8%; height: 16%;" aria-label="Go to this level"></button>
-        <button type="button" class="castle-hotspot" data-level="3" style="top: 24%; height: 15%;" aria-label="Go to this level"></button>
-        <button type="button" class="castle-hotspot" data-level="2" style="top: 39%; height: 15%;" aria-label="Go to this level"></button>
-        <button type="button" class="castle-hotspot" data-level="1" style="top: 54%; height: 16%;" aria-label="Go to this level"></button>
-        <button type="button" class="castle-hotspot" data-level="0" style="top: 70%; height: 18%;" aria-label="Go to this level"></button>
+        <!-- top to bottom: third floor → basement -->
+        <button type="button" class="castle-hotspot" data-level="4" style="top: 8%; height: 16%;" aria-label="Third floor">
+          <span class="castle-hotspot-name">Third floor</span>
+        </button>
+        <button type="button" class="castle-hotspot" data-level="3" style="top: 24%; height: 15%;" aria-label="Second floor">
+          <span class="castle-hotspot-name">Second floor</span>
+        </button>
+        <button type="button" class="castle-hotspot" data-level="2" style="top: 39%; height: 15%;" aria-label="First floor">
+          <span class="castle-hotspot-name">First floor</span>
+        </button>
+        <button type="button" class="castle-hotspot" data-level="1" style="top: 54%; height: 16%;" aria-label="Entrance hall">
+          <span class="castle-hotspot-name">Entrance hall</span>
+        </button>
+        <button type="button" class="castle-hotspot" data-level="0" style="top: 70%; height: 18%;" aria-label="Basement">
+          <span class="castle-hotspot-name">Basement</span>
+        </button>
       </div>
 
       <p class="castle-hint">step inside</p>
@@ -51,6 +61,7 @@
       <div class="castle-vignette" aria-hidden="true"></div>
 
       <div class="castle-text-panel" aria-live="polite">
+        <p class="castle-floor-name" id="castle-floor-name"></p>
         <p class="castle-section-text is-bolding" id="castle-text"></p>
       </div>
 
@@ -65,6 +76,13 @@
   <script>
     (function () {
       // Index 0 = basement (bottom) … 4 = third floor (top)
+      const floorNames = [
+        "Basement",
+        "Entrance hall",
+        "First floor",
+        "Second floor",
+        "Third floor"
+      ];
       const texts = [
         "The basement contains the project’s deepest interpretation. Freud’s ideas about the id, ego, superego, the uncanny, repression, and the fear of eyes provide a later psychoanalytic lens for reading Poe. The descent ends with the argument that guilt and conscience cannot simply be silenced or buried. In both stories, repression returns through reflection, sound, repetition, and confession.",
         "Visitors begin at the entrance hall, where the two stories and the central idea are introduced: in both texts, the apparent threat seems external, but the deeper source of horror lies within the narrator’s own mind.",
@@ -77,6 +95,7 @@
       const exterior = document.getElementById("view-exterior");
       const interior = document.getElementById("view-interior");
       const textEl = document.getElementById("castle-text");
+      const floorNameEl = document.getElementById("castle-floor-name");
       const tint = document.getElementById("depth-tint");
       const dots = document.getElementById("depth-dots");
       const btnUp = document.getElementById("btn-up");
@@ -91,6 +110,7 @@
       function boldText() {
         textEl.classList.remove("is-bolding");
         void textEl.offsetWidth;
+        floorNameEl.textContent = floorNames[level];
         textEl.textContent = texts[level];
         textEl.classList.add("is-bolding");
       }

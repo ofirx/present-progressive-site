@@ -2875,24 +2875,35 @@ h3 .he {
 
 .presenting-credits {
   align-self: flex-start;
-  width: 100%;
-  max-width: 100%;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  column-gap: 0.55rem;
+  row-gap: 0.35rem;
   text-align: left;
 }
 
-.presenting-line {
-  margin: 0;
+.presenting-credit-row {
+  display: contents;
+}
+
+.presenting-credit-label,
+.presenting-credit-name {
   font-family: "Poppins", var(--font);
   font-size: clamp(1.35rem, 3.2vw, 1.75rem);
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.01em;
   color: var(--text);
-  text-align: left;
 }
 
-.presenting-line + .presenting-line {
-  margin-top: 0.35rem;
+.presenting-credit-label {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.presenting-credit-name {
+  text-align: left;
+  white-space: nowrap;
 }
 
 .presenting-hero {

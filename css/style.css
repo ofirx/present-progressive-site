@@ -2896,16 +2896,31 @@ h3 .he {
   margin-top: 2rem;
 }
 
-.presenting-image {
+.presenting-image-link {
   display: block;
   width: 100%;
   max-width: 520px;
-  height: auto;
   margin: 0 auto;
-  border-radius: 50%;
-  box-shadow: var(--shadow);
   grid-column: 2;
   grid-row: 1;
+  border-radius: 50%;
+  line-height: 0;
+  text-decoration: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.presenting-image-link:hover {
+  transform: scale(1.03);
+  filter: brightness(1.08);
+}
+
+.presenting-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 50%;
+  box-shadow: var(--shadow);
 }
 
 .presenting-neon {
@@ -2977,7 +2992,7 @@ h3 .he {
 
   .presenting-neon--left,
   .presenting-neon--right,
-  .presenting-image {
+  .presenting-image-link {
     grid-column: 1;
   }
 
@@ -2986,7 +3001,7 @@ h3 .he {
     justify-content: center;
   }
 
-  .presenting-image {
+  .presenting-image-link {
     grid-row: 2;
   }
 

@@ -2915,7 +2915,7 @@ h3 .he {
   justify-content: center;
   gap: 0.45rem;
   font-family: "Poppins", var(--font);
-  font-size: clamp(1.05rem, 2.4vw, 1.65rem);
+  font-size: clamp(3.15rem, 7.2vw, 4.95rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: lowercase;
@@ -2925,21 +2925,19 @@ h3 .he {
     0 0 10px #fff,
     0 0 18px rgba(255, 255, 255, 0.9),
     0 0 32px rgba(255, 255, 255, 0.55);
-  animation: neon-beat 2.3s ease-in-out infinite;
+  animation: neon-beat 4.6s ease-in-out infinite;
 }
 
 .presenting-neon--left {
   grid-column: 1;
   grid-row: 1;
   justify-content: flex-end;
-  animation-delay: 0s;
 }
 
 .presenting-neon--right {
   grid-column: 3;
   grid-row: 1;
   justify-content: flex-start;
-  animation-delay: 0.35s;
 }
 
 .presenting-neon-arrow {

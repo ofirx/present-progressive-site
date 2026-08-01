@@ -3291,6 +3291,105 @@ h3 .he {
   background: linear-gradient(180deg, rgba(50, 55, 40, 0.2), rgba(14, 16, 10, 0.4));
 }
 
+.castle-nav-help {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 8;
+  width: min(240px, 28vw);
+  padding: 1.15rem 1.2rem;
+  border: 3px solid #ffe566;
+  border-radius: 16px;
+  background: rgba(8, 10, 9, 0.72);
+  box-shadow:
+    0 0 8px rgba(255, 229, 102, 0.55),
+    0 0 22px rgba(255, 229, 102, 0.35),
+    inset 0 0 18px rgba(255, 229, 102, 0.08);
+  backdrop-filter: blur(8px);
+  animation: castle-nav-help-pulse 3.2s ease-in-out infinite;
+}
+
+.castle-nav-help-title {
+  margin: 0 0 0.85rem;
+  font-family: "Poppins", var(--font);
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffe566;
+  text-shadow:
+    0 0 6px #ffe566,
+    0 0 14px rgba(255, 229, 102, 0.85),
+    0 0 28px rgba(255, 200, 0, 0.45);
+}
+
+.castle-nav-help-line {
+  margin: 0 0 0.7rem;
+  font-family: "Poppins", var(--font);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 800;
+  line-height: 1.35;
+  color: #ffe566;
+  text-shadow:
+    0 0 5px rgba(255, 229, 102, 0.9),
+    0 0 12px rgba(255, 200, 0, 0.45);
+}
+
+.castle-nav-help-line:last-child {
+  margin-bottom: 0;
+}
+
+.castle-nav-help-line span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  margin-right: 0.35rem;
+  color: #fff6b0;
+}
+
+.castle-nav-help-line--soft {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 229, 102, 0.35);
+  font-size: clamp(0.92rem, 1.8vw, 1.05rem);
+}
+
+@keyframes castle-nav-help-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px rgba(255, 229, 102, 0.45),
+      0 0 18px rgba(255, 229, 102, 0.25),
+      inset 0 0 14px rgba(255, 229, 102, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 12px rgba(255, 229, 102, 0.85),
+      0 0 30px rgba(255, 200, 0, 0.45),
+      inset 0 0 20px rgba(255, 229, 102, 0.12);
+  }
+}
+
+@media (max-width: 900px) {
+  .castle-nav-help {
+    left: 0.75rem;
+    right: 0.75rem;
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+    width: auto;
+    max-width: none;
+  }
+
+  .castle-floor-panel,
+  .castle-window-panel {
+    top: 42%;
+    max-height: min(52dvh, 520px);
+  }
+}
+
 .castle-floor-panel,
 .castle-window-panel {
   position: absolute;

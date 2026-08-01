@@ -3276,7 +3276,7 @@ h3 .he {
 }
 
 .castle-depth-tint[data-depth="2"] {
-  background: linear-gradient(180deg, rgba(45, 35, 25, 0.3), rgba(18, 12, 8, 0.5));
+  background: linear-gradient(180deg, rgba(45, 35, 25, 0.3), rgba(18, 12, 8, 0.45));
 }
 
 .castle-depth-tint[data-depth="3"] {
@@ -3287,42 +3287,202 @@ h3 .he {
   background: linear-gradient(180deg, rgba(35, 50, 45, 0.22), rgba(10, 16, 14, 0.4));
 }
 
-.castle-text-panel {
+.castle-depth-tint[data-depth="5"] {
+  background: linear-gradient(180deg, rgba(50, 55, 40, 0.2), rgba(14, 16, 10, 0.4));
+}
+
+.castle-floor-panel,
+.castle-window-panel {
   position: absolute;
   left: 50%;
-  bottom: 12%;
-  transform: translateX(-50%);
-  width: min(920px, 88vw);
-  padding: 1.5rem 1.75rem;
-  background: rgba(6, 8, 7, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(920px, 90vw);
+  max-height: min(72dvh, 740px);
+  overflow: auto;
+  padding: 1.5rem 1.75rem 1.75rem;
+  background: rgba(6, 8, 7, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   z-index: 6;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
 }
 
 .castle-floor-name {
-  margin: 0 0 0.65rem;
+  margin: 0 0 0.35rem;
   font-family: "Poppins", var(--font);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #f3f6f4;
+}
+
+.castle-floor-name.is-bolding {
+  animation: castle-text-bold 1.15s ease forwards;
+}
+
+.castle-floor-subtitle {
+  margin: 0 0 1.25rem;
+  font-family: "Poppins", var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
-.castle-section-text {
-  margin: 0;
+.castle-window-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.9rem;
+}
+
+.castle-window-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  min-height: 7.5rem;
+  padding: 1.1rem 1.15rem;
+  border: 1px solid rgba(240, 215, 140, 0.35);
+  border-radius: 14px;
+  background:
+    linear-gradient(160deg, rgba(255, 220, 140, 0.14), rgba(20, 24, 22, 0.92) 55%),
+    rgba(18, 22, 20, 0.9);
+  color: #f3f6f4;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.castle-window-link-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 230, 160, 0.22), transparent 55%);
+  animation: castle-window-glow 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.castle-window-link:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255, 230, 160, 0.75);
+  box-shadow: 0 0 28px rgba(240, 215, 140, 0.28);
+}
+
+.castle-window-link-label {
+  position: relative;
+  z-index: 1;
   font-family: "Poppins", var(--font);
-  font-size: clamp(1rem, 2.1vw, 1.2rem);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #f0d78c;
+}
+
+.castle-window-link-title {
+  position: relative;
+  z-index: 1;
+  font-family: "Poppins", var(--font);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.castle-window-back {
+  margin: 0 0 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(8, 10, 9, 0.55);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.castle-window-label {
+  margin: 0 0 0.35rem;
+  font-family: "Poppins", var(--font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.castle-window-title {
+  margin: 0 0 1rem;
+  font-family: "Poppins", var(--font);
+  font-size: clamp(1.25rem, 2.8vw, 1.75rem);
+  font-weight: 700;
+  color: #fff;
+}
+
+.castle-window-body {
+  font-family: "Poppins", var(--font);
+  font-size: 0.98rem;
   font-weight: 400;
   line-height: 1.7;
   color: #c5cec8;
-  text-align: left;
 }
 
-.castle-section-text.is-bolding {
+.castle-window-body.is-bolding {
   animation: castle-text-bold 1.15s ease forwards;
+}
+
+.castle-window-body h3 {
+  margin: 1.1rem 0 0.45rem;
+  font-size: 1.05rem;
+  color: #f0d78c;
+}
+
+.castle-window-body p,
+.castle-window-body ul {
+  margin: 0 0 0.85rem;
+}
+
+.castle-window-body ul {
+  padding-left: 1.2rem;
+}
+
+.castle-quote,
+.castle-cite {
+  padding: 0.85rem 1rem;
+  border-left: 3px solid rgba(240, 215, 140, 0.65);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.castle-cite {
+  font-size: 0.88rem;
+  color: #9aa8a1;
+}
+
+.castle-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.castle-compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.castle-compare th,
+.castle-compare td {
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  vertical-align: top;
+}
+
+.castle-compare th {
+  background: rgba(240, 215, 140, 0.12);
+  color: #f0d78c;
+  text-align: left;
 }
 
 .castle-move,
@@ -3496,11 +3656,13 @@ h3 .he {
   .castle-mist,
   .castle-enter-pulse,
   .castle-hint,
-  .castle-section-text.is-bolding {
+  .castle-window-body.is-bolding,
+  .castle-floor-name.is-bolding {
     animation: none !important;
   }
 
-  .castle-section-text.is-bolding {
+  .castle-window-body.is-bolding,
+  .castle-floor-name.is-bolding {
     font-weight: 700;
     color: #f3f6f4;
   }

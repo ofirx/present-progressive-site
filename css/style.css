@@ -3069,6 +3069,43 @@ h3 .he {
   animation: castle-bg-breathe 18s ease-in-out infinite alternate;
 }
 
+.castle-bg--cutaway {
+  object-fit: contain;
+  object-position: center bottom;
+  transform: none;
+  animation: castle-cutaway-glow 6s ease-in-out infinite alternate;
+  background: #050706;
+}
+
+.castle-hotspots {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: min(420px, 70vw);
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.castle-hotspot {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.castle-hotspot:hover,
+.castle-hotspot:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
 .castle-bg--interior {
   filter: saturate(0.85) brightness(0.72);
   animation-duration: 22s;
@@ -3156,11 +3193,11 @@ h3 .he {
 }
 
 .castle-depth-tint[data-depth="0"] {
-  background: linear-gradient(180deg, rgba(30, 40, 35, 0.2), rgba(10, 12, 11, 0.35));
+  background: linear-gradient(180deg, rgba(50, 10, 10, 0.35), rgba(8, 2, 2, 0.65));
 }
 
 .castle-depth-tint[data-depth="1"] {
-  background: linear-gradient(180deg, rgba(40, 45, 55, 0.25), rgba(12, 14, 20, 0.4));
+  background: linear-gradient(180deg, rgba(30, 40, 35, 0.2), rgba(10, 12, 11, 0.35));
 }
 
 .castle-depth-tint[data-depth="2"] {
@@ -3168,7 +3205,11 @@ h3 .he {
 }
 
 .castle-depth-tint[data-depth="3"] {
-  background: linear-gradient(180deg, rgba(50, 10, 10, 0.35), rgba(8, 2, 2, 0.65));
+  background: linear-gradient(180deg, rgba(40, 45, 55, 0.25), rgba(12, 14, 20, 0.4));
+}
+
+.castle-depth-tint[data-depth="4"] {
+  background: linear-gradient(180deg, rgba(35, 50, 45, 0.22), rgba(10, 16, 14, 0.4));
 }
 
 .castle-text-panel {
@@ -3281,6 +3322,11 @@ h3 .he {
 @keyframes castle-bg-breathe {
   from { transform: scale(1.04) translateY(0); }
   to { transform: scale(1.08) translateY(-1.2%); }
+}
+
+@keyframes castle-cutaway-glow {
+  from { filter: brightness(0.95) contrast(1.05); }
+  to { filter: brightness(1.08) contrast(1.08); }
 }
 
 @keyframes castle-mist-drift {

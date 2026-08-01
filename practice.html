@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="3: The house — The Split. An animated haunted castle through Poe." />
+  <meta name="description" content="3: The house — The Split. Enter the haunted castle." />
   <title>3: The house — The Split</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=58" />
+  <link rel="stylesheet" href="css/style.css?v=59" />
 </head>
-<body>
-  <header class="site-header">
+<body class="castle-body">
+  <header class="site-header castle-header">
     <div class="container header-inner">
       <a class="logo" href="index.html"><strong>The Split</strong><img class="logo-icon" src="images/the-split-icon.png" alt="" width="40" height="40" /></a>
       <nav aria-label="Main">
@@ -24,124 +24,130 @@
     </div>
   </header>
 
-  <main class="castle-page">
-    <section class="castle-stage" aria-label="The haunted house">
-      <div class="castle-atmosphere" aria-hidden="true">
-        <span class="castle-fog castle-fog--1"></span>
-        <span class="castle-fog castle-fog--2"></span>
-        <span class="castle-bat castle-bat--1"></span>
-        <span class="castle-bat castle-bat--2"></span>
+  <main class="castle-immersive" id="castle-app">
+    <!-- Exterior -->
+    <section class="castle-view is-active" id="view-exterior" data-view="exterior" aria-label="Castle exterior">
+      <img class="castle-bg" src="images/haunted-castle-exterior.png" alt="A haunted gothic castle in the fog" />
+      <div class="castle-vignette" aria-hidden="true"></div>
+      <div class="castle-mist" aria-hidden="true"></div>
+      <button type="button" class="castle-enter" id="btn-enter" aria-label="Enter the castle">
+        <span class="castle-enter-pulse"></span>
+      </button>
+      <p class="castle-hint">enter</p>
+    </section>
+
+    <!-- Interior descent -->
+    <section class="castle-view" id="view-interior" data-view="interior" hidden aria-label="Inside the castle">
+      <img class="castle-bg castle-bg--interior" src="images/haunted-castle-interior.png" alt="" />
+      <div class="castle-depth-tint" id="depth-tint" aria-hidden="true"></div>
+      <div class="castle-vignette" aria-hidden="true"></div>
+
+      <div class="castle-text-panel" aria-live="polite">
+        <p class="castle-section-text is-bolding" id="castle-text"></p>
       </div>
 
-      <div class="container castle-layout">
-        <div class="castle-visual" aria-hidden="false">
-          <h1 class="castle-title">The Split</h1>
-          <p class="castle-subtitle">Descend through the haunted house</p>
+      <button type="button" class="castle-move castle-move--up" id="btn-up" aria-label="Go higher">▲</button>
+      <button type="button" class="castle-move castle-move--down" id="btn-down" aria-label="Go deeper">▼</button>
+      <button type="button" class="castle-exit" id="btn-exit" aria-label="Leave the castle">↩</button>
 
-          <div class="haunted-castle" role="img" aria-label="Animated haunted castle with four floors">
-            <div class="castle-towers">
-              <span class="castle-tower castle-tower--left"></span>
-              <span class="castle-tower castle-tower--right"></span>
-            </div>
-            <div class="castle-roof"></div>
-            <button type="button" class="castle-floor" data-section="upper" aria-pressed="false">
-              <span class="castle-floor-label">Upper Floors</span>
-              <span class="castle-windows">
-                <i></i><i></i><i></i><i></i>
-              </span>
-            </button>
-            <button type="button" class="castle-floor" data-section="historical" aria-pressed="false">
-              <span class="castle-floor-label">Lower Windows</span>
-              <span class="castle-windows">
-                <i></i><i></i><i></i><i></i>
-              </span>
-            </button>
-            <button type="button" class="castle-floor is-active" data-section="entrance" aria-pressed="true">
-              <span class="castle-floor-label">Entrance Hall</span>
-              <span class="castle-door"></span>
-            </button>
-            <button type="button" class="castle-floor castle-floor--basement" data-section="basement" aria-pressed="false">
-              <span class="castle-floor-label">Basement</span>
-              <span class="castle-windows castle-windows--dim">
-                <i></i><i></i>
-              </span>
-            </button>
-            <div class="castle-ground"></div>
-          </div>
-
-          <nav class="castle-floor-nav" aria-label="House sections">
-            <button type="button" class="castle-nav-btn is-active" data-section="entrance">Entrance Hall</button>
-            <button type="button" class="castle-nav-btn" data-section="upper">Upper Floors</button>
-            <button type="button" class="castle-nav-btn" data-section="historical">Lower Levels</button>
-            <button type="button" class="castle-nav-btn" data-section="basement">Basement</button>
-          </nav>
-        </div>
-
-        <div class="castle-readings" aria-live="polite">
-          <article class="castle-section is-active" id="section-entrance" data-section="entrance">
-            <p class="castle-section-eyebrow">Entrance Hall</p>
-            <h2 class="castle-section-heading">Begin inside the mind</h2>
-            <p class="castle-section-text">
-              Visitors begin at the entrance hall, where the two stories and the central idea are introduced: in both texts, the apparent threat seems external, but the deeper source of horror lies within the narrator’s own mind.
-            </p>
-          </article>
-
-          <article class="castle-section" id="section-upper" data-section="upper" hidden>
-            <p class="castle-section-eyebrow">Upper Floors</p>
-            <h2 class="castle-section-heading">The surface of the stories</h2>
-            <p class="castle-section-text">
-              The upper floors present the visible elements of the stories, including brief summaries, key quotations, the narrators’ crimes, and Poe’s use of mirrors, repetition, sound, masks, enclosed spaces, and unreliable narration. These rooms are designed to feel relatively orderly, representing the surface level of the narratives.
-            </p>
-          </article>
-
-          <article class="castle-section" id="section-historical" data-section="historical" hidden>
-            <p class="castle-section-eyebrow">Lower Levels</p>
-            <h2 class="castle-section-heading">History, culture, and now</h2>
-            <p class="castle-section-text">
-              As the visitor moves lower through the house, the focus shifts towards historical and cultural interpretation. These windows explore Poe’s nineteenth-century American context, including individualism, social respectability, crime, urban growth, sensational print culture, and anxieties beneath national ideas of progress and rationality. The next level connects the stories to contemporary American life through issues such as curated online identities, narcissism, social pressure, anxiety, true-crime culture, and the need to appear controlled.
-            </p>
-          </article>
-
-          <article class="castle-section" id="section-basement" data-section="basement" hidden>
-            <p class="castle-section-eyebrow">Basement</p>
-            <h2 class="castle-section-heading">The deepest interpretation</h2>
-            <p class="castle-section-text">
-              The basement contains the project’s deepest interpretation. Freud’s ideas about the id, ego, superego, the uncanny, repression, and the fear of eyes provide a later psychoanalytic lens for reading Poe. The descent ends with the argument that guilt and conscience cannot simply be silenced or buried. In both stories, repression returns through reflection, sound, repetition, and confession.
-            </p>
-          </article>
-        </div>
-      </div>
+      <div class="castle-depth-dots" id="depth-dots" aria-hidden="true"></div>
     </section>
   </main>
 
   <script>
     (function () {
-      const buttons = document.querySelectorAll("[data-section]");
-      const sections = document.querySelectorAll(".castle-section");
+      const texts = [
+        "Visitors begin at the entrance hall, where the two stories and the central idea are introduced: in both texts, the apparent threat seems external, but the deeper source of horror lies within the narrator’s own mind.",
+        "The upper floors present the visible elements of the stories, including brief summaries, key quotations, the narrators’ crimes, and Poe’s use of mirrors, repetition, sound, masks, enclosed spaces, and unreliable narration. These rooms are designed to feel relatively orderly, representing the surface level of the narratives.",
+        "As the visitor moves lower through the house, the focus shifts towards historical and cultural interpretation. These windows explore Poe’s nineteenth-century American context, including individualism, social respectability, crime, urban growth, sensational print culture, and anxieties beneath national ideas of progress and rationality. The next level connects the stories to contemporary American life through issues such as curated online identities, narcissism, social pressure, anxiety, true-crime culture, and the need to appear controlled.",
+        "The basement contains the project’s deepest interpretation. Freud’s ideas about the id, ego, superego, the uncanny, repression, and the fear of eyes provide a later psychoanalytic lens for reading Poe. The descent ends with the argument that guilt and conscience cannot simply be silenced or buried. In both stories, repression returns through reflection, sound, repetition, and confession."
+      ];
 
-      function showSection(id) {
-        sections.forEach((section) => {
-          const active = section.dataset.section === id;
-          section.hidden = !active;
-          section.classList.toggle("is-active", active);
-          if (active) {
-            section.classList.remove("is-bolding");
-            void section.offsetWidth;
-            section.classList.add("is-bolding");
-          }
-        });
+      // Visual depth order after entering: entrance → upper → lower → basement
+      // Movement: up goes toward upper floors index, down goes deeper
+      let level = 0;
+      const exterior = document.getElementById("view-exterior");
+      const interior = document.getElementById("view-interior");
+      const textEl = document.getElementById("castle-text");
+      const tint = document.getElementById("depth-tint");
+      const dots = document.getElementById("depth-dots");
+      const btnUp = document.getElementById("btn-up");
+      const btnDown = document.getElementById("btn-down");
 
-        document.querySelectorAll(".castle-floor, .castle-nav-btn").forEach((btn) => {
-          const active = btn.dataset.section === id;
-          btn.classList.toggle("is-active", active);
-          if (btn.hasAttribute("aria-pressed")) {
-            btn.setAttribute("aria-pressed", active ? "true" : "false");
-          }
-        });
+      texts.forEach((_, i) => {
+        const d = document.createElement("span");
+        d.className = "castle-dot" + (i === 0 ? " is-active" : "");
+        dots.appendChild(d);
+      });
+
+      function boldText() {
+        textEl.classList.remove("is-bolding");
+        void textEl.offsetWidth;
+        textEl.textContent = texts[level];
+        textEl.classList.add("is-bolding");
       }
 
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => showSection(btn.dataset.section));
+      function updateInterior() {
+        boldText();
+        tint.dataset.depth = String(level);
+        interior.dataset.depth = String(level);
+        dots.querySelectorAll(".castle-dot").forEach((dot, i) => {
+          dot.classList.toggle("is-active", i === level);
+        });
+        btnUp.disabled = level <= 0;
+        btnDown.disabled = level >= texts.length - 1;
+      }
+
+      function showView(name) {
+        const showExterior = name === "exterior";
+        exterior.hidden = !showExterior;
+        interior.hidden = showExterior;
+        exterior.classList.toggle("is-active", showExterior);
+        interior.classList.toggle("is-active", !showExterior);
+        document.body.classList.toggle("is-inside-castle", !showExterior);
+      }
+
+      document.getElementById("btn-enter").addEventListener("click", () => {
+        level = 0;
+        showView("interior");
+        updateInterior();
+      });
+
+      document.getElementById("btn-exit").addEventListener("click", () => {
+        showView("exterior");
+      });
+
+      btnUp.addEventListener("click", () => {
+        if (level > 0) {
+          level -= 1;
+          updateInterior();
+        }
+      });
+
+      btnDown.addEventListener("click", () => {
+        if (level < texts.length - 1) {
+          level += 1;
+          updateInterior();
+        }
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (interior.hidden) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            document.getElementById("btn-enter").click();
+          }
+          return;
+        }
+        if (e.key === "ArrowUp") {
+          e.preventDefault();
+          btnUp.click();
+        } else if (e.key === "ArrowDown") {
+          e.preventDefault();
+          btnDown.click();
+        } else if (e.key === "Escape") {
+          document.getElementById("btn-exit").click();
+        }
       });
     })();
   </script>

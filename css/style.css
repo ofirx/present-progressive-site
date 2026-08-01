@@ -152,6 +152,9 @@ a:hover {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--text);
@@ -162,6 +165,14 @@ a:hover {
 .logo strong {
   font-weight: 800;
   color: inherit;
+}
+
+.logo-icon {
+  width: 2.35rem;
+  height: 2.35rem;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .logo span {

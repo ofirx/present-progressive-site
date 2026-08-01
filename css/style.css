@@ -2775,7 +2775,7 @@ h3 .he {
   }
 }
 
-/* American Survey */
+/* The Reasons Behind */
 .survey-section {
   min-height: calc(100vh - 76px);
   padding-top: 3rem;
@@ -2789,113 +2789,35 @@ h3 .he {
 }
 
 .survey-hero {
-  max-width: 760px;
-  margin-bottom: 2.5rem;
-}
-
-.survey-eyebrow {
-  margin: 0 0 0.6rem;
-  color: var(--accent);
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  text-align: left;
 }
 
 .survey-hero h1 {
-  margin: 0 0 0.85rem;
+  margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 7vw, 4.8rem);
-  line-height: 1;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-align: left;
 }
 
-.survey-lead {
-  margin: 0;
-  color: var(--muted);
-  font-family: var(--font-serif);
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
+.reasons-body {
+  max-width: 720px;
+  margin: 0 0 2.5rem;
+  text-align: left;
+}
+
+.reasons-body p {
+  margin: 0 0 1.15rem;
+  color: var(--text);
+  font-size: 16px;
   line-height: 1.7;
+  text-align: left;
 }
 
-.survey-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
-}
-
-.survey-card {
-  position: relative;
-  padding: 1.5rem;
-  overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.survey-card-number {
-  display: block;
-  margin-bottom: 1rem;
-  color: var(--accent);
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-.survey-card h2 {
-  margin: 0 0 0.7rem;
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
-}
-
-.survey-card p {
-  margin: 0 0 1rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-.survey-card ul,
-.survey-card ol {
-  margin: 0;
-  padding-left: 1.25rem;
-}
-
-.survey-card li {
-  margin: 0.45rem 0;
-}
-
-.survey-card li::marker {
-  color: var(--accent);
-  font-weight: 800;
-}
-
-.survey-prompt {
-  margin-top: 1.5rem;
-  padding: 1.75rem 2rem;
-  color: #fff;
-  background: var(--accent-dark);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.survey-prompt-label {
-  margin: 0 0 0.35rem;
-  color: #b7e4c7;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.survey-prompt h2 {
-  margin: 0 0 0.4rem;
-  font-family: var(--font-serif);
-}
-
-.survey-prompt p:last-child {
-  margin: 0;
-  color: #f1f8f3;
+.reasons-body p:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 900px) {
@@ -2910,18 +2832,10 @@ h3 .he {
     overflow-x: auto;
     padding-bottom: 0.2rem;
   }
-
-  .survey-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {
   .survey-section {
     padding-top: 2rem;
-  }
-
-  .survey-prompt {
-    padding: 1.4rem;
   }
 }

@@ -2930,7 +2930,7 @@ h3 .he {
   justify-content: center;
   gap: 0.45rem;
   font-family: "Poppins", var(--font);
-  font-size: clamp(4.2rem, 9.6vw, 6.6rem);
+  font-size: clamp(2.2rem, 4.2vw, 3.2rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: lowercase;

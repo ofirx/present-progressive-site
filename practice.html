@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=67" />
+  <link rel="stylesheet" href="css/style.css?v=68" />
 </head>
 <body class="castle-body">
   <header class="site-header castle-header">
@@ -79,6 +79,7 @@
         <h2 class="castle-window-title" id="window-title"></h2>
         <img class="castle-window-hero" id="window-hero" alt="" />
         <div class="castle-window-body is-bolding" id="window-body"></div>
+        <button type="button" class="castle-window-back castle-window-back--bottom" id="btn-window-back-bottom" aria-label="Back to windows">←</button>
       </article>
 
       <button type="button" class="castle-move castle-move--up" id="btn-up" aria-label="Go higher">▲</button>
@@ -252,6 +253,9 @@
       }
 
       document.getElementById("btn-window-back").addEventListener("click", () => {
+        showFloorWindows();
+      });
+      document.getElementById("btn-window-back-bottom").addEventListener("click", () => {
         showFloorWindows();
       });
 

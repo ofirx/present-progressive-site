@@ -3058,6 +3058,63 @@ h3 .he {
   pointer-events: auto;
 }
 
+.castle-exterior-layout {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(7rem, 1fr) minmax(0, min(520px, 70vw)) minmax(7rem, 1fr);
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 5.5rem 1rem 1.5rem;
+  box-sizing: border-box;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(40, 50, 45, 0.35), transparent 55%),
+    #050706;
+}
+
+.castle-cutaway-wrap {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  height: min(78dvh, 860px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.castle-cutaway-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  animation: castle-cutaway-glow 6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.55));
+}
+
+.castle-neon.presenting-neon--left {
+  grid-column: 1;
+  grid-row: 1;
+  justify-content: flex-end;
+}
+
+.castle-neon.presenting-neon--right {
+  grid-column: 3;
+  grid-row: 1;
+  justify-content: flex-start;
+}
+
+.castle-hotspots {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: min(100%, 420px);
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
 .castle-bg {
   position: absolute;
   inset: 0;
@@ -3077,14 +3134,9 @@ h3 .he {
   background: #050706;
 }
 
-.castle-hotspots {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: min(420px, 70vw);
-  transform: translateX(-50%);
-  z-index: 5;
+.castle-bg--interior {
+  filter: saturate(0.85) brightness(0.72);
+  animation-duration: 22s;
 }
 
 .castle-hotspot {
@@ -3396,6 +3448,34 @@ h3 .he {
 }
 
 @media (max-width: 700px) {
+  .castle-exterior-layout {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding-top: 5rem;
+    gap: 0.75rem;
+  }
+
+  .castle-neon.presenting-neon--left,
+  .castle-neon.presenting-neon--right,
+  .castle-cutaway-wrap {
+    grid-column: 1;
+  }
+
+  .castle-neon.presenting-neon--left {
+    grid-row: 1;
+    justify-content: center;
+  }
+
+  .castle-cutaway-wrap {
+    grid-row: 2;
+    height: min(58dvh, 560px);
+  }
+
+  .castle-neon.presenting-neon--right {
+    grid-row: 3;
+    justify-content: center;
+  }
+
   .castle-text-panel {
     bottom: 8%;
     padding: 1.15rem 1.2rem;
@@ -3408,14 +3488,6 @@ h3 .he {
 
   .castle-depth-dots {
     right: 1.2rem;
-  }
-
-  .castle-enter {
-    bottom: 22%;
-  }
-
-  .castle-hint {
-    bottom: 14%;
   }
 }
 

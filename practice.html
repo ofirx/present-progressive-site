@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=61" />
+  <link rel="stylesheet" href="css/style.css?v=62" />
 </head>
 <body class="castle-body">
   <header class="site-header castle-header">
@@ -26,33 +26,42 @@
 
   <main class="castle-immersive" id="castle-app">
     <section class="castle-view is-active" id="view-exterior" data-view="exterior" aria-label="Split-level castle">
-      <img
-        class="castle-bg castle-bg--cutaway"
-        src="images/haunted-castle-split-levels.png"
-        alt="A split haunted castle with basement, entrance hall, and three floors"
-      />
-      <div class="castle-vignette" aria-hidden="true"></div>
+      <div class="castle-exterior-layout">
+        <p class="presenting-neon presenting-neon--left castle-neon">
+          <span class="presenting-neon-text">step inside</span>
+          <span class="presenting-neon-arrow" aria-hidden="true">→</span>
+        </p>
 
-      <div class="castle-hotspots" aria-label="Castle levels">
-        <!-- top to bottom: third floor → basement -->
-        <button type="button" class="castle-hotspot" data-level="4" style="top: 8%; height: 16%;" aria-label="Third floor">
-          <span class="castle-hotspot-name">Third floor</span>
-        </button>
-        <button type="button" class="castle-hotspot" data-level="3" style="top: 24%; height: 15%;" aria-label="Second floor">
-          <span class="castle-hotspot-name">Second floor</span>
-        </button>
-        <button type="button" class="castle-hotspot" data-level="2" style="top: 39%; height: 15%;" aria-label="First floor">
-          <span class="castle-hotspot-name">First floor</span>
-        </button>
-        <button type="button" class="castle-hotspot" data-level="1" style="top: 54%; height: 16%;" aria-label="Entrance hall">
-          <span class="castle-hotspot-name">Entrance hall</span>
-        </button>
-        <button type="button" class="castle-hotspot" data-level="0" style="top: 70%; height: 18%;" aria-label="Basement">
-          <span class="castle-hotspot-name">Basement</span>
-        </button>
+        <div class="castle-cutaway-wrap">
+          <img
+            class="castle-cutaway-image"
+            src="images/haunted-castle-split-levels.png"
+            alt="A split haunted castle with basement, entrance hall, and three floors"
+          />
+          <div class="castle-hotspots" aria-label="Castle levels">
+            <button type="button" class="castle-hotspot" data-level="4" style="top: 8%; height: 16%;" aria-label="Third floor">
+              <span class="castle-hotspot-name">Third floor</span>
+            </button>
+            <button type="button" class="castle-hotspot" data-level="3" style="top: 24%; height: 15%;" aria-label="Second floor">
+              <span class="castle-hotspot-name">Second floor</span>
+            </button>
+            <button type="button" class="castle-hotspot" data-level="2" style="top: 39%; height: 15%;" aria-label="First floor">
+              <span class="castle-hotspot-name">First floor</span>
+            </button>
+            <button type="button" class="castle-hotspot" data-level="1" style="top: 54%; height: 16%;" aria-label="Entrance hall">
+              <span class="castle-hotspot-name">Entrance hall</span>
+            </button>
+            <button type="button" class="castle-hotspot" data-level="0" style="top: 70%; height: 18%;" aria-label="Basement">
+              <span class="castle-hotspot-name">Basement</span>
+            </button>
+          </div>
+        </div>
+
+        <p class="presenting-neon presenting-neon--right castle-neon">
+          <span class="presenting-neon-arrow" aria-hidden="true">←</span>
+          <span class="presenting-neon-text">step inside</span>
+        </p>
       </div>
-
-      <p class="castle-hint">step inside</p>
     </section>
 
     <section class="castle-view" id="view-interior" data-view="interior" hidden aria-label="Inside the castle">

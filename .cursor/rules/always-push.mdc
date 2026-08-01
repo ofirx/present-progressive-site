@@ -1,13 +1,15 @@
 ---
-description: Push git changes to GitHub after every task
+description: Commit and push after every step automatically
 alwaysApply: true
 ---
 
-# Always push after changes
+# Always commit and push after every step
 
-When you make changes to this project, always commit and push to GitHub at the end of each task or user request — without waiting to be asked.
+After each completed step or user request that changes files in this project, commit and push to GitHub automatically — without waiting to be asked.
 
-- Commit only when there are actual changes to push
+- Commit immediately when a discrete step of work is done (not only at the end of a long session)
+- Push after each successful commit so GitHub Pages stays current
+- Commit only when there are actual changes
 - Do not push secrets or credential files
 - Use the existing commit message style (concise, why-focused)
-- Confirm the push succeeded before finishing your response
+- Confirm the commit and push succeeded before finishing your response

@@ -2883,13 +2883,8 @@ h3 .he {
   color: var(--text);
 }
 
-.presenting-arrow {
-  margin: 0.85rem 0;
-  font-family: "Poppins", var(--font);
-  font-size: clamp(2.5rem, 6vw, 3.75rem);
-  font-weight: 500;
-  line-height: 1;
-  color: var(--accent);
+.presenting-line + .presenting-line {
+  margin-top: 0.85rem;
 }
 
 .presenting-image {

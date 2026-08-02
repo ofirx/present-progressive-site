@@ -197,10 +197,43 @@ nav a {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
-nav a:hover {
-  color: var(--accent);
+nav a:hover,
+nav a:active,
+nav a:focus-visible {
+  color: var(--neon-green);
+  outline: none;
+  animation: nav-neon-pulse 1.15s ease-in-out infinite;
+}
+
+@keyframes nav-neon-pulse {
+  0%,
+  100% {
+    color: var(--neon-green);
+    text-shadow:
+      0 0 4px var(--neon-green),
+      0 0 10px rgba(57, 255, 20, 0.75),
+      0 0 22px rgba(57, 255, 20, 0.45);
+  }
+  50% {
+    color: #c8ffb0;
+    text-shadow:
+      0 0 6px #fff,
+      0 0 16px var(--neon-green),
+      0 0 32px rgba(57, 255, 20, 0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  nav a:hover,
+  nav a:active,
+  nav a:focus-visible {
+    animation: none;
+    text-shadow:
+      0 0 8px rgba(57, 255, 20, 0.7);
+  }
 }
 
 .nav-github {
@@ -295,8 +328,8 @@ nav a:hover {
 }
 
 .nav-link[aria-current="page"] {
-  color: var(--accent);
-  font-weight: 800;
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .hero-content {

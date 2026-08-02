@@ -204,7 +204,8 @@ nav a {
 
 nav a:hover,
 nav a:active,
-nav a:focus-visible {
+nav a:focus-visible,
+.nav-link[aria-current="page"] {
   color: var(--neon-green);
   outline: none;
   animation: nav-neon-pulse 1.15s ease-in-out infinite;
@@ -233,7 +234,8 @@ nav a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   nav a:hover,
   nav a:active,
-  nav a:focus-visible {
+  nav a:focus-visible,
+  .nav-link[aria-current="page"] {
     animation: none;
     transform: scale(1.1);
     text-shadow:
@@ -333,7 +335,6 @@ nav a:focus-visible {
 }
 
 .nav-link[aria-current="page"] {
-  color: var(--muted);
   font-weight: 600;
 }
 

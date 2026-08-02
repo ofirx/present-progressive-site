@@ -92,7 +92,6 @@
   </main>
 
   <script src="js/castle-windows.js?v=2"></script>
-  <script src="js/castle-sounds.js?v=1"></script>
   <script>
     (function () {
       // Bottom → top physical order in the house
@@ -210,7 +209,6 @@
         const floor = currentFloor();
         const win = floor.windows[index];
         if (!win) return;
-        window.CastleSounds?.window();
         openWindowIndex = index;
         floorPanel.hidden = true;
         windowPanel.hidden = false;
@@ -249,18 +247,15 @@
       }
 
       function enterAt(nextLevel) {
-        window.CastleSounds?.enter();
         level = nextLevel;
         showView("interior");
         updateInterior();
       }
 
       document.getElementById("btn-window-back").addEventListener("click", () => {
-        window.CastleSounds?.click();
         showFloorWindows();
       });
       document.getElementById("btn-window-back-bottom").addEventListener("click", () => {
-        window.CastleSounds?.click();
         showFloorWindows();
       });
 
@@ -278,13 +273,11 @@
       });
 
       document.getElementById("btn-exit").addEventListener("click", () => {
-        window.CastleSounds?.exit();
         showView("exterior");
       });
 
       btnUp.addEventListener("click", () => {
         if (level < levelOrder.length - 1) {
-          window.CastleSounds?.creak();
           level += 1;
           updateInterior();
         }
@@ -292,7 +285,6 @@
 
       btnDown.addEventListener("click", () => {
         if (level > 0) {
-          window.CastleSounds?.creak();
           level -= 1;
           updateInterior();
         }
@@ -301,10 +293,7 @@
       window.addEventListener("keydown", (e) => {
         if (interior.hidden) return;
         if (e.key === "Escape") {
-          if (!windowPanel.hidden) {
-            window.CastleSounds?.click();
-            showFloorWindows();
-          }
+          if (!windowPanel.hidden) showFloorWindows();
           else document.getElementById("btn-exit").click();
         } else if (!windowPanel.hidden && e.key === "ArrowLeft") {
           e.preventDefault();

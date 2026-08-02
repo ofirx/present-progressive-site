@@ -9,6 +9,7 @@
   --accent-light: #1e3329;
   --accent-dark: #95d5b2;
   --border: #2c3631;
+  --neon-green: #39ff14;
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   --radius: 16px;
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -27,7 +28,10 @@ body {
   margin: 0;
   font-family: var(--font);
   color: var(--text);
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 92% 5%, var(--accent-light), transparent 30rem),
+    var(--bg);
+  background-attachment: fixed;
   line-height: 1.6;
 }
 
@@ -143,7 +147,8 @@ a:hover {
   z-index: 10;
   background: rgba(17, 20, 19, 0.92);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--neon-green);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.45);
 }
 
 .header-inner {
@@ -663,7 +668,9 @@ h2 {
 }
 
 .section-credits {
+  min-height: calc(100vh - 76px);
   padding-top: 3rem;
+  background: transparent;
 }
 
 .credits-container {
@@ -2797,9 +2804,7 @@ h3 .he {
 .survey-section {
   min-height: calc(100vh - 76px);
   padding-top: 3rem;
-  background:
-    radial-gradient(circle at 92% 5%, var(--accent-light), transparent 30rem),
-    var(--bg);
+  background: transparent;
 }
 
 .survey-container {
@@ -2863,6 +2868,7 @@ h3 .he {
   min-height: calc(100vh - 76px);
   padding-top: 3.5rem;
   padding-bottom: 4rem;
+  background: transparent;
 }
 
 .presenting-layout {
@@ -3057,7 +3063,8 @@ h3 .he {
   z-index: 40;
   background: rgba(8, 10, 9, 0.55);
   backdrop-filter: blur(12px);
-  border-bottom-color: rgba(255, 255, 255, 0.06);
+  border-bottom-color: var(--neon-green);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.45);
 }
 
 .castle-immersive {
@@ -3066,7 +3073,9 @@ h3 .he {
   height: 100dvh;
   min-height: 100vh;
   overflow: hidden;
-  background: #050706;
+  background:
+    radial-gradient(circle at 92% 5%, var(--accent-light), transparent 30rem),
+    var(--bg);
 }
 
 .castle-view {
@@ -3155,7 +3164,7 @@ h3 .he {
   object-position: center bottom;
   transform: none;
   animation: castle-cutaway-glow 6s ease-in-out infinite alternate;
-  background: #050706;
+  background: transparent;
 }
 
 .castle-bg--interior {

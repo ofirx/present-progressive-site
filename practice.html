@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=78" />
+  <link rel="stylesheet" href="css/style.css?v=79" />
 </head>
 <body class="castle-body">
   <header class="site-header castle-header">
@@ -62,8 +62,8 @@
 
       <aside class="castle-nav-help castle-nav-help--window" id="castle-nav-help-window" hidden aria-label="How to navigate in a window">
         <p class="castle-nav-help-title">How to navigate</p>
-        <p class="castle-nav-help-line"><span>◀</span> Back to last window</p>
-        <p class="castle-nav-help-line"><span>▶</span> Forward to next window</p>
+        <p class="castle-nav-help-line"><span>▲</span> Back to last window</p>
+        <p class="castle-nav-help-line"><span>▼</span> Forward to next window</p>
         <p class="castle-nav-help-line"><span>←</span> Back to the floor</p>
       </aside>
 
@@ -82,12 +82,14 @@
         <button type="button" class="castle-window-back castle-window-back--bottom" id="btn-window-back-bottom" aria-label="Back to windows">←</button>
       </article>
 
-      <button type="button" class="castle-move castle-move--up" id="btn-up" aria-label="Go higher">▲</button>
-      <button type="button" class="castle-move castle-move--down" id="btn-down" aria-label="Go deeper">▼</button>
-      <button type="button" class="castle-move castle-move--prev" id="btn-win-prev" hidden aria-label="Previous window">◀</button>
-      <button type="button" class="castle-move castle-move--next" id="btn-win-next" hidden aria-label="Next window">▶</button>
+      <div class="castle-side-nav" aria-hidden="false">
+        <button type="button" class="castle-move castle-move--up" id="btn-up" aria-label="Go higher">▲</button>
+        <button type="button" class="castle-move castle-move--prev" id="btn-win-prev" hidden aria-label="Previous window">▲</button>
+        <div class="castle-depth-dots" id="depth-dots" aria-hidden="true"></div>
+        <button type="button" class="castle-move castle-move--down" id="btn-down" aria-label="Go deeper">▼</button>
+        <button type="button" class="castle-move castle-move--next" id="btn-win-next" hidden aria-label="Next window">▼</button>
+      </div>
       <button type="button" class="castle-exit" id="btn-exit" aria-label="Leave the castle">↩</button>
-      <div class="castle-depth-dots" id="depth-dots" aria-hidden="true"></div>
     </section>
   </main>
 
@@ -140,7 +142,6 @@
         btnWinNext.hidden = !visible;
         btnUp.hidden = visible;
         btnDown.hidden = visible;
-        dots.hidden = visible;
         document.getElementById("castle-nav-help").hidden = visible;
         document.getElementById("castle-nav-help-window").hidden = !visible;
       }
@@ -295,10 +296,10 @@
         if (e.key === "Escape") {
           if (!windowPanel.hidden) showFloorWindows();
           else document.getElementById("btn-exit").click();
-        } else if (!windowPanel.hidden && e.key === "ArrowLeft") {
+        } else if (!windowPanel.hidden && (e.key === "ArrowLeft" || e.key === "ArrowUp")) {
           e.preventDefault();
           btnWinPrev.click();
-        } else if (!windowPanel.hidden && e.key === "ArrowRight") {
+        } else if (!windowPanel.hidden && (e.key === "ArrowRight" || e.key === "ArrowDown")) {
           e.preventDefault();
           btnWinNext.click();
         } else if (windowPanel.hidden && e.key === "ArrowUp") {

@@ -3706,6 +3706,18 @@ h3 .he {
   text-align: left;
 }
 
+.castle-side-nav {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.95rem;
+  z-index: 7;
+}
+
 .castle-move,
 .castle-exit {
   position: absolute;
@@ -3722,6 +3734,12 @@ h3 .he {
   transition: background 0.2s ease, opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
+.castle-side-nav .castle-move {
+  position: static;
+  transform: none;
+  flex-shrink: 0;
+}
+
 .castle-move:hover:not(:disabled),
 .castle-exit:hover {
   color: #fff;
@@ -3730,44 +3748,8 @@ h3 .he {
   animation: castle-arrow-neon-pulse 1.1s ease-in-out infinite;
 }
 
-.castle-move--up {
-  top: 50%;
-  right: 1.5rem;
-  transform: translateY(-120%);
-}
-
-.castle-move--up:hover:not(:disabled) {
-  transform: translateY(-120%) scale(1.08);
-}
-
-.castle-move--down {
-  top: 50%;
-  right: 1.5rem;
-  transform: translateY(40%);
-}
-
-.castle-move--down:hover:not(:disabled) {
-  transform: translateY(40%) scale(1.08);
-}
-
-.castle-move--prev {
-  top: 50%;
-  right: 1.5rem;
-  transform: translateY(-120%);
-}
-
-.castle-move--prev:hover:not(:disabled) {
-  transform: translateY(-120%) scale(1.08);
-}
-
-.castle-move--next {
-  top: 50%;
-  right: 1.5rem;
-  transform: translateY(40%);
-}
-
-.castle-move--next:hover:not(:disabled) {
-  transform: translateY(40%) scale(1.08);
+.castle-side-nav .castle-move:hover:not(:disabled) {
+  transform: scale(1.08);
 }
 
 .castle-move:disabled {
@@ -3777,10 +3759,7 @@ h3 .he {
   animation: none;
 }
 
-.castle-move--prev:disabled:hover,
-.castle-move--next:disabled:hover,
-.castle-move--up:disabled:hover,
-.castle-move--down:disabled:hover {
+.castle-side-nav .castle-move:disabled:hover {
   transform: none;
   animation: none;
   box-shadow: none;
@@ -3818,14 +3797,12 @@ h3 .he {
 }
 
 .castle-depth-dots {
-  position: absolute;
-  right: 1.85rem;
-  top: 50%;
-  transform: translateY(-50%);
+  position: static;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.55rem;
-  z-index: 6;
+  padding: 0.15rem 0;
   pointer-events: none;
 }
 
@@ -3920,13 +3897,8 @@ h3 .he {
     padding: 1.15rem 1.2rem;
   }
 
-  .castle-move--up,
-  .castle-move--down {
-    right: 0.85rem;
-  }
-
-  .castle-depth-dots {
-    right: 1.2rem;
+  .castle-side-nav {
+    right: 0.7rem;
   }
 }
 

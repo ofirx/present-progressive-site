@@ -3469,7 +3469,7 @@ h3 .he {
   top: 50%;
   transform: translate(-50%, -50%);
   width: min(920px, 90vw);
-  max-height: min(72dvh, 740px);
+  max-height: min(78dvh, 820px);
   overflow: auto;
   padding: 1.5rem 1.75rem 1.75rem;
   background: rgba(6, 8, 7, 0.82);

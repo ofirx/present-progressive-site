@@ -784,6 +784,17 @@ h2 {
   color: #fff;
 }
 
+.credits-citation {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #fff;
+}
+
+.credits-citation em {
+  font-style: italic;
+}
+
 .credits-link {
   word-break: break-word;
   font-size: 0.98rem;

@@ -3592,8 +3592,8 @@ h3 .he {
 .castle-window-hero {
   display: block;
   width: auto;
-  max-width: 88%;
-  max-height: min(32vh, 220px);
+  max-width: 100%;
+  max-height: min(52vh, 420px);
   height: auto;
   margin: 0 auto 1.1rem;
   object-fit: contain;

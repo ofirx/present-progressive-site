@@ -3714,7 +3714,9 @@ h3 .he {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.95rem;
+  justify-content: center;
+  width: 3.25rem;
+  gap: 0;
   z-index: 7;
 }
 
@@ -3801,8 +3803,11 @@ h3 .he {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   gap: 0.55rem;
-  padding: 0.15rem 0;
+  margin: 1.15rem 0;
+  padding: 0;
   pointer-events: none;
 }
 
